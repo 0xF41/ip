@@ -5,13 +5,25 @@ import java.util.ArrayList;
 
 public class Yapper {
 
+    /**
+     * BufferedReader object to read input from user
+     */
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
 
+    /**
+     * Name of the chatbot
+     */
     public static final String NAME = "Yapper";
 
+    /**
+     * An ArrayList to store the Tasks of the user
+     */
     public static ArrayList<Task> taskList = new ArrayList<>();
 
-    private static void greet() {
+    /**
+     * Displays a default message when the chatbot is started
+     */
+    private static void greet() { // greet text
         System.out.println("____________________________________________________________");
         System.out.println(String.format("Hello! I'm %s!", Yapper.NAME));
         System.out.println("What can I do for you?");
@@ -19,6 +31,11 @@ public class Yapper {
 
     }
 
+    /**
+     * Starts the conversation between the user and the chatbot. 
+     * 
+     * @throws IOException
+     */
     private static void startConversation() throws IOException {
 
         String cmd = "";
@@ -63,7 +80,7 @@ public class Yapper {
                 System.out.println(t);
                 System.out.println("____________________________________________________________");
 
-            } else if (cmd.split(" ")[0].equals("todo")) { // todo X
+            } else if (cmd.split(" ")[0].equals("todo")) { // todo X                
 
                 ToDos td = new ToDos(cmd.substring("todo".length() + 1));
                 taskList.add(td);
@@ -105,14 +122,32 @@ public class Yapper {
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
                 System.out.println(e);
+                System.out.println(String.format("Now you have %d tasks in the list.", taskList.size() - 1 ));
+                System.out.println("____________________________________________________________");
+
+            } else if (cmd.split(" ")[0].equals("delete")) { // delete X
+
+                int deleteIndex = Integer.parseInt(cmd.split(" ")[1]) - 1;
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Noted. I've removed this task: ");
+                System.out.println(taskList.get(deleteIndex));
                 System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
                 System.out.println("____________________________________________________________");
 
-            } 
+                taskList.remove(deleteIndex);
+
+            }
 
         } while (!cmd.equals("bye"));
     }
 
+    /**
+     * Main Function
+     * 
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         Yapper.greet();
         Yapper.startConversation();
