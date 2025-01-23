@@ -122,7 +122,7 @@ public class Yapper {
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
                 System.out.println(e);
-                System.out.println(String.format("Now you have %d tasks in the list.", taskList.size() - 1 ));
+                System.out.println(String.format("Now you have %d tasks in the list.", taskList.size() - 1));
                 System.out.println("____________________________________________________________");
 
             } else if (cmd.split(" ")[0].equals("delete")) { // delete X
