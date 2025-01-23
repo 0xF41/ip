@@ -25,7 +25,7 @@ public class Yapper {
         do {
             cmd = br.readLine();
 
-            if (cmd.equals("bye")) {
+            if (cmd.equals("bye")) { // end conversation
 
                 System.out.println("____________________________________________________________");
                 System.out.println("Bye. Hope to see you again soon!");
@@ -34,44 +34,81 @@ public class Yapper {
 
             }
 
-            if (cmd.equals("list")) {
+            if (cmd.equals("list")) { // list tasks
 
                 System.out.println("____________________________________________________________");
                 for (int i = 0, n = taskList.size(); i < n; i++) {
-                    System.out.println(String.format("%d.[%s] %s", i + 1, taskList.get(i).getStatusIcon(),
-                            taskList.get(i).getDescription()));
+                    Task t = taskList.get(i);
+                    System.out.println(String.format("%d. %s", i + 1, t));
                 }
                 System.out.println("____________________________________________________________");
 
-            } else if (cmd.split(" ")[0].equals("mark")) {
+            } else if (cmd.split(" ")[0].equals("mark")) { // mark X
 
                 int idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
                 Task t = taskList.get(idx);
                 t.markAsDone();
                 System.out.println("____________________________________________________________");
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println(String.format("[%s] %s", t.getStatusIcon(), t.getDescription()));
+                System.out.println(t);
                 System.out.println("____________________________________________________________");
 
-            } else if (cmd.split(" ")[0].equals("unmark")) {
+            } else if (cmd.split(" ")[0].equals("unmark")) { // unmark X
 
                 int idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
                 Task t = taskList.get(idx);
                 t.markAsUndone();
                 System.out.println("____________________________________________________________");
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(String.format("[%s] %s", t.getStatusIcon(), t.getDescription()));
+                System.out.println(t);
                 System.out.println("____________________________________________________________");
 
-            } else {
+            } else if (cmd.split(" ")[0].equals("todo")) { // todo X
 
-                Task t = new Task(cmd);
-                taskList.add(t);
+                ToDos td = new ToDos(cmd.substring("todo".length() + 1));
+                taskList.add(td);
                 System.out.println("____________________________________________________________");
-                System.out.println(String.format("Added: %s", t.getDescription()));
+                System.out.println("Got it. I've added this task:");
+                System.out.println(td);
+                System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
                 System.out.println("____________________________________________________________");
 
-            }
+            } else if (cmd.split(" ")[0].equals("deadline")) { // deadline X /by Y
+
+                int deadlineIndex = cmd.indexOf("deadline") + 9;
+                int byIndex = cmd.indexOf("/by");
+
+                String description = cmd.substring(deadlineIndex, byIndex).trim();
+                String dueDate = cmd.substring(byIndex + 4).trim();
+
+                Deadline dl = new Deadline(description, dueDate);
+                taskList.add(dl);
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(dl);
+                System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+                System.out.println("____________________________________________________________");
+
+            } else if (cmd.split(" ")[0].equals("event")) { // event X /from Y /to Z
+
+                int eventIndex = cmd.indexOf("event") + 6; // Start after "event "
+                int fromIndex = cmd.indexOf("/from");
+                int toIndex = cmd.indexOf("/to");
+
+                String description = cmd.substring(eventIndex, fromIndex).trim();
+                String fromTime = cmd.substring(fromIndex + 6, toIndex).trim();
+                String toTime = cmd.substring(toIndex + 4).trim();
+
+                Events e = new Events(description, fromTime, toTime);
+                taskList.add(e);
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(e);
+                System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+                System.out.println("____________________________________________________________");
+
+            } 
 
         } while (!cmd.equals("bye"));
     }

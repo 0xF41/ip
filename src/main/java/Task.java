@@ -22,4 +22,10 @@ public class Task {
     public void markAsUndone() {
         this.isDone = false;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%s] %s", this.getStatusIcon(), this.getDescription());
+    }
+
 }
