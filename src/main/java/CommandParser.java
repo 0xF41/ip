@@ -24,7 +24,15 @@ public class CommandParser {
     /**
      * Prints out all Tasks of the user
      */
-    private static void list(ArrayList<Task> taskList) {
+    private static void list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+        if (cmd.split(" ").length != 1) {
+            throw new InvalidCommandSyntaxException("Usage: list");
+        }
+
+        if (taskList.isEmpty()) {
+            System.out.println("List is empty!");
+            return;
+        }
         System.out.println("____________________________________________________________");
         for (int i = 0, n = taskList.size(); i < n; i++) {
             Task t = taskList.get(i);
@@ -39,13 +47,16 @@ public class CommandParser {
      * @param cmd user command
      */
     private static void mark(String cmd, ArrayList<Task> taskList)
-            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+            throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
+        if (cmd.split(" ").length != 2) {
+            throw new InvalidCommandSyntaxException("Usage: mark <task-index>");
+        }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
             throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
         }
         Task t = taskList.get(idx);
@@ -62,13 +73,16 @@ public class CommandParser {
      * @param cmd User command
      */
     private static void unmark(String cmd, ArrayList<Task> taskList)
-            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+            throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
+        if (cmd.split(" ").length != 2) {
+            throw new InvalidCommandSyntaxException("Usage: unmark <task-index>");
+        }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
             throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
         }
         Task t = taskList.get(idx);
@@ -138,31 +152,34 @@ public class CommandParser {
     }
 
     private static void delete(String cmd, ArrayList<Task> taskList)
-            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+            throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
+        if (cmd.split(" ").length != 2) {
+            throw new InvalidCommandSyntaxException("Usage: delete <task-index>");
+        }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
             throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
         }
         System.out.println("____________________________________________________________");
         System.out.println("Noted. I've removed this task: ");
         System.out.println(taskList.get(idx));
+        taskList.remove(idx);
         System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
         System.out.println("____________________________________________________________");
 
-        taskList.remove(idx);
     }
 
     public static void processCommand(String fullCmd, ArrayList<Task> taskList)
-            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+            throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
 
         String cmd = fullCmd.split(" ")[0];
 
         if (Command.fromString(cmd).equals(Command.LIST)) { // list tasks
-            list(taskList);
+            list(fullCmd, taskList);
         } else if (Command.fromString(cmd).equals(Command.MARK)) { // mark X
             mark(fullCmd, taskList);
         } else if (Command.fromString(cmd).equals(Command.UNMARK)) { // unmark X

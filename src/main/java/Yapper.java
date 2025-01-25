@@ -54,7 +54,7 @@ public class Yapper {
                 CommandParser.processCommand(cmd, taskList);
             } catch (InvalidCommandSyntaxException e) {
                 System.out.println(e);
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e);
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
