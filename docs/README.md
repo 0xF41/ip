@@ -1,30 +1,17 @@
-# Duke User Guide
+# Yapper User Guide
 
-// Update the title above to match the actual product name
-
-// Product screenshot goes here
-
-// Product intro goes here
-
-## Adding deadlines
-
-// Describe the action and its outcome.
-
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
+Yapper is a chatbot created as part of NUS CS2103T Software Engineering Module.
 
 ```
-expected output
+Usage:
+list - show current task list
+mark <task-index> - mark task with <task-index> as done
+ummark <task-index> - unmark task with <task-index> as incomplete
+todo <task-name> - Create a new task specified with <task-name>
+deadline <task-name> /by <deadline> - Create a new task with a deadline, specifying <deadline> as the task deadline
+event <task-name> /from <start> /to <end> - Create a new Event task with a <start> and <end>
+delete <task-index> - delete task with <task-index> on the list
+bye - end the conversation with the chatbot
+help - show help menu
+
 ```
-
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details

@@ -167,6 +167,11 @@ public class CommandParser {
 
     }
 
+    /**
+     * Return a String of the usage of the chatbot
+     * 
+     * @return help usage string
+     */
     private static String help() {
         return "Usage:\n" +
                 "list - show current task list\n" +
