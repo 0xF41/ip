@@ -8,8 +8,8 @@ public class CommandParser {
     /**
      * Chatbot commands
      */
-    enum Command {
-        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE;
+    public enum Command {
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE;
 
         // Check for valid commands
         public static Command fromString(String command) throws InvalidCommandSyntaxException {
@@ -151,6 +151,14 @@ public class CommandParser {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Deletes a Task from the user's task list
+     * 
+     * @param cmd User command
+     * @param taskList User's tasklist
+     * @throws InvalidCommandSyntaxException
+     * @throws IndexOutOfBoundsException
+     */
     private static void delete(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
@@ -173,7 +181,16 @@ public class CommandParser {
 
     }
 
-    public static void processCommand(String fullCmd, ArrayList<Task> taskList)
+    /**
+     * Processes the command entered by the user into the chatbot. 
+     * 
+     * @param fullCmd The full input command
+     * @param taskList The user's task list
+     * @return true if more follow-up commands are to be processed. false if user exits chatbot
+     * @throws InvalidCommandSyntaxException
+     * @throws IndexOutOfBoundsException
+     */
+    public static boolean processCommand(String fullCmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
 
         String cmd = fullCmd.split(" ")[0];
@@ -192,8 +209,10 @@ public class CommandParser {
             event(fullCmd, taskList);
         } else if (Command.fromString(cmd).equals(Command.DELETE)) { // delete X
             delete(fullCmd, taskList);
+        } else if (Command.fromString(cmd).equals(Command.BYE)) { // bye
+            return false;
         }
-
+        return true;
     }
 
 }

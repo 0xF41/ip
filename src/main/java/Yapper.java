@@ -48,10 +48,10 @@ public class Yapper {
     private static void startConversation() throws IOException {
         Yapper.greet();
         String cmd = "";
-        do {
+        while(true) {
             cmd = br.readLine();
             try {
-                CommandParser.processCommand(cmd, taskList);
+                if(!CommandParser.processCommand(cmd, taskList)) break;
             } catch (InvalidCommandSyntaxException e) {
                 System.out.println(e);
             } catch (IndexOutOfBoundsException e) {
@@ -59,7 +59,7 @@ public class Yapper {
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
             }
-        } while (!cmd.equals("bye"));
+        }
         Yapper.bye();
     }
 
