@@ -56,6 +56,8 @@ public class Yapper {
                 System.out.println(e);
             } catch (ArrayIndexOutOfBoundsException e) {
                 System.out.println(e);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e);
             }
         } while (!cmd.equals("bye"));
         Yapper.bye();

@@ -1,9 +1,25 @@
 import java.util.ArrayList;
 
 /**
- * CommandParser parses the commands entered by the user into the chatbot. 
+ * CommandParser parses the commands entered by the user into the chatbot.
  */
 public class CommandParser {
+
+    /**
+     * Chatbot commands
+     */
+    enum Command {
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE;
+
+        // Check for valid commands
+        public static Command fromString(String command) throws InvalidCommandSyntaxException {
+            try {
+                return Command.valueOf(command.trim().toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new InvalidCommandSyntaxException("Invalid command: " + command);
+            }
+        }
+    }
 
     /**
      * Prints out all Tasks of the user
@@ -22,7 +38,8 @@ public class CommandParser {
      * 
      * @param cmd user command
      */
-    private static void mark(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+    private static void mark(String cmd, ArrayList<Task> taskList)
+            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
@@ -44,7 +61,8 @@ public class CommandParser {
      * 
      * @param cmd User command
      */
-    private static void unmark(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+    private static void unmark(String cmd, ArrayList<Task> taskList)
+            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
@@ -119,7 +137,8 @@ public class CommandParser {
         System.out.println("____________________________________________________________");
     }
 
-    private static void delete(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
+    private static void delete(String cmd, ArrayList<Task> taskList)
+            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
@@ -137,42 +156,27 @@ public class CommandParser {
         taskList.remove(idx);
     }
 
-    private static void unknown() throws InvalidCommandSyntaxException {
-        throw new InvalidCommandSyntaxException("Unknown command.");
-    }
+    public static void processCommand(String fullCmd, ArrayList<Task> taskList)
+            throws InvalidCommandSyntaxException, ArrayIndexOutOfBoundsException {
 
-    public static void processCommand(String command, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+        String cmd = fullCmd.split(" ")[0];
 
-        if (command.split(" ").length < 2) {
-            throw new InvalidCommandSyntaxException("Invalid command syntax. Expected: 'Command argument'");
-        }
-
-        String[] tokens = command.split(" ");
-        String cmd = tokens[0];
-
-        if (cmd.equals("list")) { // list tasks
+        if (Command.fromString(cmd).equals(Command.LIST)) { // list tasks
             list(taskList);
-        } else if (cmd.split(" ")[0].equals("mark")) { // mark X
-            mark(cmd, taskList);
-        } else if (cmd.split(" ")[0].equals("unmark")) { // unmark X
-            unmark(cmd, taskList);
-        } else if (cmd.split(" ")[0].equals("todo")) { // todo X
-            todo(cmd, taskList);
-        } else if (cmd.split(" ")[0].equals("deadline")) { // deadline X /by Y
-            deadline(cmd, taskList);
-        } else if (cmd.split(" ")[0].equals("event")) { // event X /from Y /to Z
-            event(cmd, taskList);
-        } else if (cmd.split(" ")[0].equals("delete")) { // delete X
-            delete(cmd, taskList);
-        } else {
-            unknown();
+        } else if (Command.fromString(cmd).equals(Command.MARK)) { // mark X
+            mark(fullCmd, taskList);
+        } else if (Command.fromString(cmd).equals(Command.UNMARK)) { // unmark X
+            unmark(fullCmd, taskList);
+        } else if (Command.fromString(cmd).equals(Command.TODO)) { // todo X
+            todo(fullCmd, taskList);
+        } else if (Command.fromString(cmd).equals(Command.DEADLINE)) { // deadline X /by Y
+            deadline(fullCmd, taskList);
+        } else if (Command.fromString(cmd).equals(Command.EVENT)) { // event X /from Y /to Z
+            event(fullCmd, taskList);
+        } else if (Command.fromString(cmd).equals(Command.DELETE)) { // delete X
+            delete(fullCmd, taskList);
         }
-
-    }
-
-    public CommandParser() {
 
     }
 
 }
-
