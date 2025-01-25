@@ -8,24 +8,24 @@ public class Yapper {
     /**
      * BufferedReader object to read input from user.
      */
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
 
     /**
      * Name of the chatbot
      */
-    public static final String NAME = "Yapper";
+    public final String name;
 
     /**
      * An ArrayList to store the Tasks of the user.
      */
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private ArrayList<Task> taskList;
 
     /**
      * Displays a default message when the chatbot is started.
      */
-    private static void greet() {
+    private void greet() {
         System.out.println("____________________________________________________________");
-        System.out.println(String.format("Hello! I'm %s!", Yapper.NAME));
+        System.out.println(String.format("Hello! I'm %s!", this.name));
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
 
@@ -34,10 +34,8 @@ public class Yapper {
     /**
      * Displays the bye message before the chatbot is terminated.
      */
-    private static void bye() {
-        System.out.println("____________________________________________________________");
+    private void bye() {
         System.out.println("Bye. Hope to see you again soon!");
-        System.out.println("____________________________________________________________");
     }
 
     /**
@@ -45,8 +43,8 @@ public class Yapper {
      * 
      * @throws IOException
      */
-    private static void startConversation() throws IOException {
-        Yapper.greet();
+    private void startConversation() throws IOException {
+        this.greet();
         String cmd = "";
         while(true) {
             cmd = br.readLine();
@@ -63,7 +61,18 @@ public class Yapper {
                 System.out.println("____________________________________________________________");
             }
         }
-        Yapper.bye();
+        this.bye();
+        System.out.println("____________________________________________________________");
+    }
+
+    /**
+     * Constructs a Yapper object representing a yapper chatbot session initiated by a Person. 
+     * 
+     * @param taskList the Person's task list
+     */
+    public Yapper(String name, ArrayList<Task> taskList) {
+        this.name = name;
+        this.taskList = taskList;
     }
 
     /**
@@ -73,6 +82,8 @@ public class Yapper {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        Yapper.startConversation();
+        Person p1 = new Person();
+        Yapper y1 = new Yapper("Yapper", p1.taskList);
+        y1.startConversation();
     }
 }
