@@ -16,7 +16,7 @@ public class CommandParser {
             try {
                 return Command.valueOf(command.trim().toUpperCase());
             } catch (IllegalArgumentException e) {
-                throw new InvalidCommandSyntaxException("Invalid command: " + command);
+                throw new InvalidCommandSyntaxException("See usage with \"help\"");
             }
         }
     }
@@ -142,7 +142,7 @@ public class CommandParser {
     /**
      * Deletes a Task from the user's task list
      * 
-     * @param cmd User command
+     * @param cmd      User command
      * @param taskList User's task list
      * @throws InvalidCommandSyntaxException
      * @throws IndexOutOfBoundsException
@@ -167,34 +167,33 @@ public class CommandParser {
 
     }
 
-    private static void help() {
-        System.out.println("Usage:");
-        System.out.println("list - show current task list");
-        System.out.println("mark <task-index> - mark task with <task-index> as done");
-        System.out.println("ummark <task-index> - unmark task with <task-index> as incomplete");
-        System.out.println("todo <task-name> - Create a new task specified with <task-name>");
-        System.out.println("deadline <task-name> /by <deadline> - Create a new task with a deadline, specifying <deadline> as the task deadline");
-        System.out.println("event <task-name> /from <start> /to <end> - Create a new Event task with a <start> and <end>");
-        System.out.println("delete <task-index> - delete task with <task-index> on the list");
-        System.out.println("bye - end the conversation with the chatbot");
-        System.out.println("help - show help menu");
+    private static String help() {
+        return "Usage:\n" +
+                "list - show current task list\n" +
+                "mark <task-index> - mark task with <task-index> as done\n" +
+                "ummark <task-index> - unmark task with <task-index> as incomplete\n" +
+                "todo <task-name> - Create a new task specified with <task-name>\n" +
+                "deadline <task-name> /by <deadline> - Create a new task with a deadline, specifying <deadline> as the task deadline\n"
+                +
+                "event <task-name> /from <start> /to <end> - Create a new Event task with a <start> and <end>\n" +
+                "delete <task-index> - delete task with <task-index> on the list\n" +
+                "bye - end the conversation with the chatbot\n" +
+                "help - show help menu";
     }
 
     /**
-     * Processes the command entered by the user into the chatbot. 
+     * Processes the command entered by the user into the chatbot.
      * 
-     * @param fullCmd The full input command
+     * @param fullCmd  The full input command
      * @param taskList The user's task list
-     * @return true if more follow-up commands are to be processed. false if user exits chatbot
+     * @return true if more follow-up commands are to be processed. false if user
+     *         exits chatbot
      * @throws InvalidCommandSyntaxException
      * @throws IndexOutOfBoundsException
      */
     public static boolean processCommand(String fullCmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
-
         String cmd = fullCmd.split(" ")[0];
-        System.out.println("____________________________________________________________");
-
         if (Command.fromString(cmd).equals(Command.LIST)) { // list tasks
             list(fullCmd, taskList);
         } else if (Command.fromString(cmd).equals(Command.MARK)) { // mark X
@@ -212,9 +211,8 @@ public class CommandParser {
         } else if (Command.fromString(cmd).equals(Command.BYE)) { // bye
             return false;
         } else if (Command.fromString(cmd).equals(Command.HELP)) {
-            help();
+            System.out.println(help());
         }
-        System.out.println("____________________________________________________________");
         return true;
     }
 

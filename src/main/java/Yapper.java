@@ -50,6 +50,7 @@ public class Yapper {
         String cmd = "";
         while(true) {
             cmd = br.readLine();
+            System.out.println("____________________________________________________________");
             try {
                 if(!CommandParser.processCommand(cmd, taskList)) break;
             } catch (InvalidCommandSyntaxException e) {
@@ -58,6 +59,8 @@ public class Yapper {
                 System.out.println(e);
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
+            } finally {
+                System.out.println("____________________________________________________________");
             }
         }
         Yapper.bye();
