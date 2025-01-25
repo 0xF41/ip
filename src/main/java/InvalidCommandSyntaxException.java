@@ -1,7 +1,7 @@
 public class InvalidCommandSyntaxException extends Exception {
     
     public InvalidCommandSyntaxException(String message) {
-        System.out.print(String.format("%s | ", message));
+        super(message);
     }
 
     public InvalidCommandSyntaxException(String message, Throwable cause) {

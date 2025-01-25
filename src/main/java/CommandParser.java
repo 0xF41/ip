@@ -9,7 +9,7 @@ public class CommandParser {
      * Chatbot commands
      */
     public enum Command {
-        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE;
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP;
 
         // Check for valid commands
         public static Command fromString(String command) throws InvalidCommandSyntaxException {
@@ -26,19 +26,17 @@ public class CommandParser {
      */
     private static void list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length != 1) {
-            throw new InvalidCommandSyntaxException("Usage: list");
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
 
         if (taskList.isEmpty()) {
             System.out.println("List is empty!");
             return;
         }
-        System.out.println("____________________________________________________________");
         for (int i = 0, n = taskList.size(); i < n; i++) {
             Task t = taskList.get(i);
             System.out.println(String.format("%d. %s", i + 1, t));
         }
-        System.out.println("____________________________________________________________");
     }
 
     /**
@@ -55,16 +53,14 @@ public class CommandParser {
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
         Task t = taskList.get(idx);
         t.markAsDone();
-        System.out.println("____________________________________________________________");
         System.out.println("Nice! I've marked this task as done:");
         System.out.println(t);
-        System.out.println("____________________________________________________________");
     }
 
     /**
@@ -75,22 +71,20 @@ public class CommandParser {
     private static void unmark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
-            throw new InvalidCommandSyntaxException("Usage: unmark <task-index>");
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
         Task t = taskList.get(idx);
         t.markAsUndone();
-        System.out.println("____________________________________________________________");
         System.out.println("OK, I've marked this task as not done yet:");
         System.out.println(t);
-        System.out.println("____________________________________________________________");
     }
 
     /**
@@ -99,11 +93,9 @@ public class CommandParser {
     private static void todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         ToDos td = new ToDos(cmd.substring("todo".length() + 1));
         taskList.add(td);
-        System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(td);
         System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
-        System.out.println("____________________________________________________________");
     }
 
     /**
@@ -120,11 +112,9 @@ public class CommandParser {
 
         Deadline dl = new Deadline(description, dueDate);
         taskList.add(dl);
-        System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(dl);
         System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
-        System.out.println("____________________________________________________________");
     }
 
     /**
@@ -144,41 +134,50 @@ public class CommandParser {
         Events e = new Events(description, fromTime, toTime);
         taskList.add(e);
 
-        System.out.println("____________________________________________________________");
         System.out.println("Got it. I've added this task:");
         System.out.println(e);
         System.out.println(String.format("Now you have %d tasks in the list.", taskList.size() - 1));
-        System.out.println("____________________________________________________________");
     }
 
     /**
      * Deletes a Task from the user's task list
      * 
      * @param cmd User command
-     * @param taskList User's tasklist
+     * @param taskList User's task list
      * @throws InvalidCommandSyntaxException
      * @throws IndexOutOfBoundsException
      */
     private static void delete(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
-            throw new InvalidCommandSyntaxException("Usage: delete <task-index>");
+            throw new InvalidCommandSyntaxException("Type \"help\" for command list");
         }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException(String.format("%s is not a valid item.", cmd.split(" ")[1]));
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
-        System.out.println("____________________________________________________________");
         System.out.println("Noted. I've removed this task: ");
         System.out.println(taskList.get(idx));
         taskList.remove(idx);
         System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
-        System.out.println("____________________________________________________________");
 
+    }
+
+    private static void help() {
+        System.out.println("Usage:");
+        System.out.println("list - show current task list");
+        System.out.println("mark <task-index> - mark task with <task-index> as done");
+        System.out.println("ummark <task-index> - unmark task with <task-index> as incomplete");
+        System.out.println("todo <task-name> - Create a new task specified with <task-name>");
+        System.out.println("deadline <task-name> /by <deadline> - Create a new task with a deadline, specifying <deadline> as the task deadline");
+        System.out.println("event <task-name> /from <start> /to <end> - Create a new Event task with a <start> and <end>");
+        System.out.println("delete <task-index> - delete task with <task-index> on the list");
+        System.out.println("bye - end the conversation with the chatbot");
+        System.out.println("help - show help menu");
     }
 
     /**
@@ -194,6 +193,7 @@ public class CommandParser {
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
 
         String cmd = fullCmd.split(" ")[0];
+        System.out.println("____________________________________________________________");
 
         if (Command.fromString(cmd).equals(Command.LIST)) { // list tasks
             list(fullCmd, taskList);
@@ -211,7 +211,10 @@ public class CommandParser {
             delete(fullCmd, taskList);
         } else if (Command.fromString(cmd).equals(Command.BYE)) { // bye
             return false;
+        } else if (Command.fromString(cmd).equals(Command.HELP)) {
+            help();
         }
+        System.out.println("____________________________________________________________");
         return true;
     }
 
