@@ -26,8 +26,8 @@ public class Events extends Task {
      * @param to end time of an Events
      */
     public Events(String description, String from, String to) {
+        super(description);
         this.from = from;
         this.to = to;
-        super(description);
     }
 }
