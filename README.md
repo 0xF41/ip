@@ -1,22 +1,24 @@
 # Yapper
 ```
-__   __                          
-\ \ / /_ _ _ __  _ __   ___ _ __ 
- \ V / _` | '_ \| '_ \ / _ \ '__|
-  | | (_| | |_) | |_) |  __/ |   
-  |_|\__,_| .__/| .__/ \___|_|   
-          |_|   |_|           
+  __   __                           
+  \ \ / /_ _ _ __  _ __   ___ _ __ 
+   \ V / _` | '_ \| '_ \ / _ \ '__|
+    | | (_| | |_) | |_) |  __/ |   
+    |_|\__,_| .__/| .__/ \___|_|   
+            |_|   |_|              
 
 Usage:
-list - show current task list
-mark <task-index> - mark task with <task-index> as done
-ummark <task-index> - unmark task with <task-index> as incomplete
-todo <task-name> - Create a new task specified with <task-name>
-deadline <task-name> /by <deadline> - Create a new task with a deadline, specifying <deadline> as the task deadline
-event <task-name> /from <start> /to <end> - Create a new Event task with a <start> and <end>
-delete <task-index> - delete task with <task-index> on the list
-bye - end the conversation with the chatbot
-help - show help menu
+  list                  - Show current task list
+  mark <task_number>    - Mark task with <task_number> as done
+  unmark <task_number>  - Unmark task with <task_number> as incomplete
+  todo <task_name>      - Create a new task specified with <task_name>
+  deadline <task_name> /by <deadline> 
+                        - Create a new task with a deadline, specifying <deadline> as the task deadline
+  event <task_name> /from <start_time> /to <end_time> 
+                        - Create a new Event task with a <start_time> and <end_time>
+  delete <task_number>  - Delete task with <task_number> on the list
+  bye                   - End the conversation with the chatbot
+  help                  - Show this help menu
    
 ```
 
