@@ -27,8 +27,8 @@ public class FileManager {
     }
 
     /**
-     * Save contents from taskList to <file-name.csv> according to open file
-     * descriptor
+     * Save contents from the current taskList to <file-name.csv> according to open
+     * file descriptor
      * 
      * @param file     open file descriptor
      * @param taskList user list of tasks
@@ -51,7 +51,8 @@ public class FileManager {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
                     Events ev = (Events) t;
                     FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", ev.description,
-                            ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf), ev.getToLocalDateTime().format(dtf)), true);
+                            ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
+                            ev.getToLocalDateTime().format(dtf)), true);
                 } else {
                     System.out.println(String.format("%s is not added to %s.", t, file.getName()));
                 }

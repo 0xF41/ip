@@ -37,7 +37,6 @@ public class Yapper {
         System.out.println(String.format("Hello! I'm %s!", this.name));
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
-
     }
 
     /**
