@@ -1,5 +1,8 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * CommandParser parses the commands entered by the user into the chatbot.
@@ -105,17 +108,35 @@ public class CommandParser {
      * @param cmd User command
      */
     private static void deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+
+        if (cmd.split(" ").length != 2) {
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+        }
+
         int deadlineIndex = cmd.indexOf("deadline") + 9;
-        int byIndex = cmd.indexOf("/by");
+        int byIndex = -1;
 
-        String description = cmd.substring(deadlineIndex, byIndex).trim();
-        String dueDate = cmd.substring(byIndex + 4).trim();
+        String description = "";
+        String dueDateString = "";
+        try {
+            byIndex = cmd.indexOf("/by");
+            cmd.substring(deadlineIndex, byIndex).trim();
+            dueDateString = cmd.substring(byIndex + 4).trim();
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new InvalidCommandSyntaxException("Missing end date! Please specify using /by.");
+        }
 
-        Deadline dl = new Deadline(description, dueDate);
-        taskList.add(dl);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(dl);
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
+            Deadline dl = new Deadline(description, byLocalDateTime);
+            taskList.add(dl);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(dl);
+            System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+        } catch (DateTimeParseException e) {
+            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy.");
+        }
     }
 
     /**
@@ -124,20 +145,46 @@ public class CommandParser {
      * @param cmd User command
      */
     private static void event(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+
+        if (cmd.split(" ").length < 2) {
+            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+        }
+
         int eventIndex = cmd.indexOf("event") + 6; // Start after "event "
-        int fromIndex = cmd.indexOf("/from");
-        int toIndex = cmd.indexOf("/to");
+        int fromIndex = -1;
+        int toIndex = -1;
 
-        String description = cmd.substring(eventIndex, fromIndex).trim();
-        String fromTime = cmd.substring(fromIndex + 6, toIndex).trim();
-        String toTime = cmd.substring(toIndex + 4).trim();
+        String description = "";
+        String fromTimeString = "";
+        String toTimeString = "";
 
-        Events e = new Events(description, fromTime, toTime);
-        taskList.add(e);
+        try {
+            fromIndex = cmd.indexOf("/from");
+            description = cmd.substring(eventIndex, fromIndex).trim();
+            fromTimeString = cmd.substring(fromIndex + 6, toIndex).trim();
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new InvalidCommandSyntaxException("Missing start date! Please specify using /from.");
+        }
 
-        System.out.println("Got it. I've added this task:");
-        System.out.println(e);
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+        try {
+            toIndex = cmd.indexOf("/to");
+            toTimeString = cmd.substring(toIndex + 4).trim();
+        } catch (StringIndexOutOfBoundsException e) {
+            throw new InvalidCommandSyntaxException("Missing end date! Please specify using /to.");
+        }
+
+        try {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            LocalDateTime fromLocalDateTime = LocalDateTime.parse(fromTimeString, dtf);
+            LocalDateTime toLocalDateTime = LocalDateTime.parse(toTimeString, dtf);
+            Events e = new Events(description, fromLocalDateTime, toLocalDateTime);
+            taskList.add(e);
+            System.out.println("Got it. I've added this task:");
+            System.out.println(e);
+            System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+        } catch (DateTimeParseException e) {
+            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
+        }
     }
 
     /**
