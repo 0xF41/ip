@@ -27,8 +27,7 @@ public class Yapper {
     /**
      * The Person's file object to cache user tasks
      */
-    private File file; 
-
+    private File file;
 
     /**
      * Displays a default message when the chatbot is started.
@@ -42,18 +41,19 @@ public class Yapper {
     }
 
     /**
-     * Starts the conversation between the user and the chatbot. 
+     * Starts the conversation between the user and the chatbot.
      * 
      * @throws IOException
      */
     private void startConversation() throws IOException {
         this.greet();
         String cmd = "";
-        while(true) {
+        while (true) {
             cmd = br.readLine();
             System.out.println("____________________________________________________________");
             try {
-                if(!CommandParser.processCommand(cmd, this.taskList, this.file)) break;
+                if (!CommandParser.processCommand(cmd, this.taskList, this.file))
+                    break;
             } catch (InvalidCommandSyntaxException e) {
                 System.out.println(e);
             } catch (IndexOutOfBoundsException e) {
@@ -64,11 +64,11 @@ public class Yapper {
                 System.out.println("____________________________________________________________");
             }
         }
-        System.out.println("____________________________________________________________");
     }
 
     /**
-     * Constructs a Yapper object representing a yapper chatbot session initiated by a Person. 
+     * Constructs a Yapper object representing a yapper chatbot session initiated by
+     * a Person.
      * 
      * @param taskList the Person's task list
      */

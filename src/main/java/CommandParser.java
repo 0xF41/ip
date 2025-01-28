@@ -182,17 +182,28 @@ public class CommandParser {
      * @return help usage string
      */
     private static String help() {
-        return "Usage:\n" +
-                "list - show current task list\n" +
-                "mark <task-index> - mark task with <task-index> as done\n" +
-                "ummark <task-index> - unmark task with <task-index> as incomplete\n" +
-                "todo <task-name> - Create a new task specified with <task-name>\n" +
-                "deadline <task-name> /by <deadline> - Create a new task with a deadline, specifying <deadline> as the task deadline\n"
-                +
-                "event <task-name> /from <start> /to <end> - Create a new Event task with a <start> and <end>\n" +
-                "delete <task-index> - delete task with <task-index> on the list\n" +
-                "bye - end the conversation with the chatbot\n" +
-                "help - show help menu";
+        String menu = """
+        __   __                           
+        \\ \\ / /_ _ _ __  _ __   ___ _ __ 
+        \\ V / _` | '_ \\| '_ \\ / _ \\ '__|
+            | | (_| | |_) | |_) |  __/ |   
+            |_|\\__,_| .__/| .__/ \\___|_|   
+                    |_|   |_|              
+
+        Usage:
+        list                  - Show current task list
+        mark <task_number>    - Mark task with <task_number> as done
+        unmark <task_number>  - Unmark task with <task_number> as incomplete
+        todo <task_name>      - Create a new task specified with <task_name>
+        deadline <task_name> /by <deadline> 
+                                - Create a new task with a deadline, specifying <deadline> as the task deadline
+        event <task_name> /from <start_time> /to <end_time> 
+                                - Create a new Event task with a <start_time> and <end_time>
+        delete <task_number>  - Delete task with <task_number> on the list
+        bye                   - End the conversation with the chatbot
+        help                  - Show this help menu
+        """;
+        return menu;
     }
 
     /**
@@ -225,7 +236,7 @@ public class CommandParser {
         } else if (Command.fromString(cmd).equals(Command.BYE)) { // bye
             bye(fullCmd, taskList, file);
             return false;
-        } else if (Command.fromString(cmd).equals(Command.HELP)) {
+        } else if (Command.fromString(cmd).equals(Command.HELP)) { // help
             System.out.println(help());
         }
         return true;

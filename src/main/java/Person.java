@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-
 /**
  * A Person instance
  */
@@ -16,7 +15,7 @@ public class Person {
     /**
      * File object to cache user tasks
      */
-    public File file; 
+    public File file;
 
     /**
      * ArrayList to store a list of Person's Tasks
@@ -33,7 +32,7 @@ public class Person {
         try {
             this.taskList = FileManager.loadFileContents(this.file);
         } catch (FileNotFoundException e) {
-            System.out.println(String.format("File %s not found", this.taskFileName));
+            System.out.println(String.format("File %s not found.", this.taskFileName));
             this.taskList = new ArrayList<>();
         }
     }
