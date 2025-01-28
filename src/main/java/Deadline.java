@@ -5,6 +5,10 @@ public class Deadline extends Task {
      */
     protected String by;
 
+    public String getBy() {
+        return this.by;
+    }
+
     /**
      * String representation of a Deadline object. 
      */

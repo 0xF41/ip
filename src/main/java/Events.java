@@ -11,6 +11,24 @@ public class Events extends Task {
     protected String to;
 
     /**
+     * Returns from date string
+     * 
+     * @return String from
+     */
+    public String getFrom() {
+        return this.from;
+    }
+
+    /**
+     * Returns to date string
+     * 
+     * @return String to
+     */
+    public String getTo() {
+        return this.to;
+    }
+
+    /**
      * String representation of a Events.
      */
     @Override
