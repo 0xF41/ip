@@ -224,7 +224,7 @@ public class CommandParser {
      * @return help usage string
      */
     private static void help() {
-        Ui.printHelp();
+        Ui.printMenu();
     }
 
     /**
