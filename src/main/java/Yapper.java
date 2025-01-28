@@ -33,10 +33,7 @@ public class Yapper {
      * Displays a default message when the chatbot is started.
      */
     private void greet() {
-        System.out.println("____________________________________________________________");
-        System.out.println(String.format("Hello! I'm %s!", this.name));
-        System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
+        Ui.printGreet(this.name);
     }
 
     /**
@@ -44,12 +41,12 @@ public class Yapper {
      * 
      * @throws IOException
      */
-    private void startConversation() throws IOException {
+    private void run() throws IOException {
         this.greet();
         String cmd = "";
         while (true) {
             cmd = br.readLine();
-            System.out.println("____________________________________________________________");
+            Ui.printLine();
             try {
                 if (!CommandParser.processCommand(cmd, this.taskList, this.file))
                     break;
@@ -60,7 +57,7 @@ public class Yapper {
             } catch (IllegalArgumentException e) {
                 System.out.println(e);
             } finally {
-                System.out.println("____________________________________________________________");
+                Ui.printLine();
             }
         }
     }
@@ -86,6 +83,6 @@ public class Yapper {
     public static void main(String[] args) throws IOException {
         Person p1 = new Person("usertaskdata.csv");
         Yapper y1 = new Yapper("Yapper", p1.taskList, p1.file);
-        y1.startConversation();
+        y1.run();
     }
 }
