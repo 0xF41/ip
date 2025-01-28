@@ -1,8 +1,12 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * Yapper chatbot
+ */
 public class Yapper {
 
     /**
@@ -16,9 +20,15 @@ public class Yapper {
     public final String name;
 
     /**
-     * An ArrayList to store the Tasks of the user.
+     * The Person's ArrayList to store user tasks.
      */
     private ArrayList<Task> taskList;
+
+    /**
+     * The Person's file object to cache user tasks
+     */
+    private File file; 
+
 
     /**
      * Displays a default message when the chatbot is started.
@@ -29,13 +39,6 @@ public class Yapper {
         System.out.println("What can I do for you?");
         System.out.println("____________________________________________________________");
 
-    }
-
-    /**
-     * Displays the bye message before the chatbot is terminated.
-     */
-    private void bye() {
-        System.out.println("Bye. Hope to see you again soon!");
     }
 
     /**
@@ -50,7 +53,7 @@ public class Yapper {
             cmd = br.readLine();
             System.out.println("____________________________________________________________");
             try {
-                if(!CommandParser.processCommand(cmd, taskList)) break;
+                if(!CommandParser.processCommand(cmd, this.taskList, this.file)) break;
             } catch (InvalidCommandSyntaxException e) {
                 System.out.println(e);
             } catch (IndexOutOfBoundsException e) {
@@ -61,7 +64,6 @@ public class Yapper {
                 System.out.println("____________________________________________________________");
             }
         }
-        this.bye();
         System.out.println("____________________________________________________________");
     }
 
@@ -70,9 +72,10 @@ public class Yapper {
      * 
      * @param taskList the Person's task list
      */
-    public Yapper(String name, ArrayList<Task> taskList) {
+    public Yapper(String name, ArrayList<Task> taskList, File file) {
         this.name = name;
         this.taskList = taskList;
+        this.file = file;
     }
 
     /**
@@ -82,8 +85,8 @@ public class Yapper {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        Person p1 = new Person();
-        Yapper y1 = new Yapper("Yapper", p1.taskList);
+        Person p1 = new Person("usertaskdata.csv");
+        Yapper y1 = new Yapper("Yapper", p1.taskList, p1.file);
         y1.startConversation();
     }
 }

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -136,7 +137,7 @@ public class CommandParser {
 
         System.out.println("Got it. I've added this task:");
         System.out.println(e);
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size() - 1));
+        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
     }
 
     /**
@@ -165,6 +166,14 @@ public class CommandParser {
         taskList.remove(idx);
         System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
 
+    }
+
+    private static void bye(String fullCmd, ArrayList<Task> taskList, File file) throws InvalidCommandSyntaxException {
+        if (fullCmd.split(" ").length != 1) {
+            throw new InvalidCommandSyntaxException("Type \"help\" for command list");
+        }
+        FileManager.saveFileContents(file, taskList);
+        System.out.println("Bye. Hope to see you again soon!");
     }
 
     /**
@@ -196,7 +205,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException
      * @throws IndexOutOfBoundsException
      */
-    public static boolean processCommand(String fullCmd, ArrayList<Task> taskList)
+    public static boolean processCommand(String fullCmd, ArrayList<Task> taskList, File file)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         String cmd = fullCmd.split(" ")[0];
         if (Command.fromString(cmd).equals(Command.LIST)) { // list tasks
@@ -214,6 +223,7 @@ public class CommandParser {
         } else if (Command.fromString(cmd).equals(Command.DELETE)) { // delete X
             delete(fullCmd, taskList);
         } else if (Command.fromString(cmd).equals(Command.BYE)) { // bye
+            bye(fullCmd, taskList, file);
             return false;
         } else if (Command.fromString(cmd).equals(Command.HELP)) {
             System.out.println(help());
