@@ -109,7 +109,7 @@ public class CommandParser {
      */
     private static void deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
 
-        if (cmd.split(" ").length != 2) {
+        if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
 
@@ -160,17 +160,12 @@ public class CommandParser {
 
         try {
             fromIndex = cmd.indexOf("/from");
+            toIndex = cmd.indexOf("/to");
             description = cmd.substring(eventIndex, fromIndex).trim();
             fromTimeString = cmd.substring(fromIndex + 6, toIndex).trim();
-        } catch (StringIndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("Missing start date! Please specify using /from.");
-        }
-
-        try {
-            toIndex = cmd.indexOf("/to");
             toTimeString = cmd.substring(toIndex + 4).trim();
         } catch (StringIndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("Missing end date! Please specify using /to.");
+            throw new InvalidCommandSyntaxException("Missing start/end date! Please specify using /from and /to.");
         }
 
         try {
