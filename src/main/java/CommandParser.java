@@ -39,7 +39,7 @@ public class CommandParser {
         }
         for (int i = 0, n = taskList.size(); i < n; i++) {
             Task t = taskList.get(i);
-            System.out.println(String.format("%d. %s", i + 1, t));
+            Ui.print(String.format("%d. %s", i + 1, t));
         }
     }
 
@@ -63,8 +63,8 @@ public class CommandParser {
         }
         Task t = taskList.get(idx);
         t.markAsDone();
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println(t);
+        Ui.print("Nice! I've marked this task as done:");
+        Ui.print(t);
     }
 
     /**
@@ -87,8 +87,8 @@ public class CommandParser {
         }
         Task t = taskList.get(idx);
         t.markAsUndone();
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println(t);
+        Ui.print("OK, I've marked this task as not done yet:");
+        Ui.print(t);
     }
 
     /**
@@ -97,9 +97,9 @@ public class CommandParser {
     private static void todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         ToDos td = new ToDos(cmd.substring("todo".length() + 1));
         taskList.add(td);
-        System.out.println("Got it. I've added this task:");
-        System.out.println(td);
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+        Ui.print("Got it. I've added this task:");
+        Ui.print(td);
+        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
     }
 
     /**
@@ -131,9 +131,9 @@ public class CommandParser {
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
             Deadline dl = new Deadline(description, byLocalDateTime);
             taskList.add(dl);
-            System.out.println("Got it. I've added this task:");
-            System.out.println(dl);
-            System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+            Ui.print("Got it. I've added this task:");
+            Ui.print(dl);
+            Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy.");
         }
@@ -174,9 +174,9 @@ public class CommandParser {
             LocalDateTime toLocalDateTime = LocalDateTime.parse(toTimeString, dtf);
             Events e = new Events(description, fromLocalDateTime, toLocalDateTime);
             taskList.add(e);
-            System.out.println("Got it. I've added this task:");
-            System.out.println(e);
-            System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+            Ui.print("Got it. I've added this task:");
+            Ui.print(e);
+            Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
         }
@@ -203,10 +203,10 @@ public class CommandParser {
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
-        System.out.println("Noted. I've removed this task: ");
-        System.out.println(taskList.get(idx));
+        Ui.print("Noted. I've removed this task: ");
+        Ui.print(taskList.get(idx));
         taskList.remove(idx);
-        System.out.println(String.format("Now you have %d tasks in the list.", taskList.size()));
+        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
 
     }
 
@@ -215,7 +215,7 @@ public class CommandParser {
             throw new InvalidCommandSyntaxException("Type \"help\" for command list");
         }
         FileManager.saveFileContents(file, taskList);
-        System.out.println("Bye. Hope to see you again soon!");
+        Ui.print("Bye. Hope to see you again soon!");
     }
 
     /**

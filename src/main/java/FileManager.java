@@ -54,7 +54,7 @@ public class FileManager {
                             ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
                             ev.getToLocalDateTime().format(dtf)), true);
                 } else {
-                    System.out.println(String.format("%s is not added to %s.", t, file.getName()));
+                    Ui.print(String.format("%s is not added to %s.", t, file.getName()));
                 }
             }
         } catch (IOException e) {
@@ -91,28 +91,28 @@ public class FileManager {
 
             switch (taskType) {
                 case "Todos":
-                    ToDos t = new ToDos(taskDescription);
+                    ToDos td = new ToDos(taskDescription);
                     if (taskIsDone.equals("X"))
-                        t.markAsDone();
-                    taskList.add(t);
+                        td.markAsDone();
+                    taskList.add(td);
                     break;
                 case "Deadline":
                     LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-                    Deadline d = new Deadline(taskDescription, taskByLocalDateTime);
+                    Deadline dl = new Deadline(taskDescription, taskByLocalDateTime);
                     if (taskIsDone.equals("X"))
-                        d.markAsDone();
-                    taskList.add(d);
+                        dl.markAsDone();
+                    taskList.add(dl);
                     break;
                 case "Event":
                     LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
                     LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-                    Events e = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
+                    Events ev = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
                     if (taskIsDone.equals("X"))
-                        e.markAsDone();
-                    taskList.add(e);
+                        ev.markAsDone();
+                    taskList.add(ev);
                     break;
                 default:
-                    System.out.println("Unknown task: " + taskDescription + "is not loaded!");
+                    Ui.printError("Unknown task: " + taskDescription + "is not loaded!");
                     break;
             }
         }

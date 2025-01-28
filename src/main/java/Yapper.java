@@ -1,18 +1,11 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
  * Yapper chatbot
  */
 public class Yapper {
-
-    /**
-     * BufferedReader object to read input from user.
-     */
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
 
     /**
      * Name of the chatbot
@@ -38,7 +31,8 @@ public class Yapper {
         Ui.printGreet(this.name);
         String cmd = "";
         while (true) {
-            cmd = br.readLine();
+            cmd = Ui.readCommand();
+            Ui.clearConsole();
             Ui.printLine();
             try {
                 if (!CommandParser.processCommand(cmd, this.taskList, this.file))

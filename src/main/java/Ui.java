@@ -1,4 +1,29 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Ui {
+
+    
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
+
+    public static void clearConsole() {
+        // ANSI escape code to clear the console
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    public static String readCommand() throws IOException {
+        return Ui.br.readLine();
+    }
+
+    public static void print(Object obj) {
+        System.out.println(obj);
+    }
+
+    public static void printBye() {
+        System.out.println("Bye. Hope to see you again soon!");
+    }
 
     public static void printError(Object e) {
         System.out.println(e);
