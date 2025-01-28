@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,13 +43,15 @@ public class FileManager {
                     FileManager.appendToFile(filePath,
                             String.format("%s,%s,%s,%s,%s", "Todos", td.description, td.getStatusIcon(), "", ""), true);
                 } else if (t instanceof Deadline) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
                     Deadline dl = (Deadline) t;
                     FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", dl.description,
-                            dl.getStatusIcon(), "", dl.getBy()), true);
+                            dl.getStatusIcon(), "", dl.getByLocalDateTime().format(dtf)), true);
                 } else if (t instanceof Events) {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
                     Events ev = (Events) t;
                     FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", ev.description,
-                            ev.getStatusIcon(), ev.getFrom(), ev.getTo()), true);
+                            ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf), ev.getToLocalDateTime().format(dtf)), true);
                 } else {
                     System.out.println(String.format("%s is not added to %s.", t, file.getName()));
                 }
@@ -68,6 +72,7 @@ public class FileManager {
      */
     public static ArrayList<Task> loadFileContents(File file) throws FileNotFoundException {
         ArrayList<Task> taskList = new ArrayList<>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
 
         Scanner s = new Scanner(file);
         s.nextLine(); // skip first row containing csv headers
@@ -81,7 +86,7 @@ public class FileManager {
             if (tokens.length > 3)
                 taskFrom = tokens[3];
             if (tokens.length > 4)
-                taskTo = tokens[4];
+                taskTo = tokens[4]; // task by in Events
 
             switch (taskType) {
                 case "Todos":
@@ -91,13 +96,16 @@ public class FileManager {
                     taskList.add(t);
                     break;
                 case "Deadline":
-                    Deadline d = new Deadline(taskDescription, taskTo);
+                    LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
+                    Deadline d = new Deadline(taskDescription, taskByLocalDateTime);
                     if (taskIsDone.equals("X"))
                         d.markAsDone();
                     taskList.add(d);
                     break;
                 case "Event":
-                    Events e = new Events(taskDescription, taskFrom, taskTo);
+                    LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
+                    LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
+                    Events e = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
                     if (taskIsDone.equals("X"))
                         e.markAsDone();
                     taskList.add(e);

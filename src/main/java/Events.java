@@ -1,51 +1,39 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Events extends Task {
 
     /**
      * Represents the instance of when the Events is started
      */
-    protected String from;
+    private LocalDateTime fromLocalDateTime;
 
     /**
      * Represents the instance of when the Events is due
      */
-    protected String to;
+    private LocalDateTime toLocalDateTime;
 
-    /**
-     * Returns from date string
-     * 
-     * @return String from
-     */
-    public String getFrom() {
-        return this.from;
+    public LocalDateTime getFromLocalDateTime() {
+        return this.fromLocalDateTime;
+    }
+
+    public LocalDateTime getToLocalDateTime() {
+        return this.toLocalDateTime;
     }
 
     /**
-     * Returns to date string
-     * 
-     * @return String to
-     */
-    public String getTo() {
-        return this.to;
-    }
-
-    /**
-     * String representation of a Events.
+     * String representation of an Events
      */
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), this.from, this.to);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HHmm");
+        return String.format("[E]%s (from: %s to: %s)", super.toString(), this.fromLocalDateTime.format(formatter),
+                this.toLocalDateTime.format(formatter));
     }
 
-    /**
-     * Constructs a Events object. Events <: Task
-     * 
-     * @param description description of the Events object
-     * @param from start time of an Events
-     * @param to end time of an Events
-     */
-    public Events(String description, String from, String to) {
+    public Events(String description, LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.fromLocalDateTime = fromLocalDateTime;
+        this.toLocalDateTime = toLocalDateTime;
     }
 }
