@@ -34,7 +34,7 @@ public class CommandParser {
         }
 
         if (taskList.isEmpty()) {
-            System.out.println("List is empty!");
+            Ui.printError("List is empty!");
             return;
         }
         for (int i = 0, n = taskList.size(); i < n; i++) {

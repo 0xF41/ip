@@ -1,4 +1,9 @@
 public class Ui {
+
+    public static void printError(Object e) {
+        System.out.println(e);
+    }
+
     public static void printGreet(String botName) {
         System.out.println("____________________________________________________________");
         System.out.println(String.format("Hello! I'm %s!", botName));
@@ -34,4 +39,5 @@ public class Ui {
           """;
         System.out.println(menu);
     }
+
 }

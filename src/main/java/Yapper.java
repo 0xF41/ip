@@ -30,19 +30,12 @@ public class Yapper {
     private File file;
 
     /**
-     * Displays a default message when the chatbot is started.
-     */
-    private void greet() {
-        Ui.printGreet(this.name);
-    }
-
-    /**
      * Starts the conversation between the user and the chatbot.
      * 
      * @throws IOException
      */
     private void run() throws IOException {
-        this.greet();
+        Ui.printGreet(this.name);
         String cmd = "";
         while (true) {
             cmd = br.readLine();
@@ -51,11 +44,11 @@ public class Yapper {
                 if (!CommandParser.processCommand(cmd, this.taskList, this.file))
                     break;
             } catch (InvalidCommandSyntaxException e) {
-                System.out.println(e);
+                Ui.printError(e.getLocalizedMessage());
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(e);
+                Ui.printError(e.getLocalizedMessage());
             } catch (IllegalArgumentException e) {
-                System.out.println(e);
+                Ui.printError(e.getLocalizedMessage());
             } finally {
                 Ui.printLine();
             }

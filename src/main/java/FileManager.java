@@ -58,7 +58,7 @@ public class FileManager {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Ui.printError(e.getLocalizedMessage());
             return false;
         }
         return true;
@@ -138,8 +138,8 @@ public class FileManager {
                 }
             }
         } catch (IOException e) {
-            System.out.println("File error occurred.");
-            e.printStackTrace();
+            Ui.printError("File error occurred."); 
+            Ui.printError(e.getLocalizedMessage());
             return null;
         }
         return file;
