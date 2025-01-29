@@ -1,10 +1,4 @@
-import java.io.File;
-import java.util.ArrayList;
-
 public class HelpCommand implements Command {
-
-    ArrayList<Task> taskList;
-    File file; 
 
     @Override
     public boolean execute() {

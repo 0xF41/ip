@@ -2,9 +2,8 @@ import java.util.ArrayList;
 
 public class DeadlineCommand implements Command {
 
-    ArrayList<Task> taskList;
-    
-    Deadline dl;
+    private ArrayList<Task> taskList;
+    private Deadline dl;
 
     @Override
     public boolean execute() {

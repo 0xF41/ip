@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class DeleteCommand implements Command {
 
-    ArrayList<Task> taskList;
-    int idx; 
+    private ArrayList<Task> taskList;
+    private int idx; 
 
     @Override
     public boolean execute() {

@@ -2,9 +2,8 @@ import java.util.ArrayList;
 
 public class ToDosCommand implements Command {
 
-    ArrayList<Task> taskList;
-    
-    ToDos td;
+    private ArrayList<Task> taskList;
+    private ToDos td;
 
     @Override
     public boolean execute() {

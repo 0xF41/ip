@@ -2,9 +2,8 @@ import java.util.ArrayList;
 
 public class EventsCommand implements Command {
 
-    ArrayList<Task> taskList;
-
-    Events ev;
+    private ArrayList<Task> taskList;
+    private Events ev;
 
     @Override
     public boolean execute() {
