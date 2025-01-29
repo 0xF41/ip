@@ -22,7 +22,7 @@ public class FileManager {
      */
     private static void appendToFile(String filePath, String textToAppend, boolean append) throws IOException {
         FileWriter fw = new FileWriter(filePath, append);
-        fw.write("\n" + textToAppend);
+        fw.write(textToAppend + "\n");
         fw.close();
     }
 
@@ -54,11 +54,11 @@ public class FileManager {
                             ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
                             ev.getToLocalDateTime().format(dtf)), true);
                 } else {
-                    System.out.println(String.format("%s is not added to %s.", t, file.getName()));
+                    Ui.print(String.format("%s is not added to %s.", t, file.getName()));
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Ui.printError(e.getLocalizedMessage());
             return false;
         }
         return true;
@@ -91,28 +91,28 @@ public class FileManager {
 
             switch (taskType) {
                 case "Todos":
-                    ToDos t = new ToDos(taskDescription);
+                    ToDos td = new ToDos(taskDescription);
                     if (taskIsDone.equals("X"))
-                        t.markAsDone();
-                    taskList.add(t);
+                        td.markAsDone();
+                    taskList.add(td);
                     break;
                 case "Deadline":
                     LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-                    Deadline d = new Deadline(taskDescription, taskByLocalDateTime);
+                    Deadline dl = new Deadline(taskDescription, taskByLocalDateTime);
                     if (taskIsDone.equals("X"))
-                        d.markAsDone();
-                    taskList.add(d);
+                        dl.markAsDone();
+                    taskList.add(dl);
                     break;
                 case "Event":
                     LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
                     LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-                    Events e = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
+                    Events ev = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
                     if (taskIsDone.equals("X"))
-                        e.markAsDone();
-                    taskList.add(e);
+                        ev.markAsDone();
+                    taskList.add(ev);
                     break;
                 default:
-                    System.out.println("Unknown task: " + taskDescription + "is not loaded!");
+                    Ui.printError("Unknown task: " + taskDescription + "is not loaded!");
                     break;
             }
         }
@@ -138,8 +138,8 @@ public class FileManager {
                 }
             }
         } catch (IOException e) {
-            System.out.println("File error occurred.");
-            e.printStackTrace();
+            Ui.printError("File error occurred."); 
+            Ui.printError(e.getLocalizedMessage());
             return null;
         }
         return file;
