@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Ui {
-
     
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
 

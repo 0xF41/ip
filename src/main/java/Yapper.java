@@ -10,7 +10,7 @@ public class Yapper {
     /**
      * Name of the chatbot
      */
-    public final String name;
+    private final String name;
 
     /**
      * The Person's ArrayList to store user tasks.
@@ -27,7 +27,7 @@ public class Yapper {
      * 
      * @throws IOException
      */
-    private void run() throws IOException {
+    public void run() throws IOException {
         Ui.printGreet(this.name);
         String cmd = "";
         while (true) {
@@ -59,17 +59,5 @@ public class Yapper {
         this.name = name;
         this.taskList = taskList;
         this.file = file;
-    }
-
-    /**
-     * Main Function
-     * 
-     * @param args
-     * @throws IOException
-     */
-    public static void main(String[] args) throws IOException {
-        Person p1 = new Person("usertaskdata.csv");
-        Yapper y1 = new Yapper("Yapper", p1.taskList, p1.file);
-        y1.run();
     }
 }
