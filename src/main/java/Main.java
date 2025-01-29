@@ -6,7 +6,7 @@ import yapper.data.user.Person;
 public class Main {
     /**
      * Main Function source file
-     * 
+     *
      * @param args
      * @throws IOException
      */

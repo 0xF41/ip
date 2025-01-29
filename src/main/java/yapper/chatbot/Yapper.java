@@ -32,7 +32,7 @@ public class Yapper {
 
     /**
      * Starts the conversation between the user and the chatbot.
-     * 
+     *
      * @throws IOException
      */
     public void run() throws IOException {
@@ -61,7 +61,7 @@ public class Yapper {
     /**
      * Constructs a Yapper object representing a yapper chatbot session initiated by
      * a Person.
-     * 
+     *
      * @param taskList the Person's task list
      */
     public Yapper(String name, ArrayList<Task> taskList, File file) {
