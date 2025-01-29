@@ -1,3 +1,5 @@
+package yapper.storage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -6,6 +8,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import yapper.task.Deadline;
+import yapper.task.Events;
+import yapper.task.Task;
+import yapper.task.ToDos;
+import yapper.ui.Ui;
 
 /**
  * Manages the files used by Yapper chatbot
@@ -41,16 +49,17 @@ public class FileManager {
                 if (t instanceof ToDos) {
                     ToDos td = (ToDos) t;
                     FileManager.appendToFile(filePath,
-                            String.format("%s,%s,%s,%s,%s", "Todos", td.description, td.getStatusIcon(), "", ""), true);
+                            String.format("%s,%s,%s,%s,%s", "Todos", td.getDescription(), td.getStatusIcon(), "", ""),
+                            true);
                 } else if (t instanceof Deadline) {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
                     Deadline dl = (Deadline) t;
-                    FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", dl.description,
+                    FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", dl.getDescription(),
                             dl.getStatusIcon(), "", dl.getByLocalDateTime().format(dtf)), true);
                 } else if (t instanceof Events) {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
                     Events ev = (Events) t;
-                    FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", ev.description,
+                    FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", ev.getDescription(),
                             ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
                             ev.getToLocalDateTime().format(dtf)), true);
                 } else {
@@ -138,7 +147,7 @@ public class FileManager {
                 }
             }
         } catch (IOException e) {
-            Ui.printError("File error occurred."); 
+            Ui.printError("File error occurred.");
             Ui.printError(e.getLocalizedMessage());
             return null;
         }

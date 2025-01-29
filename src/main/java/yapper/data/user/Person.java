@@ -1,4 +1,11 @@
+package yapper.data.user;
+
 import java.util.ArrayList;
+
+import yapper.storage.FileManager;
+import yapper.task.Task;
+import yapper.ui.Ui;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 

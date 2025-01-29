@@ -1,5 +1,8 @@
+package yapper.task;
+
 /**
- * Task encapsulates an event that is created by the user when communicating with the Yapper chatbot.
+ * Task encapsulates an event that is created by the user when communicating
+ * with the Yapper chatbot.
  */
 public class Task {
 

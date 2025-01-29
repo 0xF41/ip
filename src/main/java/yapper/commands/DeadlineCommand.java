@@ -1,4 +1,10 @@
+package yapper.commands;
+
 import java.util.ArrayList;
+
+import yapper.task.Deadline;
+import yapper.task.Task;
+import yapper.ui.Ui;
 
 public class DeadlineCommand implements Command {
 

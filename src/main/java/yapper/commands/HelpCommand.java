@@ -1,3 +1,7 @@
+package yapper.commands;
+
+import yapper.ui.Ui;
+
 public class HelpCommand implements Command {
 
     @Override
@@ -11,6 +15,6 @@ public class HelpCommand implements Command {
     }
 
     private HelpCommand() {
-        
+
     }
 }

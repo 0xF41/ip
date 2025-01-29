@@ -1,4 +1,10 @@
+package yapper.commands;
+
 import java.util.ArrayList;
+
+import yapper.task.Events;
+import yapper.task.Task;
+import yapper.ui.Ui;
 
 public class EventsCommand implements Command {
 
