@@ -1,24 +1,25 @@
-# Duke project template
+# Yapper
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Yapper is a chatbot created as part of NUS CS2103T Software Engineering Module.
 
-## Setting up in Intellij
+```
+  __   __                           
+  \ \ / /_ _ _ __  _ __   ___ _ __ 
+   \ V / _` | '_ \| '_ \ / _ \ '__|
+    | | (_| | |_) | |_) |  __/ |   
+    |_|\__,_| .__/| .__/ \___|_|   
+            |_|   |_|              
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
-
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-3. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+  Usage:
+    list                  - Show current task list
+    mark <task_number>    - Mark task with <task_number> as done
+    unmark <task_number>  - Unmark task with <task_number> as incomplete
+    todo <task_name>      - Create a new task specified with <task_name>
+    deadline <task_name> /by <deadline>
+                          - Create a new Deadline task with a <deadline> with <dd-MM-yyyy HHmm> format
+    event <task_name> /from <start_time> /to <end_time>
+                          - Create a new Event task with a <start_time> and <end_time> with <dd-MM-yyyy HHmm> format
+    delete <task_number>  - Delete task with <task_number> on the list
+    bye                   - End the conversation with the chatbot
+    help                  - Show this help menu
+```
