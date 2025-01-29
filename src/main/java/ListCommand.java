@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class ListCommand implements Command {
 
-    ArrayList<Task> taskList;
+    private ArrayList<Task> taskList;
 
     @Override
     public boolean execute() {
