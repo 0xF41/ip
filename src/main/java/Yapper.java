@@ -30,13 +30,14 @@ public class Yapper {
     public void run() throws IOException {
         Ui.printGreet(this.name);
         String cmd = "";
-        while (true) {
+        Boolean ongoing = true;
+        while (ongoing) {
             cmd = Ui.readCommand();
             Ui.clearConsole();
             Ui.printLine();
             try {
-                if (!CommandParser.processCommand(cmd, this.taskList, this.file))
-                    break;
+                Command command = CommandParser.parse(cmd, taskList, file);
+                ongoing = command.execute();
             } catch (InvalidCommandSyntaxException e) {
                 Ui.printError(e.getLocalizedMessage());
             } catch (IndexOutOfBoundsException e) {

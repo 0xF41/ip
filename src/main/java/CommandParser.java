@@ -12,43 +12,31 @@ public class CommandParser {
     /**
      * Chatbot commands
      */
-    public enum Command {
+    public enum CommandOption {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP;
 
         // Check for valid commands
-        public static Command fromString(String command) throws InvalidCommandSyntaxException {
+        public static CommandOption fromString(String command) throws InvalidCommandSyntaxException {
             try {
-                return Command.valueOf(command.trim().toUpperCase());
+                return CommandOption.valueOf(command.trim().toUpperCase());
             } catch (IllegalArgumentException e) {
                 throw new InvalidCommandSyntaxException("See usage with \"help\"");
             }
         }
     }
 
-    /**
-     * Prints out all Tasks of the user
-     */
-    private static void list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length != 1) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
-
         if (taskList.isEmpty()) {
             Ui.printError("List is empty!");
-            return;
+            return null;
         }
-        for (int i = 0, n = taskList.size(); i < n; i++) {
-            Task t = taskList.get(i);
-            Ui.print(String.format("%d. %s", i + 1, t));
-        }
+        return ListCommand.buildListCommand(taskList);
     }
 
-    /**
-     * Mark a specified task as completed.
-     * 
-     * @param cmd user command
-     */
-    private static void mark(String cmd, ArrayList<Task> taskList)
+    private static Command mark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException("Usage: mark <task-index>");
@@ -61,18 +49,10 @@ public class CommandParser {
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
-        Task t = taskList.get(idx);
-        t.markAsDone();
-        Ui.print("Nice! I've marked this task as done:");
-        Ui.print(t);
+        return MarkCommand.buildMarkCommand(taskList, idx);
     }
 
-    /**
-     * Unmark a specified task as incomplete.
-     * 
-     * @param cmd User command
-     */
-    private static void unmark(String cmd, ArrayList<Task> taskList)
+    private static Command unmark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
@@ -85,37 +65,20 @@ public class CommandParser {
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
-        Task t = taskList.get(idx);
-        t.markAsUndone();
-        Ui.print("OK, I've marked this task as not done yet:");
-        Ui.print(t);
+        return UnmarkCommand.buildUnmarkCommand(taskList, idx);
     }
 
-    /**
-     * Creates a new ToDos Task in the user's list of task.
-     */
-    private static void todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
-        ToDos td = new ToDos(cmd.substring("todo".length() + 1));
-        taskList.add(td);
-        Ui.print("Got it. I've added this task:");
-        Ui.print(td);
-        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+    private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+        return ToDosCommand.buildToDosCommand(taskList, new ToDos(cmd.substring("todo".length() + 1)));
     }
 
-    /**
-     * Creates a Deadline Task in the user's list of task
-     * 
-     * @param cmd User command
-     */
-    private static void deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
-
+    private static Command deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
 
         int deadlineIndex = cmd.indexOf("deadline") + 9;
         int byIndex = -1;
-
         String description = "";
         String dueDateString = "";
         try {
@@ -129,22 +92,13 @@ public class CommandParser {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
-            Deadline dl = new Deadline(description, byLocalDateTime);
-            taskList.add(dl);
-            Ui.print("Got it. I've added this task:");
-            Ui.print(dl);
-            Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+            return DeadlineCommand.buildDeadlineCommand(taskList, new Deadline(description, byLocalDateTime));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy.");
         }
     }
 
-    /**
-     * Create an Event Task in the user's list of tasks
-     * 
-     * @param cmd User command
-     */
-    private static void event(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command event(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
 
         if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
@@ -172,25 +126,14 @@ public class CommandParser {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             LocalDateTime fromLocalDateTime = LocalDateTime.parse(fromTimeString, dtf);
             LocalDateTime toLocalDateTime = LocalDateTime.parse(toTimeString, dtf);
-            Events e = new Events(description, fromLocalDateTime, toLocalDateTime);
-            taskList.add(e);
-            Ui.print("Got it. I've added this task:");
-            Ui.print(e);
-            Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+            return EventsCommand.buildEventsCommand(taskList,
+                    new Events(description, fromLocalDateTime, toLocalDateTime));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
         }
     }
 
-    /**
-     * Deletes a Task from the user's task list
-     * 
-     * @param cmd      User command
-     * @param taskList User's task list
-     * @throws InvalidCommandSyntaxException
-     * @throws IndexOutOfBoundsException
-     */
-    private static void delete(String cmd, ArrayList<Task> taskList)
+    private static Command delete(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException("Type \"help\" for command list");
@@ -203,64 +146,42 @@ public class CommandParser {
         } catch (IndexOutOfBoundsException e) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
-        Ui.print("Noted. I've removed this task: ");
-        Ui.print(taskList.get(idx));
-        taskList.remove(idx);
-        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
-
+        return DeleteCommand.buildDeleteCommand(taskList, idx);
     }
 
-    private static void bye(String fullCmd, ArrayList<Task> taskList, File file) throws InvalidCommandSyntaxException {
+    private static Command bye(String fullCmd, ArrayList<Task> taskList, File file) throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length != 1) {
             throw new InvalidCommandSyntaxException("Type \"help\" for command list");
         }
-        FileManager.saveFileContents(file, taskList);
-        Ui.print("Bye. Hope to see you again soon!");
+        return ByeCommand.buildByeCommand(taskList, file);
     }
 
-    /**
-     * Return a String of the usage of the chatbot
-     * 
-     * @return help usage string
-     */
-    private static void help() {
-        Ui.printMenu();
+    private static Command help() {
+        return HelpCommand.buildHelpCommand();
     }
 
-    /**
-     * Processes the command entered by the user into the chatbot.
-     * 
-     * @param fullCmd  The full input command
-     * @param taskList The user's task list
-     * @return true if more follow-up commands are to be processed. false if user
-     *         exits chatbot
-     * @throws InvalidCommandSyntaxException
-     * @throws IndexOutOfBoundsException
-     */
-    public static boolean processCommand(String fullCmd, ArrayList<Task> taskList, File file)
+    public static Command parse(String fullCmd, ArrayList<Task> taskList, File file)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         String cmd = fullCmd.split(" ")[0];
-        if (Command.fromString(cmd).equals(Command.LIST)) { // list tasks
-            list(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.MARK)) { // mark X
-            mark(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.UNMARK)) { // unmark X
-            unmark(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.TODO)) { // todo X
-            todo(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.DEADLINE)) { // deadline X /by Y
-            deadline(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.EVENT)) { // event X /from Y /to Z
-            event(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.DELETE)) { // delete X
-            delete(fullCmd, taskList);
-        } else if (Command.fromString(cmd).equals(Command.BYE)) { // bye
-            bye(fullCmd, taskList, file);
-            return false;
-        } else if (Command.fromString(cmd).equals(Command.HELP)) { // help
-            help();
+        if (CommandOption.fromString(cmd).equals(CommandOption.LIST)) { // list tasks
+            return list(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.MARK)) { // mark X
+            return mark(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.UNMARK)) { // unmark X
+            return unmark(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.TODO)) { // todo X
+            return todo(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.DEADLINE)) { // deadline X /by Y
+            return deadline(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.EVENT)) { // event X /from Y /to Z
+            return event(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.DELETE)) { // delete X
+            return delete(fullCmd, taskList);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.BYE)) { // bye
+            return bye(fullCmd, taskList, file);
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) { // help
+            return help();
         }
-        return true;
+        return null;
     }
-
 }
