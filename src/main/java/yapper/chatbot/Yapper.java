@@ -1,6 +1,14 @@
+package yapper.chatbot;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import yapper.commands.Command;
+import yapper.data.exception.InvalidCommandSyntaxException;
+import yapper.parser.CommandParser;
+import yapper.task.Task;
+import yapper.ui.Ui;
 
 /**
  * Yapper chatbot

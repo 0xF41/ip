@@ -1,3 +1,5 @@
+package yapper.task;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -6,14 +8,14 @@ public class Deadline extends Task {
     /**
      * Represents the Deadline of the task
      */
-    private LocalDateTime byLocalDateTime; 
+    private LocalDateTime byLocalDateTime;
 
     public LocalDateTime getByLocalDateTime() {
         return this.byLocalDateTime;
     }
 
     /**
-     * String representation of a Deadline object. 
+     * String representation of a Deadline object.
      */
     @Override
     public String toString() {

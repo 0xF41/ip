@@ -1,5 +1,7 @@
+package yapper.task;
+
 public class ToDos extends Task {
-    
+
     /**
      * String representation of ToDos
      */
@@ -10,6 +12,7 @@ public class ToDos extends Task {
 
     /**
      * Constructs a new ToDos object. Todos <: Task
+     * 
      * @param description description of the ToDos object
      */
     public ToDos(String description) {

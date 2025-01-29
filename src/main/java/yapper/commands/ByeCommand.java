@@ -1,10 +1,16 @@
+package yapper.commands;
+
 import java.io.File;
 import java.util.ArrayList;
+
+import yapper.storage.FileManager;
+import yapper.task.Task;
+import yapper.ui.Ui;
 
 public class ByeCommand implements Command {
 
     ArrayList<Task> taskList;
-    File file; 
+    File file;
 
     @Override
     public boolean execute() {

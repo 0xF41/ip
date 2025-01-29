@@ -1,9 +1,14 @@
+package yapper.commands;
+
 import java.util.ArrayList;
+
+import yapper.task.Task;
+import yapper.ui.Ui;
 
 public class UnmarkCommand implements Command {
 
     private ArrayList<Task> taskList;
-    private int idx; 
+    private int idx;
 
     @Override
     public boolean execute() {
