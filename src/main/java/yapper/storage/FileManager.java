@@ -16,16 +16,16 @@ import yapper.task.ToDos;
 import yapper.ui.Ui;
 
 /**
- * Manages the files used by Yapper chatbot
+ * Represents a file manager to handle file operations.
  */
 public class FileManager {
 
     /**
-     * Append text to specified file in filepath
+     * Append text to file
      * 
-     * @param filePath     path of file
-     * @param textToAppend text to append
-     * @param append       set true for append to file and false to overwrite file
+     * @param filePath     path of file to append text to
+     * @param textToAppend text to append to file
+     * @param append       true to append, false to overwrite
      * @throws IOException
      */
     private static void appendToFile(String filePath, String textToAppend, boolean append) throws IOException {
@@ -35,11 +35,11 @@ public class FileManager {
     }
 
     /**
-     * Save contents from the current taskList to <file-name.csv> according to open
-     * file descriptor
+     * Save taskList to file
      * 
-     * @param file     open file descriptor
-     * @param taskList user list of tasks
+     * @param file     file to save taskList to
+     * @param taskList list of tasks to save
+     * @return true if save is successful, false otherwise
      */
     public static boolean saveFileContents(File file, ArrayList<Task> taskList) {
         String filePath = file.getName();
@@ -74,10 +74,10 @@ public class FileManager {
     }
 
     /**
-     * Loads and returns the file contents into an ArrayList<Task>
+     * Load contents from file to taskList
      * 
-     * @param file File object to be read from
-     * @return An ArrayList of Task objects - ArrayList<Task>
+     * @param file file to load contents from
+     * @return ArrayList of tasks loaded from file
      * @throws FileNotFoundException
      */
     public static ArrayList<Task> loadFileContents(File file) throws FileNotFoundException {
@@ -131,10 +131,10 @@ public class FileManager {
     }
 
     /**
-     * Opens a Person's cached file containing Tasks
+     * Open file with specified taskFileName
      * 
-     * @param taskFileName relative filepath of Person's cached file
-     * @return File instance
+     * @param taskFileName name of file to open
+     * @return File object of the opened file
      */
     public static File openFile(String taskFileName) {
         File file = new File(taskFileName);

@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
- * A Person instance
+ * Represents a Person who uses the chatbot.
  */
 public class Person {
 

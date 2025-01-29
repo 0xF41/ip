@@ -11,29 +11,29 @@ import yapper.task.Task;
 import yapper.ui.Ui;
 
 /**
- * Yapper chatbot
+ * Yapper represents a chatbot that interacts with the user.
  */
 public class Yapper {
 
     /**
-     * Name of the chatbot
+     * The name of the Chatbot
      */
     private final String name;
 
     /**
-     * The Person's ArrayList to store user tasks.
+     * The Person's task list
      */
     private ArrayList<Task> taskList;
 
     /**
-     * The Person's file object to cache user tasks
+     * The file to store the task list
      */
     private File file;
 
     /**
-     * Starts the conversation between the user and the chatbot.
-     * 
-     * @throws IOException
+     * Runs the Yapper chatbot session.
+     *
+     * @throws IOException if an I/O error occurs
      */
     public void run() throws IOException {
         Ui.printGreet(this.name);
@@ -59,10 +59,11 @@ public class Yapper {
     }
 
     /**
-     * Constructs a Yapper object representing a yapper chatbot session initiated by
-     * a Person.
+     * Constructs a Yapper chatbot.
      * 
-     * @param taskList the Person's task list
+     * @param name     The name of the chatbot
+     * @param taskList The list of tasks
+     * @param file     The file to store the task list
      */
     public Yapper(String name, ArrayList<Task> taskList, File file) {
         this.name = name;

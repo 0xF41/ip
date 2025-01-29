@@ -30,7 +30,7 @@ import java.time.format.DateTimeParseException;
 public class CommandParser {
 
     /**
-     * Chatbot commands
+     * Enum to represent the different types of commands.
      */
     public enum CommandOption {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP;
@@ -45,6 +45,14 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Builds a list command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return List command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     */
     private static Command list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length != 1) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
@@ -56,6 +64,15 @@ public class CommandParser {
         return ListCommand.buildListCommand(taskList);
     }
 
+    /**
+     * Builds a mark command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return Mark command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     * @throws IndexOutOfBoundsException     If the index is out of bounds.
+     */
     private static Command mark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
@@ -72,6 +89,15 @@ public class CommandParser {
         return MarkCommand.buildMarkCommand(taskList, idx);
     }
 
+    /**
+     * Builds an unmark command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return Unmark command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     * @throws IndexOutOfBoundsException     If the index is out of bounds.
+     */
     private static Command unmark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
@@ -88,10 +114,26 @@ public class CommandParser {
         return UnmarkCommand.buildUnmarkCommand(taskList, idx);
     }
 
+    /**
+     * Builds a todo command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return Todo command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     */
     private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         return ToDosCommand.buildToDosCommand(taskList, new ToDos(cmd.substring("todo".length() + 1)));
     }
 
+    /**
+     * Builds a deadline command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return Deadline command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     */
     private static Command deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
@@ -118,6 +160,14 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Builds an event command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return Event command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     */
     private static Command event(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
 
         if (cmd.split(" ").length < 2) {
@@ -153,6 +203,15 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Builds a delete command.
+     *
+     * @param cmd      Full command entered by the user.
+     * @param taskList List of tasks.
+     * @return Delete command.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     * @throws IndexOutOfBoundsException     If the index is out of bounds.
+     */
     private static Command delete(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
@@ -169,6 +228,15 @@ public class CommandParser {
         return DeleteCommand.buildDeleteCommand(taskList, idx);
     }
 
+    /**
+     * Builds a bye command.
+     *
+     * @param fullCmd  Full command entered by the user.
+     * @param taskList List of tasks.
+     * @param file     File to save the tasks to.
+     * @return Bye command.
+     * @throws InvalidCommandSyntaxException If the command is invalid
+     */
     private static Command bye(String fullCmd, ArrayList<Task> taskList, File file)
             throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length != 1) {
@@ -177,10 +245,25 @@ public class CommandParser {
         return ByeCommand.buildByeCommand(taskList, file);
     }
 
+    /**
+     * Builds a help command.
+     *
+     * @return Help command.
+     */
     private static Command help() {
         return HelpCommand.buildHelpCommand();
     }
 
+    /**
+     * Parses the command entered by the user.
+     *
+     * @param fullCmd  Full command entered by the user.
+     * @param taskList List of tasks.
+     * @param file     File to save the tasks to.
+     * @return Command object.
+     * @throws InvalidCommandSyntaxException If the command is invalid.
+     * @throws IndexOutOfBoundsException     If the index is out of bounds.
+     */
     public static Command parse(String fullCmd, ArrayList<Task> taskList, File file)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         String cmd = fullCmd.split(" ")[0];
