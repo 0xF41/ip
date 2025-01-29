@@ -3,6 +3,9 @@ package yapper.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an Events task.
+ */
 public class Events extends Task {
 
     /**
@@ -15,10 +18,20 @@ public class Events extends Task {
      */
     private LocalDateTime toLocalDateTime;
 
+    /**
+     * Returns the instance of when the Events is started
+     * 
+     * @return LocalDateTime instance of when the Events is started
+     */
     public LocalDateTime getFromLocalDateTime() {
         return this.fromLocalDateTime;
     }
 
+    /**
+     * Returns the instance of when the Events is due
+     * 
+     * @return LocalDateTime instance of when the Events is due
+     */
     public LocalDateTime getToLocalDateTime() {
         return this.toLocalDateTime;
     }

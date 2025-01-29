@@ -4,32 +4,65 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Represents the user interface of the chatbot.
+ */
 public class Ui {
 
+    /**
+     * BufferedReader to read user input.
+     */
     private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));;
 
+    /**
+     * Clears the console.
+     */
     public static void clearConsole() {
         // ANSI escape code to clear the console
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Reads the user's command.
+     *
+     * @return User's command.
+     * @throws IOException If an I/O error occurs.
+     */
     public static String readCommand() throws IOException {
         return Ui.br.readLine();
     }
 
+    /**
+     * Prints the given object.
+     *
+     * @param obj Object to be printed.
+     */
     public static void print(Object obj) {
         System.out.println(obj);
     }
 
+    /**
+     * Prints the bye message.
+     */
     public static void printBye() {
         System.out.println("Bye. Hope to see you again soon!");
     }
 
+    /**
+     * Prints the error message.
+     *
+     * @param e Error message.
+     */
     public static void printError(Object e) {
         System.out.println(e);
     }
 
+    /**
+     * Prints the greeting message.
+     *
+     * @param botName Name of the chatbot.
+     */
     public static void printGreet(String botName) {
         System.out.println("____________________________________________________________");
         System.out.println(String.format("Hello! I'm %s!", botName));
@@ -37,10 +70,16 @@ public class Ui {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Prints the line separator.
+     */
     public static void printLine() {
         System.out.println("____________________________________________________________");
     }
 
+    /**
+     * Prints the help menu.
+     */
     public static void printMenu() {
         String menu = """
                   __   __

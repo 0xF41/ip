@@ -3,6 +3,9 @@ package yapper.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a Deadline task.
+ */
 public class Deadline extends Task {
 
     /**
@@ -23,6 +26,12 @@ public class Deadline extends Task {
         return String.format("[D]%s (by: %s)", super.toString(), this.byLocalDateTime.format(formatter));
     }
 
+    /**
+     * Constructs a Deadline object.
+     *
+     * @param description     Description of the Deadline task.
+     * @param byLocalDateTime Deadline of the task.
+     */
     public Deadline(String description, LocalDateTime byLocalDateTime) {
         super(description);
         this.byLocalDateTime = byLocalDateTime;

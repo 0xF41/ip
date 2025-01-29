@@ -17,9 +17,9 @@ public class Task {
     protected boolean isDone;
 
     /**
-     * Constructs a new Task with the specified description message.
+     * Constructs a Task object.
      * 
-     * @param description description of the task.
+     * @param description Description of the task.
      */
     public Task(String description) {
         this.description = description;
