@@ -3,15 +3,16 @@
 Yapper is a chatbot created as part of NUS CS2103T Software Engineering Module.
 
 ```
-  __   __                           
-  \ \ / /_ _ _ __  _ __   ___ _ __ 
+  __   __
+  \ \ / /_ _ _ __  _ __   ___ _ __
    \ V / _` | '_ \| '_ \ / _ \ '__|
-    | | (_| | |_) | |_) |  __/ |   
-    |_|\__,_| .__/| .__/ \___|_|   
-            |_|   |_|              
+    | | (_| | |_) | |_) |  __/ |
+    |_|\__,_| .__/| .__/ \___|_|
+            |_|   |_|
 
   Usage:
     list                  - Show current task list
+    find <search_term>    - Find tasks with <search_term>
     mark <task_number>    - Mark task with <task_number> as done
     unmark <task_number>  - Unmark task with <task_number> as incomplete
     todo <task_name>      - Create a new task specified with <task_name>
