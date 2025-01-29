@@ -24,7 +24,7 @@ public class ListCommand implements Command {
     public boolean execute() {
         if (this.taskList.isEmpty()) {
             Ui.printError("List is empty!");
-            return false;
+            return true;
         }
         for (int i = 0, n = taskList.size(); i < n; i++) {
             Task t = taskList.get(i);

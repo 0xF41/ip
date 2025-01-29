@@ -8,6 +8,7 @@ import yapper.commands.Command;
 import yapper.commands.DeadlineCommand;
 import yapper.commands.DeleteCommand;
 import yapper.commands.EventsCommand;
+import yapper.commands.FindCommand;
 import yapper.commands.HelpCommand;
 import yapper.commands.ListCommand;
 import yapper.commands.MarkCommand;
@@ -33,7 +34,7 @@ public class CommandParser {
      * Enum to represent the different types of commands.
      */
     public enum CommandOption {
-        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP;
+        LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP, FIND;
 
         // Check for valid commands
         public static CommandOption fromString(String command) throws InvalidCommandSyntaxException {
@@ -246,6 +247,18 @@ public class CommandParser {
     }
 
     /**
+     * Builds a find command.
+     *
+     * @return Find command.
+     */
+    private static Command find(String fullCmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+        if (fullCmd.split(" ").length < 2) {
+            throw new InvalidCommandSyntaxException("Type \"help\" for command list");
+        }
+        return FindCommand.buildFindCommand(taskList, fullCmd.substring("todo".length() + 1));
+    }
+
+    /**
      * Builds a help command.
      *
      * @return Help command.
@@ -285,6 +298,8 @@ public class CommandParser {
             return bye(fullCmd, taskList, file);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) { // help
             return help();
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) { // find X
+            return find(fullCmd, taskList);
         }
         return null;
     }

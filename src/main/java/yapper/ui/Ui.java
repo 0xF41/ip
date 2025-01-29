@@ -91,6 +91,7 @@ public class Ui {
 
                 Usage:
                   list                  - Show current task list
+                  find <search_term>    - Find tasks with <search_term>
                   mark <task_number>    - Mark task with <task_number> as done
                   unmark <task_number>  - Unmark task with <task_number> as incomplete
                   todo <task_name>      - Create a new task specified with <task_name>
