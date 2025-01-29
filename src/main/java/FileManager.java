@@ -22,7 +22,7 @@ public class FileManager {
      */
     private static void appendToFile(String filePath, String textToAppend, boolean append) throws IOException {
         FileWriter fw = new FileWriter(filePath, append);
-        fw.write("\n" + textToAppend);
+        fw.write(textToAppend + "\n");
         fw.close();
     }
 
