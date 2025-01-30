@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 import yapper.commands.ByeCommand;
 import yapper.commands.Command;
-import yapper.commands.DeadlineCommand;
+import yapper.commands.DeadlineTaskCommand;
 import yapper.commands.DeleteCommand;
-import yapper.commands.EventsCommand;
-import yapper.commands.FindCommand;
+import yapper.commands.EventsTaskCommand;
+import yapper.commands.FindTaskCommand;
 import yapper.commands.HelpCommand;
 import yapper.commands.ListCommand;
 import yapper.commands.MarkCommand;
-import yapper.commands.ToDosCommand;
+import yapper.commands.ToDosTaskCommand;
 import yapper.commands.UnmarkCommand;
 import yapper.data.exception.InvalidCommandSyntaxException;
 import yapper.task.Deadline;
@@ -124,7 +124,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
     private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
-        return ToDosCommand.buildToDosCommand(taskList, new ToDos(cmd.substring("todo".length() + 1)));
+        return ToDosTaskCommand.buildToDosCommand(taskList, new ToDos(cmd.substring("todo".length() + 1)));
     }
 
     /**
@@ -155,7 +155,7 @@ public class CommandParser {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
-            return DeadlineCommand.buildDeadlineCommand(taskList, new Deadline(description, byLocalDateTime));
+            return DeadlineTaskCommand.buildDeadlineCommand(taskList, new Deadline(description, byLocalDateTime));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy.");
         }
@@ -197,7 +197,7 @@ public class CommandParser {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             LocalDateTime fromLocalDateTime = LocalDateTime.parse(fromTimeString, dtf);
             LocalDateTime toLocalDateTime = LocalDateTime.parse(toTimeString, dtf);
-            return EventsCommand.buildEventsCommand(taskList,
+            return EventsTaskCommand.buildEventsCommand(taskList,
                     new Events(description, fromLocalDateTime, toLocalDateTime));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
@@ -255,7 +255,7 @@ public class CommandParser {
         if (fullCmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException("Type \"help\" for command list");
         }
-        return FindCommand.buildFindCommand(taskList, fullCmd.substring("todo".length() + 1));
+        return FindTaskCommand.buildFindCommand(taskList, fullCmd.substring("todo".length() + 1));
     }
 
     /**

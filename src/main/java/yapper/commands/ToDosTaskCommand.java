@@ -9,7 +9,7 @@ import yapper.ui.Ui;
 /**
  * Represents a command to add a ToDos task.
  */
-public class ToDosCommand implements Command {
+public class ToDosTaskCommand implements TaskCommand {
 
     /**
      * List of a Person's current tasks.
@@ -20,6 +20,16 @@ public class ToDosCommand implements Command {
      * ToDos task to be added.
      */
     private ToDos td;
+
+    /**
+     * Returns the description of the ToDos task.
+     *
+     * @return Description of the ToDos task.
+     */
+    @Override
+    public String getTaskDescription() {
+        return td.getDescription();
+    }
 
     /**
      * Executes the command to add a ToDos task.
@@ -43,7 +53,7 @@ public class ToDosCommand implements Command {
      * @return ToDosCommand object.
      */
     public static Command buildToDosCommand(ArrayList<Task> taskList, ToDos td) {
-        return new ToDosCommand(taskList, td);
+        return new ToDosTaskCommand(taskList, td);
     }
 
     /**
@@ -52,7 +62,7 @@ public class ToDosCommand implements Command {
      * @param taskList List of a Person's current tasks.
      * @param td       ToDos task to be added.
      */
-    private ToDosCommand(ArrayList<Task> taskList, ToDos td) {
+    private ToDosTaskCommand(ArrayList<Task> taskList, ToDos td) {
         this.taskList = taskList;
         this.td = td;
     }
