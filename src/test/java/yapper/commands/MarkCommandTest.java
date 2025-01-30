@@ -1,5 +1,8 @@
 package yapper.commands;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +20,7 @@ public class MarkCommandTest {
     // Constants for testing
     private static final String MARK_COMMAND = "mark 1";
     private static final String MARK_COMMAND_INVALID = "mark 0";
+    private static final String MARK_COMMAND_INVALID_2 = "mark 99";
 
     // Stub task list
     private ArrayList<Task> taskList = new ArrayList<>();
@@ -32,7 +36,7 @@ public class MarkCommandTest {
         Command command;
         try {
             command = CommandParser.parse(MARK_COMMAND, taskList, null);
-            assert (command.execute());
+            assertDoesNotThrow(() -> command.execute());
         } catch (IndexOutOfBoundsException | InvalidCommandSyntaxException e) {
             e.printStackTrace();
         }
@@ -42,12 +46,16 @@ public class MarkCommandTest {
      * Tests the execute method in MarkCommand with an invalid index.
      */
     @Test
-    public void testExecuteInvalid() {
-        Command command;
+    public void testExecuteInvalidIndex() {
+        Command command, command2;
         try {
             command = CommandParser.parse(MARK_COMMAND_INVALID, taskList, null);
-            assert (command.execute());
-        } catch (IndexOutOfBoundsException | InvalidCommandSyntaxException e) {
+            command2 = CommandParser.parse(MARK_COMMAND_INVALID_2, taskList, null);
+            assertThrowsExactly(IndexOutOfBoundsException.class, () -> command.execute());
+            assertThrowsExactly(IndexOutOfBoundsException.class, () -> command2.execute());
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        } catch (InvalidCommandSyntaxException e) {
             e.printStackTrace();
         }
     }
