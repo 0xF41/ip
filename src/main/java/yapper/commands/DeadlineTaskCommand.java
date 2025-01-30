@@ -9,7 +9,7 @@ import yapper.ui.Ui;
 /**
  * Represents a command to add a Deadline task.
  */
-public class DeadlineCommand implements Command {
+public class DeadlineTaskCommand implements TaskCommand {
 
     /**
      * List of a Person's current tasks.
@@ -36,6 +36,16 @@ public class DeadlineCommand implements Command {
     }
 
     /**
+     * Returns the description of the Deadline task.
+     *
+     * @return Description of the Deadline task.
+     */
+    @Override
+    public String getTaskDescription() {
+        return dl.getDescription();
+    }
+
+    /**
      * Builds a DeadlineCommand object.
      *
      * @param taskList List of a Person's current tasks.
@@ -43,7 +53,7 @@ public class DeadlineCommand implements Command {
      * @return DeadlineCommand object.
      */
     public static Command buildDeadlineCommand(ArrayList<Task> taskList, Deadline dl) {
-        return new DeadlineCommand(taskList, dl);
+        return new DeadlineTaskCommand(taskList, dl);
     }
 
     /**
@@ -52,7 +62,7 @@ public class DeadlineCommand implements Command {
      * @param taskList List of a Person's current tasks.
      * @param dl       Deadline task to be added.
      */
-    private DeadlineCommand(ArrayList<Task> taskList, Deadline dl) {
+    private DeadlineTaskCommand(ArrayList<Task> taskList, Deadline dl) {
         this.taskList = taskList;
         this.dl = dl;
     }

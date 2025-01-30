@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import yapper.task.Task;
 import yapper.ui.Ui;
 
-public class FindCommand implements Command {
+public class FindTaskCommand implements Command {
 
     /**
      * List of a Person's current tasks.
@@ -40,7 +40,7 @@ public class FindCommand implements Command {
      * @return FindCommand object.
      */
     public static Command buildFindCommand(ArrayList<Task> taskList, String searchTerm) {
-        return new FindCommand(taskList, searchTerm);
+        return new FindTaskCommand(taskList, searchTerm);
     }
 
     /**
@@ -48,7 +48,7 @@ public class FindCommand implements Command {
      * 
      * @param taskList List of a Person's current tasks.
      */
-    private FindCommand(ArrayList<Task> taskList, String searchTerm) {
+    private FindTaskCommand(ArrayList<Task> taskList, String searchTerm) {
         this.taskList = taskList;
         this.searchTerm = searchTerm;
     }
