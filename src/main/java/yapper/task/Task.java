@@ -18,7 +18,7 @@ public class Task {
 
     /**
      * Constructs a Task object.
-     * 
+     *
      * @param description Description of the task.
      */
     public Task(String description) {
@@ -28,7 +28,7 @@ public class Task {
 
     /**
      * Returns the current status icon of the Task.
-     * 
+     *
      * @return a character indicating the status icon of the Task.
      */
     public String getStatusIcon() {
@@ -37,7 +37,7 @@ public class Task {
 
     /**
      * Returns the description of the Task.
-     * 
+     *
      * @return description of the task
      */
     public String getDescription() {

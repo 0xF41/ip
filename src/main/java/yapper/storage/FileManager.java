@@ -22,7 +22,7 @@ public class FileManager {
 
     /**
      * Append text to file
-     * 
+     *
      * @param filePath     path of file to append text to
      * @param textToAppend text to append to file
      * @param append       true to append, false to overwrite
@@ -36,7 +36,7 @@ public class FileManager {
 
     /**
      * Save taskList to file
-     * 
+     *
      * @param file     file to save taskList to
      * @param taskList list of tasks to save
      * @return true if save is successful, false otherwise
@@ -75,7 +75,7 @@ public class FileManager {
 
     /**
      * Load contents from file to taskList
-     * 
+     *
      * @param file file to load contents from
      * @return ArrayList of tasks loaded from file
      * @throws FileNotFoundException
@@ -141,7 +141,7 @@ public class FileManager {
 
     /**
      * Open file with specified taskFileName
-     * 
+     *
      * @param taskFileName name of file to open
      * @return File object of the opened file
      */

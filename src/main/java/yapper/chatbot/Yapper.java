@@ -32,7 +32,7 @@ public class Yapper {
 
     /**
      * Constructs a Yapper chatbot.
-     * 
+     *
      * @param name     The name of the chatbot
      * @param taskList The list of tasks
      * @param file     The file to store the task list

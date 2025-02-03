@@ -20,7 +20,7 @@ public class Events extends Task {
 
     /**
      * Constructs an Events object.
-     * 
+     *
      * @param description       Description of the Events task.
      * @param fromLocalDateTime Instance of when the Events is started
      * @param toLocalDateTime   Instance of when the Events is due
@@ -33,7 +33,7 @@ public class Events extends Task {
 
     /**
      * Returns the instance of when the Events is started
-     * 
+     *
      * @return LocalDateTime instance of when the Events is started
      */
     public LocalDateTime getFromLocalDateTime() {
@@ -42,7 +42,7 @@ public class Events extends Task {
 
     /**
      * Returns the instance of when the Events is due
-     * 
+     *
      * @return LocalDateTime instance of when the Events is due
      */
     public LocalDateTime getToLocalDateTime() {

@@ -99,7 +99,7 @@ public class Ui {
                                           deadline <task_name> /by <deadline>
                                         - Create a new Deadline task with a <deadline> with <dd-MM-yyyy HHmm> format
                   event <task_name> /from <start_time> /to <end_time>
-                                        - Create a new Event task with a <start_time> and <end_time> with 
+                                        - Create a new Event task with a <start_time> and <end_time> with
                   <dd-MM-yyyy HHmm> format
                   delete <task_number>  - Delete task with <task_number> on the list
                   bye                   - End the conversation with the chatbot

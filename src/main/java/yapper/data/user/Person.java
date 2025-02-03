@@ -30,7 +30,7 @@ public class Person {
 
     /**
      * Constructs a Person instance
-     * 
+     *
      * @param taskFileName name of the file to cache Person's tasks
      */
     public Person(String taskFileName) {
@@ -45,7 +45,7 @@ public class Person {
 
     /**
      * Returns the list of tasks of the Person
-     * 
+     *
      * @return list of tasks of the Person
      */
     public ArrayList<Task> getTaskList() {
@@ -54,7 +54,7 @@ public class Person {
 
     /**
      * Returns the file object of the Person
-     * 
+     *
      * @return file object of the Person
      */
     public File getFile() {

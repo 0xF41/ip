@@ -18,7 +18,7 @@ public class FindTaskCommand implements Command {
 
     /**
      * Constructs a FindCommand object.
-     * 
+     *
      * @param taskList List of a Person's current tasks.
      */
     private FindTaskCommand(ArrayList<Task> taskList, String searchTerm) {
@@ -28,7 +28,7 @@ public class FindTaskCommand implements Command {
 
     /**
      * Executes the command to find tasks with a search term.
-     * 
+     *
      * @return true to indicate the chatbot conversation should continue.
      */
     @Override
@@ -48,7 +48,7 @@ public class FindTaskCommand implements Command {
 
     /**
      * Builds a FindCommand object.
-     * 
+     *
      * @param taskList List of a Person's current tasks.
      * @return FindCommand object.
      */
