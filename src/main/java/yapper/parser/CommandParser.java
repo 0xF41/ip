@@ -146,6 +146,7 @@ public class CommandParser {
         String dueDateString = "";
         try {
             byIndex = cmd.indexOf("/by");
+            description = cmd.substring(deadlineIndex, byIndex).trim();
             cmd.substring(deadlineIndex, byIndex).trim();
             dueDateString = cmd.substring(byIndex + 4).trim();
         } catch (StringIndexOutOfBoundsException e) {
@@ -157,7 +158,7 @@ public class CommandParser {
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
             return DeadlineTaskCommand.buildDeadlineCommand(taskList, new Deadline(description, byLocalDateTime));
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy.");
+            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
         }
     }
 

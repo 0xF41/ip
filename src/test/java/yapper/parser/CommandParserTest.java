@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import yapper.task.Task;
+import yapper.commands.DeadlineTaskCommand;
+import yapper.commands.EventsTaskCommand;
 import yapper.commands.TaskCommand;
 import yapper.commands.ToDosTaskCommand;
 
@@ -21,7 +23,7 @@ public class CommandParserTest {
      * @throws Exception if an error occurs within the test.
      */
     @Test
-    public void parseTest() throws Exception {
+    public void parse_todos_test() throws Exception {
         TaskCommand command = (TaskCommand) CommandParser.parse("todo read book", this.taskList, null);
         assert (command instanceof ToDosTaskCommand);
         assert (command.getTaskDescription().equals("read book"));
@@ -33,10 +35,11 @@ public class CommandParserTest {
      * @throws Exception if an error occurs within the test.
      */
     @Test
-    public void parseTest2() throws Exception {
-        TaskCommand command = (TaskCommand) CommandParser.parse("deadline return book /by 2021-08-21 18:00",
+    public void parse_deadline_test() throws Exception {
+        DeadlineTaskCommand command = (DeadlineTaskCommand) CommandParser.parse(
+                "deadline return book /by 21-08-2025 1800",
                 this.taskList, null);
-        assert (command instanceof ToDosTaskCommand);
+        assert (command instanceof DeadlineTaskCommand);
         assert (command.getTaskDescription().equals("return book"));
     }
 
@@ -46,10 +49,12 @@ public class CommandParserTest {
      * @throws Exception if an error occurs within the test.
      */
     @Test
-    public void parseTest3() throws Exception {
-        TaskCommand command = (TaskCommand) CommandParser.parse("event drink water /by 2025-30-01 19:54", this.taskList,
+    public void parse_events_test() throws Exception {
+        EventsTaskCommand command = (EventsTaskCommand) CommandParser.parse(
+                "event drink water /from 21-08-2025 1954 /to 22-08-2025 1954",
+                this.taskList,
                 null);
-        assert (command instanceof ToDosTaskCommand);
+        assert (command instanceof EventsTaskCommand);
         assert (command.getTaskDescription().equals("drink water"));
     }
 }
