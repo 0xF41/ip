@@ -15,12 +15,23 @@ public class ByeCommand implements Command {
     /**
      * List of a Person's current tasks.
      */
-    ArrayList<Task> taskList;
+    private ArrayList<Task> taskList;
 
     /**
      * File to save the tasks to.
      */
-    File file;
+    private File file;
+
+    /**
+     * Constructs a ByeCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param file     File to save the tasks to.
+     */
+    private ByeCommand(ArrayList<Task> taskList, File file) {
+        this.taskList = taskList;
+        this.file = file;
+    }
 
     /**
      * Executes the command to end the chatbot conversation.
@@ -43,16 +54,5 @@ public class ByeCommand implements Command {
      */
     public static Command buildByeCommand(ArrayList<Task> taskList, File file) {
         return new ByeCommand(taskList, file);
-    }
-
-    /**
-     * Constructs a ByeCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param file     File to save the tasks to.
-     */
-    private ByeCommand(ArrayList<Task> taskList, File file) {
-        this.taskList = taskList;
-        this.file = file;
     }
 }

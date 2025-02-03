@@ -21,6 +21,17 @@ public class DeleteCommand implements Command {
     private int idx;
 
     /**
+     * Constructs a DeleteCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param idx      Index of the task to be deleted.
+     */
+    private DeleteCommand(ArrayList<Task> taskList, int idx) {
+        this.taskList = taskList;
+        this.idx = idx;
+    }
+
+    /**
      * Executes the command to delete a task.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -43,16 +54,5 @@ public class DeleteCommand implements Command {
      */
     public static Command buildDeleteCommand(ArrayList<Task> taskList, int idx) {
         return new DeleteCommand(taskList, idx);
-    }
-
-    /**
-     * Constructs a DeleteCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param idx      Index of the task to be deleted.
-     */
-    private DeleteCommand(ArrayList<Task> taskList, int idx) {
-        this.taskList = taskList;
-        this.idx = idx;
     }
 }

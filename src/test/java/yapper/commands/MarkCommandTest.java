@@ -47,7 +47,8 @@ public class MarkCommandTest {
      */
     @Test
     public void testExecuteInvalidIndex() {
-        Command command, command2;
+        Command command;
+        Command command2;
         try {
             command = CommandParser.parse(MARK_COMMAND_INVALID, taskList, null);
             command2 = CommandParser.parse(MARK_COMMAND_INVALID_2, taskList, null);

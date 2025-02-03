@@ -21,6 +21,17 @@ public class MarkCommand implements Command {
     private int idx;
 
     /**
+     * Constructs a MarkCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param idx      Index of the task to be marked as done.
+     */
+    private MarkCommand(ArrayList<Task> taskList, int idx) {
+        this.taskList = taskList;
+        this.idx = idx;
+    }
+
+    /**
      * Executes the command to mark a task as done.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -45,14 +56,4 @@ public class MarkCommand implements Command {
         return new MarkCommand(taskList, idx);
     }
 
-    /**
-     * Constructs a MarkCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param idx      Index of the task to be marked as done.
-     */
-    private MarkCommand(ArrayList<Task> taskList, int idx) {
-        this.taskList = taskList;
-        this.idx = idx;
-    }
 }

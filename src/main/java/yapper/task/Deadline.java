@@ -13,6 +13,22 @@ public class Deadline extends Task {
      */
     private LocalDateTime byLocalDateTime;
 
+    /**
+     * Constructs a Deadline object.
+     *
+     * @param description     Description of the Deadline task.
+     * @param byLocalDateTime Deadline of the task.
+     */
+    public Deadline(String description, LocalDateTime byLocalDateTime) {
+        super(description);
+        this.byLocalDateTime = byLocalDateTime;
+    }
+
+    /**
+     * Gets the Deadline of the task.
+     *
+     * @return Deadline of the task.
+     */
     public LocalDateTime getByLocalDateTime() {
         return this.byLocalDateTime;
     }
@@ -25,16 +41,4 @@ public class Deadline extends Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
         return String.format("[D]%s (by: %s)", super.toString(), this.byLocalDateTime.format(formatter));
     }
-
-    /**
-     * Constructs a Deadline object.
-     *
-     * @param description     Description of the Deadline task.
-     * @param byLocalDateTime Deadline of the task.
-     */
-    public Deadline(String description, LocalDateTime byLocalDateTime) {
-        super(description);
-        this.byLocalDateTime = byLocalDateTime;
-    }
-
 }

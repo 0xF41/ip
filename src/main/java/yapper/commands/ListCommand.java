@@ -16,6 +16,15 @@ public class ListCommand implements Command {
     private ArrayList<Task> taskList;
 
     /**
+     * Constructs a ListCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     */
+    private ListCommand(ArrayList<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    /**
      * Executes the command to list all tasks.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -41,14 +50,5 @@ public class ListCommand implements Command {
      */
     public static Command buildListCommand(ArrayList<Task> taskList) {
         return new ListCommand(taskList);
-    }
-
-    /**
-     * Constructs a ListCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     */
-    private ListCommand(ArrayList<Task> taskList) {
-        this.taskList = taskList;
     }
 }

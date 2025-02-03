@@ -8,6 +8,13 @@ import yapper.ui.Ui;
 public class HelpCommand implements Command {
 
     /**
+     * Constructs a HelpCommand object.
+     */
+    private HelpCommand() {
+
+    }
+
+    /**
      * Executes the command to print the help menu.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -27,10 +34,4 @@ public class HelpCommand implements Command {
         return new HelpCommand();
     }
 
-    /**
-     * Constructs a HelpCommand object.
-     */
-    private HelpCommand() {
-
-    }
 }

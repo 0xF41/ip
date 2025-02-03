@@ -1,13 +1,12 @@
 package yapper.data.user;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import yapper.storage.FileManager;
 import yapper.task.Task;
 import yapper.ui.Ui;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * Represents a Person who uses the chatbot.
@@ -22,12 +21,12 @@ public class Person {
     /**
      * File object to cache user tasks
      */
-    public File file;
+    private File file;
 
     /**
      * ArrayList to store a list of Person's Tasks
      */
-    public ArrayList<Task> taskList;
+    private ArrayList<Task> taskList;
 
     /**
      * Constructs a Person instance
@@ -42,5 +41,23 @@ public class Person {
             Ui.printError(String.format("Existing file %s not found.", this.taskFileName));
             this.taskList = new ArrayList<>();
         }
+    }
+
+    /**
+     * Returns the list of tasks of the Person
+     * 
+     * @return list of tasks of the Person
+     */
+    public ArrayList<Task> getTaskList() {
+        return this.taskList;
+    }
+
+    /**
+     * Returns the file object of the Person
+     * 
+     * @return file object of the Person
+     */
+    public File getFile() {
+        return this.file;
     }
 }

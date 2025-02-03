@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import yapper.task.Task;
 import yapper.commands.DeadlineTaskCommand;
 import yapper.commands.EventsTaskCommand;
 import yapper.commands.TaskCommand;
 import yapper.commands.ToDosTaskCommand;
+import yapper.task.Task;
 
 public class CommandParserTest {
 
     /**
      * Stub task list.
      */
-    public ArrayList<Task> taskList = new ArrayList<Task>();
+    private ArrayList<Task> taskList = new ArrayList<Task>();
 
     /**
      * Tests the parse method in CommandParser for a ToDos task.

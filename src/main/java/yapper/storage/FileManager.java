@@ -88,41 +88,50 @@ public class FileManager {
         s.nextLine(); // skip first row containing csv headers
         while (s.hasNext()) {
             String[] tokens = s.nextLine().split(",");
-            String taskType = "", taskDescription = "", taskIsDone = "", taskFrom = "", taskTo = "";
+            String taskType = "";
+            String taskDescription = "";
+            String taskIsDone = "";
+            String taskFrom = "";
+            String taskTo = "";
             taskType = tokens[0];
             taskDescription = tokens[1];
-            if (tokens.length > 2)
+            if (tokens.length > 2) {
                 taskIsDone = tokens[2];
-            if (tokens.length > 3)
+            }
+            if (tokens.length > 3) {
                 taskFrom = tokens[3];
-            if (tokens.length > 4)
+            }
+            if (tokens.length > 4) {
                 taskTo = tokens[4]; // task by in Events
-
+            }
             switch (taskType) {
-                case "Todos":
-                    ToDos td = new ToDos(taskDescription);
-                    if (taskIsDone.equals("X"))
-                        td.markAsDone();
-                    taskList.add(td);
-                    break;
-                case "Deadline":
-                    LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-                    Deadline dl = new Deadline(taskDescription, taskByLocalDateTime);
-                    if (taskIsDone.equals("X"))
-                        dl.markAsDone();
-                    taskList.add(dl);
-                    break;
-                case "Event":
-                    LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
-                    LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-                    Events ev = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
-                    if (taskIsDone.equals("X"))
-                        ev.markAsDone();
-                    taskList.add(ev);
-                    break;
-                default:
-                    Ui.printError("Unknown task: " + taskDescription + "is not loaded!");
-                    break;
+            case "Todos":
+                ToDos td = new ToDos(taskDescription);
+                if (taskIsDone.equals("X")) {
+                    td.markAsDone();
+                }
+                taskList.add(td);
+                break;
+            case "Deadline":
+                LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
+                Deadline dl = new Deadline(taskDescription, taskByLocalDateTime);
+                if (taskIsDone.equals("X")) {
+                    dl.markAsDone();
+                }
+                taskList.add(dl);
+                break;
+            case "Event":
+                LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
+                LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
+                Events ev = new Events(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
+                if (taskIsDone.equals("X")) {
+                    ev.markAsDone();
+                }
+                taskList.add(ev);
+                break;
+            default:
+                Ui.printError("Unknown task: " + taskDescription + "is not loaded!");
+                break;
             }
         }
         s.close();

@@ -21,6 +21,17 @@ public class UnmarkCommand implements Command {
     private int idx;
 
     /**
+     * Constructs an UnmarkCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param idx      Index of the task to be marked as not done.
+     */
+    private UnmarkCommand(ArrayList<Task> taskList, int idx) {
+        this.taskList = taskList;
+        this.idx = idx;
+    }
+
+    /**
      * Executes the command to mark a task as not done.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -45,14 +56,4 @@ public class UnmarkCommand implements Command {
         return new UnmarkCommand(taskList, idx);
     }
 
-    /**
-     * Constructs an UnmarkCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param idx      Index of the task to be marked as not done.
-     */
-    private UnmarkCommand(ArrayList<Task> taskList, int idx) {
-        this.taskList = taskList;
-        this.idx = idx;
-    }
 }

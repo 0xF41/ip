@@ -1,6 +1,9 @@
 package yapper.parser;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import yapper.commands.ByeCommand;
@@ -21,10 +24,6 @@ import yapper.task.Task;
 import yapper.task.ToDos;
 import yapper.ui.Ui;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 /**
  * CommandParser parses the commands entered by the user into the chatbot.
  */
@@ -36,7 +35,13 @@ public class CommandParser {
     public enum CommandOption {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP, FIND;
 
-        // Check for valid commands
+        /**
+         * Converts a string to a CommandOption.
+         *
+         * @param command Command string.
+         * @return CommandOption.
+         * @throws InvalidCommandSyntaxException If the command is invalid.
+         */
         public static CommandOption fromString(String command) throws InvalidCommandSyntaxException {
             try {
                 return CommandOption.valueOf(command.trim().toUpperCase());
