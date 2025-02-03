@@ -31,6 +31,19 @@ public class Yapper {
     private File file;
 
     /**
+     * Constructs a Yapper chatbot.
+     * 
+     * @param name     The name of the chatbot
+     * @param taskList The list of tasks
+     * @param file     The file to store the task list
+     */
+    public Yapper(String name, ArrayList<Task> taskList, File file) {
+        this.name = name;
+        this.taskList = taskList;
+        this.file = file;
+    }
+
+    /**
      * Runs the Yapper chatbot session.
      *
      * @throws IOException if an I/O error occurs
@@ -56,18 +69,5 @@ public class Yapper {
                 Ui.printLine();
             }
         }
-    }
-
-    /**
-     * Constructs a Yapper chatbot.
-     * 
-     * @param name     The name of the chatbot
-     * @param taskList The list of tasks
-     * @param file     The file to store the task list
-     */
-    public Yapper(String name, ArrayList<Task> taskList, File file) {
-        this.name = name;
-        this.taskList = taskList;
-        this.file = file;
     }
 }

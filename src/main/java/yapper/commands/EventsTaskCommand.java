@@ -22,6 +22,17 @@ public class EventsTaskCommand implements TaskCommand {
     private Events ev;
 
     /**
+     * Constructs an EventsCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param ev       Events task to be added.
+     */
+    private EventsTaskCommand(ArrayList<Task> taskList, Events ev) {
+        this.taskList = taskList;
+        this.ev = ev;
+    }
+
+    /**
      * Executes the command to add an Events task.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -54,16 +65,5 @@ public class EventsTaskCommand implements TaskCommand {
      */
     public static Command buildEventsCommand(ArrayList<Task> taskList, Events ev) {
         return new EventsTaskCommand(taskList, ev);
-    }
-
-    /**
-     * Constructs an EventsCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param ev       Events task to be added.
-     */
-    private EventsTaskCommand(ArrayList<Task> taskList, Events ev) {
-        this.taskList = taskList;
-        this.ev = ev;
     }
 }

@@ -1,6 +1,9 @@
 package yapper.parser;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import yapper.commands.ByeCommand;
@@ -21,10 +24,6 @@ import yapper.task.Task;
 import yapper.task.ToDos;
 import yapper.ui.Ui;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 /**
  * CommandParser parses the commands entered by the user into the chatbot.
  */
@@ -36,7 +35,13 @@ public class CommandParser {
     public enum CommandOption {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP, FIND;
 
-        // Check for valid commands
+        /**
+         * Converts a string to a CommandOption.
+         *
+         * @param command Command string.
+         * @return CommandOption.
+         * @throws InvalidCommandSyntaxException If the command is invalid.
+         */
         public static CommandOption fromString(String command) throws InvalidCommandSyntaxException {
             try {
                 return CommandOption.valueOf(command.trim().toUpperCase());
@@ -146,6 +151,7 @@ public class CommandParser {
         String dueDateString = "";
         try {
             byIndex = cmd.indexOf("/by");
+            description = cmd.substring(deadlineIndex, byIndex).trim();
             cmd.substring(deadlineIndex, byIndex).trim();
             dueDateString = cmd.substring(byIndex + 4).trim();
         } catch (StringIndexOutOfBoundsException e) {
@@ -157,7 +163,7 @@ public class CommandParser {
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
             return DeadlineTaskCommand.buildDeadlineCommand(taskList, new Deadline(description, byLocalDateTime));
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy.");
+            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
         }
     }
 

@@ -22,6 +22,17 @@ public class DeadlineTaskCommand implements TaskCommand {
     private Deadline dl;
 
     /**
+     * Constructs a DeadlineCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param dl       Deadline task to be added.
+     */
+    private DeadlineTaskCommand(ArrayList<Task> taskList, Deadline dl) {
+        this.taskList = taskList;
+        this.dl = dl;
+    }
+
+    /**
      * Executes the command to add a Deadline task.
      *
      * @return true to indicate the chatbot conversation should continue.
@@ -56,14 +67,4 @@ public class DeadlineTaskCommand implements TaskCommand {
         return new DeadlineTaskCommand(taskList, dl);
     }
 
-    /**
-     * Constructs a DeadlineCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param dl       Deadline task to be added.
-     */
-    private DeadlineTaskCommand(ArrayList<Task> taskList, Deadline dl) {
-        this.taskList = taskList;
-        this.dl = dl;
-    }
 }

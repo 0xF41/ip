@@ -22,6 +22,17 @@ public class ToDosTaskCommand implements TaskCommand {
     private ToDos td;
 
     /**
+     * Constructs a ToDosCommand object.
+     *
+     * @param taskList List of a Person's current tasks.
+     * @param td       ToDos task to be added.
+     */
+    private ToDosTaskCommand(ArrayList<Task> taskList, ToDos td) {
+        this.taskList = taskList;
+        this.td = td;
+    }
+
+    /**
      * Returns the description of the ToDos task.
      *
      * @return Description of the ToDos task.
@@ -54,16 +65,5 @@ public class ToDosTaskCommand implements TaskCommand {
      */
     public static Command buildToDosCommand(ArrayList<Task> taskList, ToDos td) {
         return new ToDosTaskCommand(taskList, td);
-    }
-
-    /**
-     * Constructs a ToDosCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @param td       ToDos task to be added.
-     */
-    private ToDosTaskCommand(ArrayList<Task> taskList, ToDos td) {
-        this.taskList = taskList;
-        this.td = td;
     }
 }

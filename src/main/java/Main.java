@@ -15,7 +15,7 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         Person p1 = new Person("usertaskdata.csv");
-        Yapper y1 = new Yapper("Yapper", p1.taskList, p1.file);
+        Yapper y1 = new Yapper("Yapper", p1.getTaskList(), p1.getFile());
         y1.run();
     }
 }

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import yapper.task.Task;
 import yapper.ui.Ui;
 
+/**
+ * Represents a command to find tasks with a search term.
+ */
 public class FindTaskCommand implements Command {
 
     /**
@@ -12,6 +15,16 @@ public class FindTaskCommand implements Command {
      */
     private ArrayList<Task> taskList;
     private String searchTerm;
+
+    /**
+     * Constructs a FindCommand object.
+     * 
+     * @param taskList List of a Person's current tasks.
+     */
+    private FindTaskCommand(ArrayList<Task> taskList, String searchTerm) {
+        this.taskList = taskList;
+        this.searchTerm = searchTerm;
+    }
 
     /**
      * Executes the command to find tasks with a search term.
@@ -41,15 +54,5 @@ public class FindTaskCommand implements Command {
      */
     public static Command buildFindCommand(ArrayList<Task> taskList, String searchTerm) {
         return new FindTaskCommand(taskList, searchTerm);
-    }
-
-    /**
-     * Constructs a FindCommand object.
-     * 
-     * @param taskList List of a Person's current tasks.
-     */
-    private FindTaskCommand(ArrayList<Task> taskList, String searchTerm) {
-        this.taskList = taskList;
-        this.searchTerm = searchTerm;
     }
 }
