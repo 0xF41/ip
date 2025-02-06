@@ -16,15 +16,6 @@ public class Ui {
             new InputStreamReader(System.in));;
 
     /**
-     * Clears the console.
-     */
-    public static void clearConsole() {
-        // ANSI escape code to clear the console
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
-    /**
      * Reads the user's command.
      *
      * @return User's command.
@@ -34,54 +25,48 @@ public class Ui {
         return Ui.br.readLine();
     }
 
+
     /**
-     * Prints the given object.
+     * Return the string representation of an object.
      *
-     * @param obj Object to be printed.
+     * @param obj Object to be converted to string.
      */
-    public static void print(Object obj) {
-        System.out.println(obj);
+    public static String toString(Object obj) {
+        return obj.toString();
     }
 
     /**
-     * Prints the bye message.
+     * Return the string representation of the bye message.
      */
-    public static void printBye() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public static String printBye() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /**
-     * Prints the error message.
+     * Return the string representation of the error message.
      *
      * @param e Error message.
      */
-    public static void printError(Object e) {
-        System.out.println(e);
+    public static String toErrorString(Object e) {
+        return e.toString();
     }
 
     /**
-     * Prints the greeting message.
+     * Return the string representation of greeting message.
      *
      * @param botName Name of the chatbot.
      */
-    public static void printGreet(String botName) {
-        System.out.println("____________________________________________________________");
-        System.out.println(String.format("Hello! I'm %s!", botName));
-        System.out.println("What can I do for you?");
-        System.out.println("____________________________________________________________");
+    public static String printGreet(String botName) {
+        String str = "";
+        str += String.format("Hello! I'm %s!\n", botName);
+        str += "What can I do for you?";
+        return str;
     }
 
     /**
-     * Prints the line separator.
+     * Return the string representation of the help menu.
      */
-    public static void printLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Prints the help menu.
-     */
-    public static void printMenu() {
+    public static String printMenu() {
         String menu = """
                   __   __
                   \\ \\ / /_ _ _ __  _ __   ___ _ __
@@ -105,7 +90,7 @@ public class Ui {
                   bye                   - End the conversation with the chatbot
                   help                  - Show this help menu
                 """;
-        System.out.println(menu);
+        return menu;
     }
 
 }

@@ -1,14 +1,9 @@
 package yapper.chatbot;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import yapper.commands.Command;
-import yapper.data.exception.InvalidCommandSyntaxException;
-import yapper.parser.CommandParser;
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Yapper represents a chatbot that interacts with the user.
@@ -44,30 +39,27 @@ public class Yapper {
     }
 
     /**
-     * Runs the Yapper chatbot session.
-     *
-     * @throws IOException if an I/O error occurs
+     * Generates a response for the user's chat message.
      */
-    public void run() throws IOException {
-        Ui.printGreet(this.name);
-        String cmd = "";
-        Boolean ongoing = true;
-        while (ongoing) {
-            cmd = Ui.readCommand();
-            Ui.clearConsole();
-            Ui.printLine();
-            try {
-                Command command = CommandParser.parse(cmd, taskList, file);
-                ongoing = command.execute();
-            } catch (InvalidCommandSyntaxException e) {
-                Ui.printError(e.getLocalizedMessage());
-            } catch (IndexOutOfBoundsException e) {
-                Ui.printError(e.getLocalizedMessage());
-            } catch (IllegalArgumentException e) {
-                Ui.printError(e.getLocalizedMessage());
-            } finally {
-                Ui.printLine();
-            }
-        }
+    public String getResponse(String input) {
+        return String.format("%s heard: %s", this.name, input);
+    }
+
+    /**
+     * Returns the task list.
+     *
+     * @return The task list
+     */
+    public ArrayList<Task> getTaskList() {
+        return this.taskList;
+    }
+
+    /**
+     * Returns the file to store the task list.
+     *
+     * @return The file to store the task list
+     */
+    public File getFile() {
+        return this.file;
     }
 }

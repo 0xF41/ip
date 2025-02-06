@@ -13,7 +13,6 @@ import yapper.task.Deadline;
 import yapper.task.Events;
 import yapper.task.Task;
 import yapper.task.ToDos;
-import yapper.ui.Ui;
 
 /**
  * Represents a file manager to handle file operations.
@@ -63,11 +62,11 @@ public class FileManager {
                             ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
                             ev.getToLocalDateTime().format(dtf)), true);
                 } else {
-                    Ui.print(String.format("%s is not added to %s.", t, file.getName()));
+                    System.out.println(String.format("%s is not added to %s.", t, file.getName()));
                 }
             }
         } catch (IOException e) {
-            Ui.printError(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
             return false;
         }
         return true;
@@ -130,7 +129,7 @@ public class FileManager {
                 taskList.add(ev);
                 break;
             default:
-                Ui.printError("Unknown task: " + taskDescription + "is not loaded!");
+                System.out.println("Unknown task: " + taskDescription + "is not loaded!");
                 break;
             }
         }
@@ -156,8 +155,8 @@ public class FileManager {
                 }
             }
         } catch (IOException e) {
-            Ui.printError("File error occurred.");
-            Ui.printError(e.getLocalizedMessage());
+            System.out.println("File error occurred.");
+            System.out.println(e.getLocalizedMessage());
             return null;
         }
         return file;

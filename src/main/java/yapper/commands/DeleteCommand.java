@@ -3,7 +3,6 @@ package yapper.commands;
 import java.util.ArrayList;
 
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to delete a task.
@@ -34,14 +33,15 @@ public class DeleteCommand implements Command {
     /**
      * Executes the command to delete a task.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param responseList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
     @Override
-    public boolean execute() {
-        Ui.print("Noted. I've removed this task: ");
-        Ui.print(taskList.get(idx));
+    public boolean execute(ArrayList<String> responseList) {
+        responseList.add("Noted. I've removed this task: ");
+        responseList.add(taskList.get(idx).toString());
         taskList.remove(idx);
-        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+        responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
         return true;
     }
 

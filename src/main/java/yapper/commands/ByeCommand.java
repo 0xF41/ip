@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import yapper.storage.FileManager;
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to end the chatbot conversation.
@@ -39,9 +38,9 @@ public class ByeCommand implements Command {
      * @return false to indicate the end of the chatbot conversation.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> responseList) {
         FileManager.saveFileContents(file, taskList);
-        Ui.print("Bye. Hope to see you again soon!");
+        responseList.add("Bye. Hope to see you again soon!");
         return false;
     }
 

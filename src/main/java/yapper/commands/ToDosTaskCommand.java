@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import yapper.task.Task;
 import yapper.task.ToDos;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to add a ToDos task.
@@ -45,14 +44,15 @@ public class ToDosTaskCommand implements TaskCommand {
     /**
      * Executes the command to add a ToDos task.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param responseList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> responseList) {
         taskList.add(td);
-        Ui.print("Got it. I've added this task:");
-        Ui.print(td);
-        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+        responseList.add("Got it. I've added this task:");
+        responseList.add(td.toString());
+        responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
         return true;
     }
 

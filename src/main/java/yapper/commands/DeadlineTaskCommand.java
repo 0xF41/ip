@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import yapper.task.Deadline;
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to add a Deadline task.
@@ -35,14 +34,15 @@ public class DeadlineTaskCommand implements TaskCommand {
     /**
      * Executes the command to add a Deadline task.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param respondList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> respondList) {
         taskList.add(dl);
-        Ui.print("Got it. I've added this task:");
-        Ui.print(dl);
-        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+        respondList.add("Got it. I've added this task:");
+        respondList.add(dl.toString());
+        respondList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
         return true;
     }
 

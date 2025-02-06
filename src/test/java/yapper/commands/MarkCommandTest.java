@@ -36,7 +36,7 @@ public class MarkCommandTest {
         Command command;
         try {
             command = CommandParser.parse(MARK_COMMAND, taskList, null);
-            assertDoesNotThrow(() -> command.execute());
+            assertDoesNotThrow(() -> command.execute(new ArrayList<String>()));
         } catch (IndexOutOfBoundsException | InvalidCommandSyntaxException e) {
             e.printStackTrace();
         }
@@ -47,13 +47,15 @@ public class MarkCommandTest {
      */
     @Test
     public void testExecuteInvalidIndex() {
+        ArrayList<String> responseList = new ArrayList<>();
+
         Command command;
         Command command2;
         try {
             command = CommandParser.parse(MARK_COMMAND_INVALID, taskList, null);
             command2 = CommandParser.parse(MARK_COMMAND_INVALID_2, taskList, null);
-            assertThrowsExactly(IndexOutOfBoundsException.class, () -> command.execute());
-            assertThrowsExactly(IndexOutOfBoundsException.class, () -> command2.execute());
+            assertThrowsExactly(IndexOutOfBoundsException.class, () -> command.execute(responseList));
+            assertThrowsExactly(IndexOutOfBoundsException.class, () -> command2.execute(responseList));
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         } catch (InvalidCommandSyntaxException e) {

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import yapper.storage.FileManager;
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a Person who uses the chatbot.
@@ -38,7 +37,7 @@ public class Person {
         try {
             this.taskList = FileManager.loadFileContents(this.file);
         } catch (FileNotFoundException e) {
-            Ui.printError(String.format("Existing file %s not found.", this.taskFileName));
+            System.out.println(String.format("Existing file %s not found.", this.taskFileName));
             this.taskList = new ArrayList<>();
         }
     }
