@@ -18,10 +18,10 @@ import yapper.commands.MarkCommand;
 import yapper.commands.ToDosTaskCommand;
 import yapper.commands.UnmarkCommand;
 import yapper.data.exception.InvalidCommandSyntaxException;
-import yapper.task.Deadline;
-import yapper.task.Events;
+import yapper.task.DeadlineTask;
+import yapper.task.EventsTask;
 import yapper.task.Task;
-import yapper.task.ToDos;
+import yapper.task.ToDosTask;
 
 /**
  * CommandParser parses the commands entered by the user into the chatbot.
@@ -127,7 +127,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
     private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
-        return ToDosTaskCommand.buildToDosCommand(taskList, new ToDos(cmd.substring("todo".length() + 1)));
+        return ToDosTaskCommand.buildToDosCommand(taskList, new ToDosTask(cmd.substring("todo".length() + 1)));
     }
 
     /**
@@ -135,7 +135,7 @@ public class CommandParser {
      *
      * @param cmd      Full command entered by the user.
      * @param taskList List of tasks.
-     * @return Deadline command.
+     * @return DeadlineTask command.
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
     private static Command deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
@@ -159,7 +159,7 @@ public class CommandParser {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
-            return DeadlineTaskCommand.buildDeadlineCommand(taskList, new Deadline(description, byLocalDateTime));
+            return DeadlineTaskCommand.buildDeadlineCommand(taskList, new DeadlineTask(description, byLocalDateTime));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
         }
@@ -202,7 +202,7 @@ public class CommandParser {
             LocalDateTime fromLocalDateTime = LocalDateTime.parse(fromTimeString, dtf);
             LocalDateTime toLocalDateTime = LocalDateTime.parse(toTimeString, dtf);
             return EventsTaskCommand.buildEventsCommand(taskList,
-                    new Events(description, fromLocalDateTime, toLocalDateTime));
+                    new EventsTask(description, fromLocalDateTime, toLocalDateTime));
         } catch (DateTimeParseException e) {
             throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
         }

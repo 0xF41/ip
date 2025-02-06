@@ -2,11 +2,11 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.Deadline;
+import yapper.task.DeadlineTask;
 import yapper.task.Task;
 
 /**
- * Represents a command to add a Deadline task.
+ * Represents a command to add a DeadlineTask task.
  */
 public class DeadlineTaskCommand implements TaskCommand {
 
@@ -16,23 +16,23 @@ public class DeadlineTaskCommand implements TaskCommand {
     private ArrayList<Task> taskList;
 
     /**
-     * Deadline task to be added.
+     * DeadlineTask task to be added.
      */
-    private Deadline dl;
+    private DeadlineTask dl;
 
     /**
      * Constructs a DeadlineCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param dl       Deadline task to be added.
+     * @param dl       DeadlineTask task to be added.
      */
-    private DeadlineTaskCommand(ArrayList<Task> taskList, Deadline dl) {
+    private DeadlineTaskCommand(ArrayList<Task> taskList, DeadlineTask dl) {
         this.taskList = taskList;
         this.dl = dl;
     }
 
     /**
-     * Executes the command to add a Deadline task.
+     * Executes the command to add a DeadlineTask task.
      *
      * @param respondList List of responses to be displayed to the user.
      * @return True if the command is successfully executed, false otherwise.
@@ -47,9 +47,9 @@ public class DeadlineTaskCommand implements TaskCommand {
     }
 
     /**
-     * Returns the description of the Deadline task.
+     * Returns the description of the DeadlineTask task.
      *
-     * @return Description of the Deadline task.
+     * @return Description of the DeadlineTask task.
      */
     @Override
     public String getTaskDescription() {
@@ -60,10 +60,10 @@ public class DeadlineTaskCommand implements TaskCommand {
      * Builds a DeadlineCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param dl       Deadline task to be added.
+     * @param dl       DeadlineTask task to be added.
      * @return DeadlineCommand object.
      */
-    public static Command buildDeadlineCommand(ArrayList<Task> taskList, Deadline dl) {
+    public static Command buildDeadlineCommand(ArrayList<Task> taskList, DeadlineTask dl) {
         return new DeadlineTaskCommand(taskList, dl);
     }
 

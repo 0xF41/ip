@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Represents an Events task.
  */
-public class Events extends Task {
+public class EventsTask extends Task {
 
     /**
      * Represents the instance of when the Events is started
@@ -25,7 +25,7 @@ public class Events extends Task {
      * @param fromLocalDateTime Instance of when the Events is started
      * @param toLocalDateTime   Instance of when the Events is due
      */
-    public Events(String description, LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime) {
+    public EventsTask(String description, LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime) {
         super(description);
         this.fromLocalDateTime = fromLocalDateTime;
         this.toLocalDateTime = toLocalDateTime;

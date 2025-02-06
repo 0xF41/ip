@@ -3,10 +3,10 @@ package yapper.commands;
 import java.util.ArrayList;
 
 import yapper.task.Task;
-import yapper.task.ToDos;
+import yapper.task.ToDosTask;
 
 /**
- * Represents a command to add a ToDos task.
+ * Represents a command to add a ToDosTask task.
  */
 public class ToDosTaskCommand implements TaskCommand {
 
@@ -16,25 +16,25 @@ public class ToDosTaskCommand implements TaskCommand {
     private ArrayList<Task> taskList;
 
     /**
-     * ToDos task to be added.
+     * ToDosTask task to be added.
      */
-    private ToDos td;
+    private ToDosTask td;
 
     /**
      * Constructs a ToDosCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param td       ToDos task to be added.
+     * @param td       ToDosTask task to be added.
      */
-    private ToDosTaskCommand(ArrayList<Task> taskList, ToDos td) {
+    private ToDosTaskCommand(ArrayList<Task> taskList, ToDosTask td) {
         this.taskList = taskList;
         this.td = td;
     }
 
     /**
-     * Returns the description of the ToDos task.
+     * Returns the description of the ToDosTask task.
      *
-     * @return Description of the ToDos task.
+     * @return Description of the ToDosTask task.
      */
     @Override
     public String getTaskDescription() {
@@ -42,7 +42,7 @@ public class ToDosTaskCommand implements TaskCommand {
     }
 
     /**
-     * Executes the command to add a ToDos task.
+     * Executes the command to add a ToDosTask task.
      *
      * @param responseList List of responses to be displayed to the user.
      * @return True if the command is successfully executed, false otherwise.
@@ -60,10 +60,10 @@ public class ToDosTaskCommand implements TaskCommand {
      * Builds a ToDosCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param td       ToDos task to be added.
+     * @param td       ToDosTask task to be added.
      * @return ToDosCommand object.
      */
-    public static Command buildToDosCommand(ArrayList<Task> taskList, ToDos td) {
+    public static Command buildToDosCommand(ArrayList<Task> taskList, ToDosTask td) {
         return new ToDosTaskCommand(taskList, td);
     }
 }

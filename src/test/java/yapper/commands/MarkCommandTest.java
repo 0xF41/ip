@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import yapper.data.exception.InvalidCommandSyntaxException;
 import yapper.parser.CommandParser;
 import yapper.task.Task;
-import yapper.task.ToDos;
+import yapper.task.ToDosTask;
 
 /**
  * Tests the MarkCommand class.
@@ -25,7 +25,7 @@ public class MarkCommandTest {
     // Stub task list
     private ArrayList<Task> taskList = new ArrayList<>();
     {
-        taskList.add(new ToDos("read book"));
+        taskList.add(new ToDosTask("read book"));
     }
 
     /**
