@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import yapper.task.Events;
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to add an Events task.
@@ -38,11 +37,11 @@ public class EventsTaskCommand implements TaskCommand {
      * @return true to indicate the chatbot conversation should continue.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> responseList) {
         taskList.add(ev);
-        Ui.print("Got it. I've added this task:");
-        Ui.print(ev);
-        Ui.print(String.format("Now you have %d tasks in the list.", taskList.size()));
+        responseList.add("Got it. I've added this task:");
+        responseList.add(ev.toString());
+        responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
         return true;
     }
 

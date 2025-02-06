@@ -22,7 +22,6 @@ import yapper.task.Deadline;
 import yapper.task.Events;
 import yapper.task.Task;
 import yapper.task.ToDos;
-import yapper.ui.Ui;
 
 /**
  * CommandParser parses the commands entered by the user into the chatbot.
@@ -64,8 +63,7 @@ public class CommandParser {
             throw new InvalidCommandSyntaxException("See usage with \"help\"");
         }
         if (taskList.isEmpty()) {
-            Ui.printError("List is empty!");
-            return null;
+            throw new InvalidCommandSyntaxException("List is empty!");
         }
         return ListCommand.buildListCommand(taskList);
     }

@@ -1,5 +1,7 @@
 package yapper.commands;
 
+import java.util.ArrayList;
+
 import yapper.ui.Ui;
 
 /**
@@ -17,11 +19,13 @@ public class HelpCommand implements Command {
     /**
      * Executes the command to print the help menu.
      *
+     * @param responseList List of responses to be displayed to the user.
+     *
      * @return true to indicate the chatbot conversation should continue.
      */
     @Override
-    public boolean execute() {
-        Ui.printMenu();
+    public boolean execute(ArrayList<String> responseList) {
+        responseList.add(Ui.printMenu());
         return true;
     }
 

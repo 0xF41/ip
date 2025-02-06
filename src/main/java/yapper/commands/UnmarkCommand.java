@@ -3,7 +3,6 @@ package yapper.commands;
 import java.util.ArrayList;
 
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to mark a task as not done.
@@ -34,14 +33,15 @@ public class UnmarkCommand implements Command {
     /**
      * Executes the command to mark a task as not done.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param responseList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> responseList) {
         Task t = taskList.get(idx);
         t.markAsUndone();
-        Ui.print("OK, I've marked this task as not done yet:");
-        Ui.print(t);
+        responseList.add("OK, I've marked this task as not done yet:");
+        responseList.add(t.toString());
         return true;
     }
 

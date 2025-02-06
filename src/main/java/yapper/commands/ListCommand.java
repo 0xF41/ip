@@ -3,7 +3,6 @@ package yapper.commands;
 import java.util.ArrayList;
 
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to list all tasks.
@@ -27,17 +26,18 @@ public class ListCommand implements Command {
     /**
      * Executes the command to list all tasks.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param responseList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> responseList) {
         if (this.taskList.isEmpty()) {
-            Ui.printError("List is empty!");
+            responseList.add("List is empty!");
             return true;
         }
         for (int i = 0, n = taskList.size(); i < n; i++) {
             Task t = taskList.get(i);
-            Ui.print(String.format("%d. %s", i + 1, t));
+            responseList.add(String.format("%d. %s", i + 1, t));
         }
         return true;
     }

@@ -3,7 +3,6 @@ package yapper.commands;
 import java.util.ArrayList;
 
 import yapper.task.Task;
-import yapper.ui.Ui;
 
 /**
  * Represents a command to find tasks with a search term.
@@ -29,18 +28,19 @@ public class FindTaskCommand implements Command {
     /**
      * Executes the command to find tasks with a search term.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param responseList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
     @Override
-    public boolean execute() {
+    public boolean execute(ArrayList<String> responseList) {
         if (this.taskList.isEmpty()) {
-            Ui.printError(String.format("Tasks with search term \"%s\" not found!", searchTerm));
+            responseList.add(String.format("Tasks with search term \"%s\" not found!", searchTerm));
             return true;
         }
         for (int i = 0, n = taskList.size(); i < n; i++) { // O(nm)
             Task t = taskList.get(i);
             if (t.getDescription().contains(searchTerm)) {
-                Ui.print(String.format("%d. %s", i + 1, t));
+                responseList.add(String.format("%d. %s", i + 1, t));
             }
         }
         return true;

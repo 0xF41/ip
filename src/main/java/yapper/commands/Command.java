@@ -1,5 +1,7 @@
 package yapper.commands;
 
+import java.util.ArrayList;
+
 /**
  * Represents a command to be executed by the chatbot.
  */
@@ -7,7 +9,8 @@ public interface Command {
     /**
      * Executes the command.
      *
-     * @return true to indicate the chatbot conversation should continue.
+     * @param responseList List of responses to be displayed to the user.
+     * @return True if the command is successfully executed, false otherwise.
      */
-    public boolean execute();
+    public boolean execute(ArrayList<String> responseList);
 }
