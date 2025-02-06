@@ -71,11 +71,11 @@ public class MainWindow extends AnchorPane {
             Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getFile());
             isOngoing = command.execute(responseList);
         } catch (InvalidCommandSyntaxException e) {
-            responseList.add(e.getLocalizedMessage());
+            responseList.add(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
-            responseList.add(e.getLocalizedMessage());
+            responseList.add(e.getMessage());
         } catch (IllegalArgumentException e) {
-            responseList.add(e.getLocalizedMessage());
+            responseList.add(e.getMessage());
         }
 
         for (String response : responseList) {

@@ -3,6 +3,7 @@ package yapper.commands;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.application.Platform;
 import yapper.storage.FileManager;
 import yapper.task.Task;
 
@@ -41,6 +42,8 @@ public class ByeCommand implements Command {
     public boolean execute(ArrayList<String> responseList) {
         FileManager.saveFileContents(file, taskList);
         responseList.add("Bye. Hope to see you again soon!");
+        Platform.exit();
+        System.exit(0);
         return false;
     }
 
