@@ -36,8 +36,6 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream(USER_IMAGE));
     private Image yapperImage = new Image(this.getClass().getResourceAsStream(YAPPER_IMAGE));
 
-    private boolean isOngoing = true;
-
     /**
      * Initializes the main window.
      */
@@ -69,7 +67,7 @@ public class MainWindow extends AnchorPane {
         String fullResponseString = "";
         try {
             Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getFile());
-            isOngoing = command.execute(responseList);
+            command.execute(responseList);
         } catch (InvalidCommandSyntaxException e) {
             responseList.add(e.getMessage());
         } catch (IndexOutOfBoundsException e) {

@@ -19,6 +19,9 @@ import yapper.task.ToDosTask;
  */
 public class FileManager {
 
+    private static final String DATE_TIME_FORMAT_STRING = "dd-MM-yyyy HHmm";
+    private static final String CSV_FILE_HEADERS_STRING = "Type,Description,isDone,From,To";
+
     /**
      * Append text to file
      *
@@ -51,12 +54,12 @@ public class FileManager {
                             String.format("%s,%s,%s,%s,%s", "Todos", td.getDescription(), td.getStatusIcon(), "", ""),
                             true);
                 } else if (t instanceof DeadlineTask) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
                     DeadlineTask dl = (DeadlineTask) t;
                     FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", dl.getDescription(),
                             dl.getStatusIcon(), "", dl.getByLocalDateTime().format(dtf)), true);
                 } else if (t instanceof EventsTask) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
                     EventsTask ev = (EventsTask) t;
                     FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Events", ev.getDescription(),
                             ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
@@ -81,7 +84,7 @@ public class FileManager {
      */
     public static ArrayList<Task> loadFileContents(File file) throws FileNotFoundException {
         ArrayList<Task> taskList = new ArrayList<>();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
 
         Scanner s = new Scanner(file);
         s.nextLine(); // skip first row containing csv headers
@@ -151,7 +154,7 @@ public class FileManager {
 
             try (FileWriter fw = new FileWriter(file, true)) {
                 if (file.length() == 0) { // Write first CSV row if file is empty
-                    fw.write("Type,Description,isDone,From,To\n");
+                    fw.write(String.format("%s\n", CSV_FILE_HEADERS_STRING));
                 }
             }
         } catch (IOException e) {
