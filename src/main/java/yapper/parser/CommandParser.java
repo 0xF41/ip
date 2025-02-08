@@ -28,6 +28,8 @@ import yapper.task.ToDosTask;
  */
 public class CommandParser {
 
+    private static final String ASSERT_FAIL_STRING = "Command not handled!";
+
     /**
      * Enum to represent the different types of commands.
      */
@@ -305,6 +307,7 @@ public class CommandParser {
         } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) { // find X
             return find(fullCmd, taskList);
         }
+        assert false : ASSERT_FAIL_STRING;
         return null;
     }
 

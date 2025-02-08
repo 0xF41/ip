@@ -21,6 +21,7 @@ public class FileManager {
 
     private static final String DATE_TIME_FORMAT_STRING = "dd-MM-yyyy HHmm";
     private static final String CSV_FILE_HEADERS_STRING = "Type,Description,isDone,From,To";
+    private static final String ASSERT_UNKNOWN_EVENT_TYPE = "Unknown event type: ";
 
     /**
      * Append text to file
@@ -132,7 +133,7 @@ public class FileManager {
                 taskList.add(ev);
                 break;
             default:
-                System.out.println("Unknown task: " + taskDescription + "is not loaded!");
+                assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
                 break;
             }
         }

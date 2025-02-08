@@ -10,6 +10,8 @@ import yapper.task.ToDosTask;
  */
 public class ToDosTaskCommand implements TaskCommand {
 
+    private static final String ASSERT_TASK_LIST_NEGATIVE_STRING = "Task list should not be negative.";
+
     /**
      * List of a Person's current tasks.
      */
@@ -50,6 +52,7 @@ public class ToDosTaskCommand implements TaskCommand {
     @Override
     public boolean execute(ArrayList<String> responseList) {
         taskList.add(td);
+        assert taskList.size() >= 0 : ASSERT_TASK_LIST_NEGATIVE_STRING;
         responseList.add("Got it. I've added this task:");
         responseList.add(td.toString());
         responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));

@@ -9,6 +9,9 @@ import yapper.task.Task;
  */
 public class DeleteCommand implements Command {
 
+    private static final String ASSERT_TASK_LIST_NEGATIVE_STRING = "Task list should not be negative.";
+    private static final String ASSERT_DELETE_TASKLIST_NOT_NULL_STRING = "EventsTask should not be null.";
+
     /**
      * List of a Person's current tasks.
      */
@@ -41,6 +44,7 @@ public class DeleteCommand implements Command {
         responseList.add("Noted. I've removed this task: ");
         responseList.add(taskList.get(idx).toString());
         taskList.remove(idx);
+        assert taskList.size() >= 0 : ASSERT_TASK_LIST_NEGATIVE_STRING;
         responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
         return true;
     }
@@ -53,6 +57,7 @@ public class DeleteCommand implements Command {
      * @return DeleteCommand object.
      */
     public static Command buildDeleteCommand(ArrayList<Task> taskList, int idx) {
+        assert taskList != null : ASSERT_DELETE_TASKLIST_NOT_NULL_STRING;
         return new DeleteCommand(taskList, idx);
     }
 }

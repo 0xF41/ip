@@ -20,6 +20,9 @@ import javafx.scene.layout.HBox;
  */
 public class DialogBox extends HBox {
 
+    private static final String ASSERT_EMPTY_DIALOG_LABEL_STRING = "Dialog label should not be null";
+    private static final String ASSERT_EMPTY_OBSERVABLE_LIST_STRING = "Observable list should not be null";
+
     // Solution below adapted from https://se-education.org/guides/tutorials/javaFxPart4.html
     @FXML
     private Label dialog;
@@ -35,6 +38,7 @@ public class DialogBox extends HBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert dialog != null : ASSERT_EMPTY_DIALOG_LABEL_STRING;
 
         dialog.setText(text);
         displayPicture.setImage(img);
@@ -45,6 +49,7 @@ public class DialogBox extends HBox {
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        assert tmp != null : ASSERT_EMPTY_OBSERVABLE_LIST_STRING;
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
