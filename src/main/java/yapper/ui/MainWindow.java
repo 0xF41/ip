@@ -102,4 +102,8 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getYapperDialog(fullResponseString, yapperImage));
     }
 
+    public void displayChatbotGreeting() {
+        String greeting = Ui.printGreet(yapper.getName());
+        dialogContainer.getChildren().add(DialogBox.getYapperDialog(greeting, yapperImage));
+    }
 }

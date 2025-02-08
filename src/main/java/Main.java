@@ -30,15 +30,35 @@ public class Main extends Application {
      * @throws IOException If the FXML file is not found.
      */
     private void loadScene(Stage stage, Yapper y1) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(FILE_PATH_MAIN_WINDOW_FXML));
-        AnchorPane ap = fxmlLoader.load();
+        // Load the FXML file
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FILE_PATH_MAIN_WINDOW_FXML));
+        AnchorPane ap = fxmlLoader.load();  // Load the FXML layout
+
+        // Get the controller from FXMLLoader
+        MainWindow controller = fxmlLoader.getController();
+
+        // Check if the controller is null, and ensure it's being injected correctly
+        if (controller == null) {
+            throw new NullPointerException("Controller is null after FXML load.");
+        }
+
+        // Inject the Yapper instance into the controller
+        controller.setYapper(y1);
+
+        // Create the scene and show the stage
         Scene scene = new Scene(ap);
         stage.setScene(scene);
-        fxmlLoader.<MainWindow>getController().setYapper(y1); // inject the Yapper instance
-        stage.setMinHeight(220);
-        stage.setMinWidth(417);
+        stage.setMinHeight(720);
+        stage.setMinWidth(1280);
+        stage.centerOnScreen();
+        stage.setTitle(CHATBOT_NAME);
+        stage.toFront();
         stage.show();
+
+        // Call displayChatbotGreeting after Yapper is set
+        controller.displayChatbotGreeting();
     }
+
 
     /**
      * Starts the JavaFX application. (GUI version)
