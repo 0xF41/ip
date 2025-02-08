@@ -2,11 +2,11 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.Events;
+import yapper.task.EventsTask;
 import yapper.task.Task;
 
 /**
- * Represents a command to add an Events task.
+ * Represents a command to add an EventsTask task.
  */
 public class EventsTaskCommand implements TaskCommand {
 
@@ -16,23 +16,23 @@ public class EventsTaskCommand implements TaskCommand {
     private ArrayList<Task> taskList;
 
     /**
-     * Events task to be added.
+     * EventsTask task to be added.
      */
-    private Events ev;
+    private EventsTask ev;
 
     /**
      * Constructs an EventsCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param ev       Events task to be added.
+     * @param ev       EventsTask task to be added.
      */
-    private EventsTaskCommand(ArrayList<Task> taskList, Events ev) {
+    private EventsTaskCommand(ArrayList<Task> taskList, EventsTask ev) {
         this.taskList = taskList;
         this.ev = ev;
     }
 
     /**
-     * Executes the command to add an Events task.
+     * Executes the command to add an EventsTask task.
      *
      * @return true to indicate the chatbot conversation should continue.
      */
@@ -46,9 +46,9 @@ public class EventsTaskCommand implements TaskCommand {
     }
 
     /**
-     * Returns the description of the Events task.
+     * Returns the description of the EventsTask task.
      *
-     * @return Description of the Events task.
+     * @return Description of the EventsTask task.
      */
     @Override
     public String getTaskDescription() {
@@ -59,10 +59,10 @@ public class EventsTaskCommand implements TaskCommand {
      * Builds an EventsCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param ev       Events task to be added.
+     * @param ev       EventsTask task to be added.
      * @return EventsCommand object.
      */
-    public static Command buildEventsCommand(ArrayList<Task> taskList, Events ev) {
+    public static Command buildEventsCommand(ArrayList<Task> taskList, EventsTask ev) {
         return new EventsTaskCommand(taskList, ev);
     }
 }

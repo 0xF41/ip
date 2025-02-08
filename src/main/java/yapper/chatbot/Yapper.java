@@ -39,13 +39,6 @@ public class Yapper {
     }
 
     /**
-     * Generates a response for the user's chat message.
-     */
-    public String getResponse(String input) {
-        return String.format("%s heard: %s", this.name, input);
-    }
-
-    /**
      * Returns the task list.
      *
      * @return The task list

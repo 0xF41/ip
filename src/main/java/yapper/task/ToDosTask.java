@@ -3,14 +3,14 @@ package yapper.task;
 /**
  * Represents a ToDos task.
  */
-public class ToDos extends Task {
+public class ToDosTask extends Task {
 
     /**
      * Constructs a ToDos object.
      *
      * @param description Description of the ToDos task.
      */
-    public ToDos(String description) {
+    public ToDosTask(String description) {
         super(description);
     }
 
