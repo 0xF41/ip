@@ -47,7 +47,8 @@ public class CommandParser {
     private static final String ERR_EMPTY_LIST_STRING = "List is empty!";
     private static final String ERR_MISSING_END_DATE_STRING = "Missing end date! Please specify using /by.";
     private static final String ERR_INVALID_DATE_FORMAT_STRING = "Invalid date format! Please use dd-MM-yyyy HHmm.";
-    private static final String ERR_MISSING_START_END_DATE_STRING = "Missing start/end date! Please specify using /from and /to.";
+    private static final String ERR_MISSING_START_END_DATE_STRING =
+            "Missing start/end date! Please specify using /from and /to.";
 
 
 
@@ -151,7 +152,8 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
     private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
-        return ToDosTaskCommand.buildToDosCommand(taskList, new ToDosTask(cmd.substring(COMMAND_TODO_STRING.length() + 1)));
+        return ToDosTaskCommand.buildToDosCommand(taskList,
+                new ToDosTask(cmd.substring(COMMAND_TODO_STRING.length() + 1)));
     }
 
     /**

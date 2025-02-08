@@ -58,29 +58,6 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Displays the user input and Yapper's response in the dialog container.
-     *
-     * @param input     The user's input.
-     * @param responses The responses to be displayed.
-     */
-    private void displayResponses(String input, String... responses) {
-        String fullResponseString = String.join("\n", responses);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getYapperDialog(fullResponseString, yapperImage));
-    }
-
-    /**
-     * Adds multiple responses to the response list using varargs.
-     *
-     * @param responseList The list to store responses.
-     * @param messages     The messages to be added.
-     */
-    private void addResponses(List<String> responseList, String... messages) {
-        responseList.addAll(Arrays.asList(messages));
-    }
-
-    /**
      * Creates two dialog boxes, one echoing user input and the other containing
      * Yapper's reply and then appends them to
      * the dialog container. Clears the user input after processing.
@@ -101,4 +78,28 @@ public class MainWindow extends AnchorPane {
         this.displayResponses(input, responseList.toArray(new String[0]));
         userInput.clear();
     }
+
+    /**
+     * Adds multiple responses to the response list using varargs.
+     *
+     * @param responseList The list to store responses.
+     * @param messages     The messages to be added.
+     */
+    private void addResponses(List<String> responseList, String... messages) {
+        responseList.addAll(Arrays.asList(messages));
+    }
+
+    /**
+     * Displays the user input and Yapper's response in the dialog container.
+     *
+     * @param input     The user's input.
+     * @param responses The responses to be displayed.
+     */
+    private void displayResponses(String input, String... responses) {
+        String fullResponseString = String.join("\n", responses);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getYapperDialog(fullResponseString, yapperImage));
+    }
+
 }

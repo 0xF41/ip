@@ -22,6 +22,23 @@ public class Main extends Application {
     private static final String ASSERT_YAPPER_NOT_NULL_STRING = "Yapper should not be null";
     private static final String ASSERT_PERSON_NOT_NULL_STRING = "Person should not be null";
 
+    /**
+     * Loads the main window scene.
+     *
+     * @param stage Stage to load the scene.
+     * @param y1    Yapper instance to inject into the MainWindow controller.
+     * @throws IOException If the FXML file is not found.
+     */
+    private void loadScene(Stage stage, Yapper y1) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(FILE_PATH_MAIN_WINDOW_FXML));
+        AnchorPane ap = fxmlLoader.load();
+        Scene scene = new Scene(ap);
+        stage.setScene(scene);
+        fxmlLoader.<MainWindow>getController().setYapper(y1); // inject the Yapper instance
+        stage.setMinHeight(220);
+        stage.setMinWidth(417);
+        stage.show();
+    }
 
     /**
      * Starts the JavaFX application. (GUI version)
@@ -37,14 +54,7 @@ public class Main extends Application {
         assert p1 != null : ASSERT_PERSON_NOT_NULL_STRING;
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(FILE_PATH_MAIN_WINDOW_FXML));
-            AnchorPane ap = fxmlLoader.load();
-            Scene scene = new Scene(ap);
-            stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setYapper(y1); // inject the Yapper instance
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
-            stage.show();
+            loadScene(stage, y1);
         } catch (IOException e) {
             e.printStackTrace();
         }
