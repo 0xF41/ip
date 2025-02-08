@@ -1,6 +1,8 @@
 package yapper.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,14 +47,36 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Injects the Yapper instance into the controller.
+     * Sets the Yapper object.
      *
-     * @param y Yapper instance to be injected.
+     * @param y Yapper object to be set.
      */
     public void setYapper(Yapper y) {
         yapper = y;
     }
 
+    /**
+     * Displays the user input and Yapper's response in the dialog container.
+     *
+     * @param input     The user's input.
+     * @param responses The responses to be displayed.
+     */
+    private void displayResponses(String input, String... responses) {
+        String fullResponseString = String.join("\n", responses);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getYapperDialog(fullResponseString, yapperImage));
+    }
+
+    /**
+     * Adds multiple responses to the response list using varargs.
+     *
+     * @param responseList The list to store responses.
+     * @param messages     The messages to be added.
+     */
+    private void addResponses(List<String> responseList, String... messages) {
+        responseList.addAll(Arrays.asList(messages));
+    }
 
     /**
      * Creates two dialog boxes, one echoing user input and the other containing
@@ -64,36 +88,14 @@ public class MainWindow extends AnchorPane {
 
         String input = userInput.getText();
         ArrayList<String> responseList = new ArrayList<>(); // List of responses to be displayed to the user
-        String fullResponseString = "";
         try {
             Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getFile());
             command.execute(responseList);
-        } catch (InvalidCommandSyntaxException e) {
-            responseList.add(e.getMessage());
-        } catch (IndexOutOfBoundsException e) {
-            responseList.add(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            responseList.add(e.getMessage());
+        } catch (InvalidCommandSyntaxException | IndexOutOfBoundsException | IllegalArgumentException e) {
+            this.addResponses(responseList, e.getMessage());
         }
 
-        for (String response : responseList) {
-            fullResponseString += response + "\n";
-        }
-
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getYapperDialog(fullResponseString, yapperImage));
-        userInput.clear();
-    }
-
-    /**
-     * Handles the error message.
-     *
-     * @param errorMessage Error message to be displayed.
-     */
-    public void handleError(String errorMessage) {
-        dialogContainer.getChildren().addAll(
-                DialogBox.getYapperDialog(errorMessage, yapperImage));
+        this.displayResponses(input, responseList.toArray(new String[0]));
         userInput.clear();
     }
 }
