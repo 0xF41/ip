@@ -71,5 +71,4 @@ public class Task {
     public String toString() {
         return String.format(TASK_INFO_FORMAT_STRING, this.getStatusIcon(), this.getDescription());
     }
-
 }

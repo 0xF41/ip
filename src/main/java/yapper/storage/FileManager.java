@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import yapper.task.DeadlineTask;
-import yapper.task.EventsTask;
+import yapper.task.DeadlineScheduleTask;
+import yapper.task.EventsScheduleTask;
 import yapper.task.Task;
 import yapper.task.ToDosTask;
 
@@ -59,9 +59,9 @@ public class FileManager {
             for (Task t : taskList) {
                 if (t instanceof ToDosTask) {
                     saveToDosTaskToFile(filePath, t);
-                } else if (t instanceof DeadlineTask) {
+                } else if (t instanceof DeadlineScheduleTask) {
                     saveDeadlineTaskToFile(filePath, t);
-                } else if (t instanceof EventsTask) {
+                } else if (t instanceof EventsScheduleTask) {
                     saveEventsTaskToFile(filePath, t);
                 } else {
                     System.out.println(String.format(ERR_TASK_NOT_ADDED_STRING, t, file.getName()));
@@ -83,7 +83,7 @@ public class FileManager {
      */
     private static void saveEventsTaskToFile(String filePath, Task t) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
-        EventsTask ev = (EventsTask) t;
+        EventsScheduleTask ev = (EventsScheduleTask) t;
         FileManager.appendToFile(filePath, String.format(
                 WRITE_FORMAT_STRING,
                 EVENTS_COMMAND_STRING, ev.getDescription(),
@@ -100,7 +100,7 @@ public class FileManager {
      */
     private static void saveDeadlineTaskToFile(String filePath, Task t) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
-        DeadlineTask dl = (DeadlineTask) t;
+        DeadlineScheduleTask dl = (DeadlineScheduleTask) t;
         FileManager.appendToFile(
                 filePath,
                 String.format(
@@ -195,7 +195,7 @@ public class FileManager {
             String taskIsDone, String taskFrom, String taskTo) {
         LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
         LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-        EventsTask ev = new EventsTask(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
+        EventsScheduleTask ev = new EventsScheduleTask(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
         if (taskIsDone.equals(IS_DONE_SYMBOL)) {
             ev.markAsDone();
         }
@@ -214,7 +214,7 @@ public class FileManager {
     private static void loadDeadlineTaskFromFile(ArrayList<Task> taskList,
             DateTimeFormatter dtf, String taskDescription, String taskIsDone, String taskTo) {
         LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
-        DeadlineTask dl = new DeadlineTask(taskDescription, taskByLocalDateTime);
+        DeadlineScheduleTask dl = new DeadlineScheduleTask(taskDescription, taskByLocalDateTime);
         if (taskIsDone.equals(IS_DONE_SYMBOL)) {
             dl.markAsDone();
         }
