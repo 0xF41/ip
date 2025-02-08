@@ -1,6 +1,7 @@
 package yapper.commands;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import yapper.task.Task;
 
@@ -40,12 +41,18 @@ public class FindTaskCommand implements Command {
             responseList.add(String.format(NOT_FOUND_STRING, searchTerm));
             return true;
         }
-        for (int i = 0, n = taskList.size(); i < n; i++) { // O(nm)
-            Task t = taskList.get(i);
-            if (t.getDescription().contains(searchTerm)) {
-                responseList.add(String.format(LIST_OUTPUT_FORMAT_STRING, i + 1, t));
-            }
+
+        AtomicInteger idx = new AtomicInteger(1); // To track the index for formatting
+        taskList.stream()
+                .filter(task -> task.getDescription().contains(searchTerm))
+                .map(task -> String.format(LIST_OUTPUT_FORMAT_STRING, idx.getAndIncrement(), task))
+                .forEach(responseList::add);
+
+        if (responseList.isEmpty()) {
+            responseList.add(String.format(NOT_FOUND_STRING, searchTerm));
+            return true;
         }
+
         return true;
     }
 
