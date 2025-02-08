@@ -15,9 +15,9 @@ import yapper.commands.FindTaskCommand;
 import yapper.commands.HelpCommand;
 import yapper.commands.ListCommand;
 import yapper.commands.MarkCommand;
+import yapper.commands.RescheduleCommand;
 import yapper.commands.ToDosTaskCommand;
 import yapper.commands.UnmarkCommand;
-import yapper.commands.RescheduleCommand;
 import yapper.data.exception.InvalidCommandSyntaxException;
 import yapper.task.DeadlineScheduleTask;
 import yapper.task.EventsScheduleTask;
@@ -49,7 +49,8 @@ public class CommandParser {
     private static final String ERR_EMPTY_LIST_STRING = "List is empty!";
     private static final String ERR_MISSING_END_DATE_STRING = "Missing end date! Please specify using /by.";
     private static final String ERR_INVALID_DATE_FORMAT_STRING = "Invalid date format! Please use dd-MM-yyyy HHmm.";
-    private static final String ERR_MISSING_START_END_DATE_STRING = "Missing start/end date! Please specify using /from and /to.";
+    private static final String ERR_MISSING_START_END_DATE_STRING =
+            "Missing start/end date! Please specify using /from and /to.";
 
     /**
      * Enum to represent the different types of commands.
@@ -367,25 +368,25 @@ public class CommandParser {
         String cmd = fullCmd.split(" ")[0];
         if (CommandOption.fromString(cmd).equals(CommandOption.LIST)) { // list tasks
             return buildListCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.MARK)) { // mark X
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.MARK)) {
             return buildMarkCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.UNMARK)) { // unmark X
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.UNMARK)) {
             return buildUnmarkCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.TODO)) { // todo X
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.TODO)) {
             return buildToDosCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.DEADLINE)) { // deadline X /by Y
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.DEADLINE)) {
             return buildDeadlineCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.EVENT)) { // event X /from Y /to Z
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.EVENT)) {
             return buildEventCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.DELETE)) { // delete X
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.DELETE)) {
             return buildDeleteCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.BYE)) { // bye
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.BYE)) {
             return buildByeCommand(fullCmd, taskList, file);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) { // help
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) {
             return buildHelpCommand();
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) { // find X
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) {
             return buildFindCommand(fullCmd, taskList);
-        } else if (CommandOption.fromString(cmd).equals(CommandOption.RESCHEDULE)) { // reschedule X /from Y /to Z
+        } else if (CommandOption.fromString(cmd).equals(CommandOption.RESCHEDULE)) {
             return buildRescheduleCommand(fullCmd, taskList);
         }
         assert false : ASSERT_FAIL_STRING;

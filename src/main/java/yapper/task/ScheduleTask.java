@@ -2,17 +2,10 @@ package yapper.task;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a task that can be scheduled.
+ */
 public abstract class ScheduleTask extends Task {
-    /**
-     * Reschedules the task to a new date and time.
-     *
-     * @param newDateTime New date and time for the task.
-     * @return The rescheduled task.
-     */
-    public ScheduleTask reschedule(LocalDateTime... newDateTime) {
-        assert newDateTime.length == 1 : "Only one new date and time should be provided.";
-        return null;
-    }
 
     /**
      * Constructs a ScheduableTask object.
@@ -21,5 +14,16 @@ public abstract class ScheduleTask extends Task {
      */
     public ScheduleTask(String description) {
         super(description);
+    }
+
+    /**
+     * Reschedules the task to a new date and time.
+     *
+     * @param newDateTime New date and time for the task.
+     * @return The rescheduled task.
+     */
+    public ScheduleTask reschedule(LocalDateTime... newDateTime) {
+        assert false : "This method should be overridden.";
+        return null;
     }
 }
