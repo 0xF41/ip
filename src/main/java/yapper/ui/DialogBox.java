@@ -30,7 +30,6 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
-
     /**
      * Constructs a dialog box.
      *
@@ -60,7 +59,6 @@ public class DialogBox extends HBox {
         fxmlLoader.setRoot(this);
         fxmlLoader.load();
     }
-
 
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
