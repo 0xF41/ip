@@ -1,6 +1,7 @@
 package yapper.commands;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import yapper.task.Task;
 
@@ -38,10 +39,12 @@ public class ListCommand implements Command {
             responseList.add(LIST_EMPTY_STRING);
             return true;
         }
-        for (int i = 0, n = taskList.size(); i < n; i++) {
-            Task t = taskList.get(i);
-            responseList.add(String.format(LIST_OUTPUT_FORMAT_STRING, i + 1, t));
-        }
+
+        AtomicInteger idx = new AtomicInteger(1); // To track the index for formatting
+        taskList.stream()
+                .map(task -> String.format(LIST_OUTPUT_FORMAT_STRING, idx.getAndIncrement(), task))
+                .forEach(responseList::add);
+
         return true;
     }
 
