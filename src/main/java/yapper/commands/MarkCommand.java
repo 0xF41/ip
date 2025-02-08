@@ -9,6 +9,8 @@ import yapper.task.Task;
  */
 public class MarkCommand implements Command {
 
+    private static final String ASSERT_TASK_NULL_STRING = "Task should not be null.";
+
     /**
      * List of a Person's current tasks.
      */
@@ -39,6 +41,7 @@ public class MarkCommand implements Command {
     @Override
     public boolean execute(ArrayList<String> responseList) {
         Task t = this.taskList.get(this.idx);
+        assert t != null : ASSERT_TASK_NULL_STRING;
         t.markAsDone();
         responseList.add("Nice! I've marked this task as done:");
         responseList.add(t.toString());

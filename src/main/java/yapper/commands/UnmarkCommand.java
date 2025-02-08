@@ -9,6 +9,8 @@ import yapper.task.Task;
  */
 public class UnmarkCommand implements Command {
 
+    private static final String ASSERT_TASK_NULL_STRING = "Task should not be null.";
+
     /**
      * List of a Person's current tasks.
      */
@@ -39,6 +41,7 @@ public class UnmarkCommand implements Command {
     @Override
     public boolean execute(ArrayList<String> responseList) {
         Task t = taskList.get(idx);
+        assert t != null : ASSERT_TASK_NULL_STRING;
         t.markAsUndone();
         responseList.add("OK, I've marked this task as not done yet:");
         responseList.add(t.toString());

@@ -24,6 +24,8 @@ public class MainWindow extends AnchorPane {
     private static final String USER_IMAGE = "/images/jesse.jpg";
     private static final String YAPPER_IMAGE = "/images/heisenberg.jpg";
 
+    private static final String ASSERT_RESPONSE_LIST_EMPTY = "Response list should not be empty.";
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -94,6 +96,7 @@ public class MainWindow extends AnchorPane {
         } catch (InvalidCommandSyntaxException | IndexOutOfBoundsException | IllegalArgumentException e) {
             this.addResponses(responseList, e.getMessage());
         }
+        assert responseList.size() > 0 : ASSERT_RESPONSE_LIST_EMPTY;
 
         this.displayResponses(input, responseList.toArray(new String[0]));
         userInput.clear();

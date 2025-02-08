@@ -39,6 +39,15 @@ public class Yapper {
     }
 
     /**
+     * Returns the name of the chatbot.
+     *
+     * @return The name of the chatbot
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
      * Returns the task list.
      *
      * @return The task list
