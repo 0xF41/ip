@@ -83,7 +83,7 @@ public class CommandParser {
      * @return List command.
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
-    private static Command list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command buildListCommand(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length != 1) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
@@ -102,7 +102,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      * @throws IndexOutOfBoundsException     If the index is out of bounds.
      */
-    private static Command mark(String cmd, ArrayList<Task> taskList)
+    private static Command buildMarkCommand(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
@@ -127,7 +127,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      * @throws IndexOutOfBoundsException     If the index is out of bounds.
      */
-    private static Command unmark(String cmd, ArrayList<Task> taskList)
+    private static Command buildUnmarkCommand(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
@@ -151,7 +151,7 @@ public class CommandParser {
      * @return Todo command.
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
-    private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command buildToDosCommand(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         return ToDosTaskCommand.buildToDosCommand(taskList,
                 new ToDosTask(cmd.substring(COMMAND_TODO_STRING.length() + 1)));
     }
@@ -164,7 +164,7 @@ public class CommandParser {
      * @return DeadlineTask command.
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
-    private static Command deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command buildDeadlineCommand(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
@@ -199,7 +199,7 @@ public class CommandParser {
      * @return Event command.
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
-    private static Command event(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command buildEventCommand(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
 
         if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
@@ -243,7 +243,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      * @throws IndexOutOfBoundsException     If the index is out of bounds.
      */
-    private static Command delete(String cmd, ArrayList<Task> taskList)
+    private static Command buildDeleteCommand(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
@@ -268,7 +268,7 @@ public class CommandParser {
      * @return Bye command.
      * @throws InvalidCommandSyntaxException If the command is invalid
      */
-    private static Command bye(String fullCmd, ArrayList<Task> taskList, File file)
+    private static Command buildByeCommand(String fullCmd, ArrayList<Task> taskList, File file)
             throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length != 1) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
@@ -281,7 +281,7 @@ public class CommandParser {
      *
      * @return Find command.
      */
-    private static Command find(String fullCmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
+    private static Command buildFindCommand(String fullCmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
@@ -293,7 +293,7 @@ public class CommandParser {
      *
      * @return Help command.
      */
-    private static Command help() {
+    private static Command buildHelpCommand() {
         return HelpCommand.buildHelpCommand();
     }
 
@@ -311,25 +311,25 @@ public class CommandParser {
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         String cmd = fullCmd.split(" ")[0];
         if (CommandOption.fromString(cmd).equals(CommandOption.LIST)) { // list tasks
-            return list(fullCmd, taskList);
+            return buildListCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.MARK)) { // mark X
-            return mark(fullCmd, taskList);
+            return buildMarkCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.UNMARK)) { // unmark X
-            return unmark(fullCmd, taskList);
+            return buildUnmarkCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.TODO)) { // todo X
-            return todo(fullCmd, taskList);
+            return buildToDosCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.DEADLINE)) { // deadline X /by Y
-            return deadline(fullCmd, taskList);
+            return buildDeadlineCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.EVENT)) { // event X /from Y /to Z
-            return event(fullCmd, taskList);
+            return buildEventCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.DELETE)) { // delete X
-            return delete(fullCmd, taskList);
+            return buildDeleteCommand(fullCmd, taskList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.BYE)) { // bye
-            return bye(fullCmd, taskList, file);
+            return buildByeCommand(fullCmd, taskList, file);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) { // help
-            return help();
+            return buildHelpCommand();
         } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) { // find X
-            return find(fullCmd, taskList);
+            return buildFindCommand(fullCmd, taskList);
         }
         assert false : ASSERT_FAIL_STRING;
         return null;
