@@ -20,21 +20,25 @@ import javafx.scene.layout.HBox;
  */
 public class DialogBox extends HBox {
 
+    private static final String DIALOG_REPLY_LABEL_FIELD_STRING = "reply-label";
+    private static final String DIALOG_BOX_FXML_FILEPATH = "/view/DialogBox.fxml";
     private static final String ASSERT_EMPTY_DIALOG_LABEL_STRING = "Dialog label should not be null";
     private static final String ASSERT_EMPTY_OBSERVABLE_LIST_STRING = "Observable list should not be null";
 
-    // Solution below adapted from https://se-education.org/guides/tutorials/javaFxPart4.html
     @FXML
     private Label dialog;
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Constructs a dialog box.
+     *
+     * @param text The text to display
+     * @param img  The image to display
+     */
     private DialogBox(String text, Image img) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
-            fxmlLoader.setController(this);
-            fxmlLoader.setRoot(this);
-            fxmlLoader.load();
+            this.loadFxml();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,6 +46,18 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+    }
+
+    /**
+     * Loads the FXML file for the dialog box.
+     *
+     * @throws IOException If the FXML file is not found.
+     */
+    private void loadFxml() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource(DIALOG_BOX_FXML_FILEPATH));
+        fxmlLoader.setController(this);
+        fxmlLoader.setRoot(this);
+        fxmlLoader.load();
     }
 
     /**
@@ -53,7 +69,7 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
-        dialog.getStyleClass().add("reply-label");
+        dialog.getStyleClass().add(DIALOG_REPLY_LABEL_FIELD_STRING);
     }
 
     /**

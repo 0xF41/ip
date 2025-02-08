@@ -5,6 +5,8 @@ package yapper.task;
  */
 public class ToDosTask extends Task {
 
+    private static final String TODOS_INFO_FORMAT_STRING = "[T]%s";
+
     /**
      * Constructs a ToDos object.
      *
@@ -19,6 +21,6 @@ public class ToDosTask extends Task {
      */
     @Override
     public String toString() {
-        return String.format("[T]%s", super.toString());
+        return String.format(TODOS_INFO_FORMAT_STRING, super.toString());
     }
 }

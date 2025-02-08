@@ -12,6 +12,8 @@ import yapper.task.Task;
  */
 public class Person {
 
+    private static final String ERR_FILE_NOT_FOUND_FORMAT_STRING = "Existing file %s not found.";
+
     /**
      * Path of Person's file to cache user tasks
      */
@@ -37,7 +39,7 @@ public class Person {
         try {
             this.taskList = FileManager.loadFileContents(this.file);
         } catch (FileNotFoundException e) {
-            System.out.println(String.format("Existing file %s not found.", this.taskFileName));
+            System.out.println(String.format(ERR_FILE_NOT_FOUND_FORMAT_STRING, this.taskFileName));
             this.taskList = new ArrayList<>();
         }
     }

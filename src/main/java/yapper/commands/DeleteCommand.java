@@ -9,6 +9,10 @@ import yapper.task.Task;
  */
 public class DeleteCommand implements Command {
 
+    private static final String DELETE_REMAINING_TASKS_STRING = "Now you have %d tasks in the list.";
+
+    private static final String DELETE_INFO_STRING = "Noted. I've removed this task: ";
+
     private static final String ASSERT_TASK_LIST_NEGATIVE_STRING = "Task list should not be negative.";
     private static final String ASSERT_DELETE_TASKLIST_NOT_NULL_STRING = "EventsTask should not be null.";
 
@@ -41,11 +45,11 @@ public class DeleteCommand implements Command {
      */
     @Override
     public boolean execute(ArrayList<String> responseList) {
-        responseList.add("Noted. I've removed this task: ");
+        responseList.add(DELETE_INFO_STRING);
         responseList.add(taskList.get(idx).toString());
         taskList.remove(idx);
         assert taskList.size() >= 0 : ASSERT_TASK_LIST_NEGATIVE_STRING;
-        responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
+        responseList.add(String.format(DELETE_REMAINING_TASKS_STRING, taskList.size()));
         return true;
     }
 
