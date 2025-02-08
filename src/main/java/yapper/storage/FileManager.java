@@ -19,6 +19,14 @@ import yapper.task.ToDosTask;
  */
 public class FileManager {
 
+    private static final String EVENTS_COMMAND_STRING = "Events";
+    private static final String WRITE_STRING_FORMAT_STRING = "%s\n";
+    private static final String ERR_FILE_ERROR_OCCURRED = "File error occurred.";
+    private static final String IS_DONE_SYMBOL = "X";
+    private static final String ERR_TASK_NOT_ADDED_STRING = "%s is not added to %s.";
+    private static final String DEADLINE_COMMAND_STRING = "Deadline";
+    private static final String TODOS_COMMAND_STRING = "Todos";
+    private static final String WRITE_FORMAT_STRING = "%s,%s,%s,%s,%s";
     private static final String DATE_TIME_FORMAT_STRING = "dd-MM-yyyy HHmm";
     private static final String CSV_FILE_HEADERS_STRING = "Type,Description,isDone,From,To";
     private static final String ASSERT_UNKNOWN_EVENT_TYPE = "Unknown event type: ";
@@ -47,26 +55,26 @@ public class FileManager {
     public static boolean saveFileContents(File file, ArrayList<Task> taskList) {
         String filePath = file.getName();
         try {
-            appendToFile(filePath, "Type,Description,isDone,From,To", false);
+            appendToFile(filePath, CSV_FILE_HEADERS_STRING, false);
             for (Task t : taskList) {
                 if (t instanceof ToDosTask) {
                     ToDosTask td = (ToDosTask) t;
                     FileManager.appendToFile(filePath,
-                            String.format("%s,%s,%s,%s,%s", "Todos", td.getDescription(), td.getStatusIcon(), "", ""),
+                            String.format(WRITE_FORMAT_STRING, TODOS_COMMAND_STRING, td.getDescription(), td.getStatusIcon(), "", ""),
                             true);
                 } else if (t instanceof DeadlineTask) {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
                     DeadlineTask dl = (DeadlineTask) t;
-                    FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Deadline", dl.getDescription(),
+                    FileManager.appendToFile(filePath, String.format(WRITE_FORMAT_STRING, DEADLINE_COMMAND_STRING, dl.getDescription(),
                             dl.getStatusIcon(), "", dl.getByLocalDateTime().format(dtf)), true);
                 } else if (t instanceof EventsTask) {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
                     EventsTask ev = (EventsTask) t;
-                    FileManager.appendToFile(filePath, String.format("%s,%s,%s,%s,%s", "Events", ev.getDescription(),
+                    FileManager.appendToFile(filePath, String.format(WRITE_FORMAT_STRING, EVENTS_COMMAND_STRING, ev.getDescription(),
                             ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
                             ev.getToLocalDateTime().format(dtf)), true);
                 } else {
-                    System.out.println(String.format("%s is not added to %s.", t, file.getName()));
+                    System.out.println(String.format(ERR_TASK_NOT_ADDED_STRING, t, file.getName()));
                 }
             }
         } catch (IOException e) {
@@ -108,26 +116,26 @@ public class FileManager {
                 taskTo = tokens[4]; // task by in EventsTask
             }
             switch (taskType) {
-            case "Todos":
+            case TODOS_COMMAND_STRING:
                 ToDosTask td = new ToDosTask(taskDescription);
-                if (taskIsDone.equals("X")) {
+                if (taskIsDone.equals(IS_DONE_SYMBOL)) {
                     td.markAsDone();
                 }
                 taskList.add(td);
                 break;
-            case "Deadline":
+            case DEADLINE_COMMAND_STRING:
                 LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
                 DeadlineTask dl = new DeadlineTask(taskDescription, taskByLocalDateTime);
-                if (taskIsDone.equals("X")) {
+                if (taskIsDone.equals(IS_DONE_SYMBOL)) {
                     dl.markAsDone();
                 }
                 taskList.add(dl);
                 break;
-            case "Event":
+            case EVENTS_COMMAND_STRING:
                 LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
                 LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
                 EventsTask ev = new EventsTask(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
-                if (taskIsDone.equals("X")) {
+                if (taskIsDone.equals(IS_DONE_SYMBOL)) {
                     ev.markAsDone();
                 }
                 taskList.add(ev);
@@ -155,11 +163,11 @@ public class FileManager {
 
             try (FileWriter fw = new FileWriter(file, true)) {
                 if (file.length() == 0) { // Write first CSV row if file is empty
-                    fw.write(String.format("%s\n", CSV_FILE_HEADERS_STRING));
+                    fw.write(String.format(WRITE_STRING_FORMAT_STRING, CSV_FILE_HEADERS_STRING));
                 }
             }
         } catch (IOException e) {
-            System.out.println("File error occurred.");
+            System.out.println(ERR_FILE_ERROR_OCCURRED);
             System.out.println(e.getLocalizedMessage());
             return null;
         }

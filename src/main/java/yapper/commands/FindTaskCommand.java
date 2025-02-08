@@ -9,6 +9,9 @@ import yapper.task.Task;
  */
 public class FindTaskCommand implements Command {
 
+    private static final String NOT_FOUND_STRING = "Tasks with search term \"%s\" not found!";
+    private static final String LIST_OUTPUT_FORMAT_STRING = "%d. %s";
+
     /**
      * List of a Person's current tasks.
      */
@@ -34,13 +37,13 @@ public class FindTaskCommand implements Command {
     @Override
     public boolean execute(ArrayList<String> responseList) {
         if (this.taskList.isEmpty()) {
-            responseList.add(String.format("Tasks with search term \"%s\" not found!", searchTerm));
+            responseList.add(String.format(NOT_FOUND_STRING, searchTerm));
             return true;
         }
         for (int i = 0, n = taskList.size(); i < n; i++) { // O(nm)
             Task t = taskList.get(i);
             if (t.getDescription().contains(searchTerm)) {
-                responseList.add(String.format("%d. %s", i + 1, t));
+                responseList.add(String.format(LIST_OUTPUT_FORMAT_STRING, i + 1, t));
             }
         }
         return true;

@@ -12,6 +12,8 @@ public class EventsTaskCommand implements TaskCommand {
 
     private static final String ASSERT_TASK_LIST_NEGATIVE_STRING = "Task list should not be negative.";
     private static final String ASSERT_EVENTS_TASK_NOT_NULL_STRING = "EventsTask should not be null.";
+    private static final String DELETE_INFO_STRING = "Got it. I've added this task:";
+    private static final String DELETE_REMAINING_TASKS_STRING = "Now you have %d tasks in the list.";
 
     /**
      * List of a Person's current tasks.
@@ -43,9 +45,9 @@ public class EventsTaskCommand implements TaskCommand {
     public boolean execute(ArrayList<String> responseList) {
         taskList.add(ev);
         assert taskList.size() >= 0 : ASSERT_TASK_LIST_NEGATIVE_STRING;
-        responseList.add("Got it. I've added this task:");
+        responseList.add(DELETE_INFO_STRING);
         responseList.add(ev.toString());
-        responseList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
+        responseList.add(String.format(DELETE_REMAINING_TASKS_STRING, taskList.size()));
         return true;
     }
 

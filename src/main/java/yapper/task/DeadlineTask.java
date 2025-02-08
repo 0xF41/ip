@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class DeadlineTask extends Task {
 
+    private static final String DEADLINE_INFO_FORMAT_STRING = "[D]%s (by: %s)";
+    private static final String DTF_FORMATTER_STRING = "dd-MMM-yyyy";
     /**
      * Represents the Deadline of the task
      */
@@ -38,7 +40,7 @@ public class DeadlineTask extends Task {
      */
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        return String.format("[D]%s (by: %s)", super.toString(), this.byLocalDateTime.format(formatter));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
+        return String.format(DEADLINE_INFO_FORMAT_STRING, super.toString(), this.byLocalDateTime.format(formatter));
     }
 }

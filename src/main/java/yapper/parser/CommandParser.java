@@ -30,11 +30,33 @@ public class CommandParser {
 
     private static final String ASSERT_FAIL_STRING = "Command not handled!";
 
+    private static final int BY_MAGIC_LENGTH_INT = 4;
+    private static final int DEADLINE_MAGIC_LENGTH_INT = 9;
+    private static final int FROM_MAGIC_LENGTH_INT = 6;
+
+    private static final String COMMAND_EVENT_STRING = "event";
+    private static final String COMMAND_DEADLINE_STRING = "deadline";
+    private static final String COMMAND_TODO_STRING = "todo";
+    private static final String SUBCOMMAND_FROM_STRING = "/from";
+    private static final String SUBCOMMAND_TO_STRING = "/to";
+    private static final String SUBCOMMAND_BY_STRING = "/by";
+
+    private static final String DATE_TIME_FORMATTER_PATTERN_STRING = "dd-MM-yyyy HHmm";
+
+    private static final String ERR_SEE_USAGE_STRING = "See usage with \"help\"";
+    private static final String ERR_EMPTY_LIST_STRING = "List is empty!";
+    private static final String ERR_MISSING_END_DATE_STRING = "Missing end date! Please specify using /by.";
+    private static final String ERR_INVALID_DATE_FORMAT_STRING = "Invalid date format! Please use dd-MM-yyyy HHmm.";
+    private static final String ERR_MISSING_START_END_DATE_STRING = "Missing start/end date! Please specify using /from and /to.";
+
+
+
     /**
      * Enum to represent the different types of commands.
      */
     public enum CommandOption {
         LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, BYE, HELP, FIND;
+
 
         /**
          * Converts a string to a CommandOption.
@@ -47,7 +69,7 @@ public class CommandParser {
             try {
                 return CommandOption.valueOf(command.trim().toUpperCase());
             } catch (IllegalArgumentException e) {
-                throw new InvalidCommandSyntaxException("See usage with \"help\"");
+                throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
             }
         }
     }
@@ -62,10 +84,10 @@ public class CommandParser {
      */
     private static Command list(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length != 1) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         if (taskList.isEmpty()) {
-            throw new InvalidCommandSyntaxException("List is empty!");
+            throw new InvalidCommandSyntaxException(ERR_EMPTY_LIST_STRING);
         }
         return ListCommand.buildListCommand(taskList);
     }
@@ -82,15 +104,15 @@ public class CommandParser {
     private static Command mark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
-            throw new InvalidCommandSyntaxException("Usage: mark <task-index>");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         return MarkCommand.buildMarkCommand(taskList, idx);
     }
@@ -107,15 +129,15 @@ public class CommandParser {
     private static Command unmark(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         return UnmarkCommand.buildUnmarkCommand(taskList, idx);
     }
@@ -129,7 +151,7 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid.
      */
     private static Command todo(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
-        return ToDosTaskCommand.buildToDosCommand(taskList, new ToDosTask(cmd.substring("todo".length() + 1)));
+        return ToDosTaskCommand.buildToDosCommand(taskList, new ToDosTask(cmd.substring(COMMAND_TODO_STRING.length() + 1)));
     }
 
     /**
@@ -142,28 +164,28 @@ public class CommandParser {
      */
     private static Command deadline(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (cmd.split(" ").length < 2) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
 
-        int deadlineIndex = cmd.indexOf("deadline") + 9;
+        int deadlineIndex = cmd.indexOf(COMMAND_DEADLINE_STRING) + DEADLINE_MAGIC_LENGTH_INT;
         int byIndex = -1;
         String description = "";
         String dueDateString = "";
         try {
-            byIndex = cmd.indexOf("/by");
+            byIndex = cmd.indexOf(SUBCOMMAND_BY_STRING);
             description = cmd.substring(deadlineIndex, byIndex).trim();
             cmd.substring(deadlineIndex, byIndex).trim();
-            dueDateString = cmd.substring(byIndex + 4).trim();
+            dueDateString = cmd.substring(byIndex + BY_MAGIC_LENGTH_INT).trim();
         } catch (StringIndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("Missing end date! Please specify using /by.");
+            throw new InvalidCommandSyntaxException(ERR_MISSING_END_DATE_STRING);
         }
 
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER_PATTERN_STRING);
             LocalDateTime byLocalDateTime = LocalDateTime.parse(dueDateString, dtf);
             return DeadlineTaskCommand.buildDeadlineCommand(taskList, new DeadlineTask(description, byLocalDateTime));
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
+            throw new InvalidCommandSyntaxException(ERR_INVALID_DATE_FORMAT_STRING);
         }
     }
 
@@ -178,10 +200,10 @@ public class CommandParser {
     private static Command event(String cmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
 
         if (cmd.split(" ").length < 2) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
 
-        int eventIndex = cmd.indexOf("event") + 6; // Start after "event "
+        int eventIndex = cmd.indexOf(COMMAND_EVENT_STRING) + 6; // Start after "event "
         int fromIndex = -1;
         int toIndex = -1;
 
@@ -190,23 +212,23 @@ public class CommandParser {
         String toTimeString = "";
 
         try {
-            fromIndex = cmd.indexOf("/from");
-            toIndex = cmd.indexOf("/to");
+            fromIndex = cmd.indexOf(SUBCOMMAND_FROM_STRING);
+            toIndex = cmd.indexOf(SUBCOMMAND_TO_STRING);
             description = cmd.substring(eventIndex, fromIndex).trim();
-            fromTimeString = cmd.substring(fromIndex + 6, toIndex).trim();
-            toTimeString = cmd.substring(toIndex + 4).trim();
+            fromTimeString = cmd.substring(fromIndex + FROM_MAGIC_LENGTH_INT, toIndex).trim();
+            toTimeString = cmd.substring(toIndex + BY_MAGIC_LENGTH_INT).trim();
         } catch (StringIndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("Missing start/end date! Please specify using /from and /to.");
+            throw new InvalidCommandSyntaxException(ERR_MISSING_START_END_DATE_STRING);
         }
 
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMATTER_PATTERN_STRING);
             LocalDateTime fromLocalDateTime = LocalDateTime.parse(fromTimeString, dtf);
             LocalDateTime toLocalDateTime = LocalDateTime.parse(toTimeString, dtf);
             return EventsTaskCommand.buildEventsCommand(taskList,
                     new EventsTask(description, fromLocalDateTime, toLocalDateTime));
         } catch (DateTimeParseException e) {
-            throw new InvalidCommandSyntaxException("Invalid date format! Please use dd-MM-yyyy HHmm.");
+            throw new InvalidCommandSyntaxException(ERR_INVALID_DATE_FORMAT_STRING);
         }
     }
 
@@ -222,15 +244,15 @@ public class CommandParser {
     private static Command delete(String cmd, ArrayList<Task> taskList)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
         if (cmd.split(" ").length != 2) {
-            throw new InvalidCommandSyntaxException("Type \"help\" for command list");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         int idx = -1;
         try {
             idx = Integer.parseInt(cmd.split(" ")[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException("See usage with \"help\"");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         return DeleteCommand.buildDeleteCommand(taskList, idx);
     }
@@ -247,7 +269,7 @@ public class CommandParser {
     private static Command bye(String fullCmd, ArrayList<Task> taskList, File file)
             throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length != 1) {
-            throw new InvalidCommandSyntaxException("Type \"help\" for command list");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
         return ByeCommand.buildByeCommand(taskList, file);
     }
@@ -259,9 +281,9 @@ public class CommandParser {
      */
     private static Command find(String fullCmd, ArrayList<Task> taskList) throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length < 2) {
-            throw new InvalidCommandSyntaxException("Type \"help\" for command list");
+            throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
-        return FindTaskCommand.buildFindCommand(taskList, fullCmd.substring("todo".length() + 1));
+        return FindTaskCommand.buildFindCommand(taskList, fullCmd.substring(COMMAND_TODO_STRING.length() + 1));
     }
 
     /**

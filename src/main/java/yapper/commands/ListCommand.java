@@ -9,6 +9,9 @@ import yapper.task.Task;
  */
 public class ListCommand implements Command {
 
+    private static final String LIST_EMPTY_STRING = "List is empty!";
+    private static final String LIST_OUTPUT_FORMAT_STRING = "%d. %s";
+
     /**
      * List of a Person's current tasks.
      */
@@ -32,12 +35,12 @@ public class ListCommand implements Command {
     @Override
     public boolean execute(ArrayList<String> responseList) {
         if (this.taskList.isEmpty()) {
-            responseList.add("List is empty!");
+            responseList.add(LIST_EMPTY_STRING);
             return true;
         }
         for (int i = 0, n = taskList.size(); i < n; i++) {
             Task t = taskList.get(i);
-            responseList.add(String.format("%d. %s", i + 1, t));
+            responseList.add(String.format(LIST_OUTPUT_FORMAT_STRING, i + 1, t));
         }
         return true;
     }

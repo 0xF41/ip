@@ -6,6 +6,12 @@ package yapper.task;
  */
 public class Task {
 
+    private static final String TASK_INFO_FORMAT_STRING = "[%s] %s";
+
+    private static final String EMPTY_SYMBOL_STRING = " ";
+
+    private static final String DONE_SYMBOL_STRING = "X";
+
     /**
      * Description of the task.
      */
@@ -32,7 +38,7 @@ public class Task {
      * @return a character indicating the status icon of the Task.
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? DONE_SYMBOL_STRING : EMPTY_SYMBOL_STRING); // mark done task with X
     }
 
     /**
@@ -63,7 +69,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return String.format("[%s] %s", this.getStatusIcon(), this.getDescription());
+        return String.format(TASK_INFO_FORMAT_STRING, this.getStatusIcon(), this.getDescription());
     }
 
 }

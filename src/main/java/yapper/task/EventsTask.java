@@ -8,6 +8,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class EventsTask extends Task {
 
+    private static final String EVENTS_INFO_FORMAT_STRING = "[E]%s (from: %s to: %s)";
+    private static final String DTF_FORMATTER_STRING = "dd-MMM-yyyy HHmm";
+
     /**
      * Represents the instance of when the Events is started
      */
@@ -54,8 +57,8 @@ public class EventsTask extends Task {
      */
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy HHmm");
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), this.fromLocalDateTime.format(formatter),
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
+        return String.format(EVENTS_INFO_FORMAT_STRING, super.toString(), this.fromLocalDateTime.format(formatter),
                 this.toLocalDateTime.format(formatter));
     }
 }

@@ -12,6 +12,8 @@ import yapper.task.Task;
  */
 public class ByeCommand implements Command {
 
+    private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
+
     /**
      * List of a Person's current tasks.
      */
@@ -41,7 +43,7 @@ public class ByeCommand implements Command {
     @Override
     public boolean execute(ArrayList<String> responseList) {
         FileManager.saveFileContents(file, taskList);
-        responseList.add("Bye. Hope to see you again soon!");
+        responseList.add(BYE_MESSAGE);
         Platform.exit();
         System.exit(0);
         return false;
