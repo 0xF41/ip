@@ -1,47 +1,51 @@
-# 📌 Yapper Usage Guide
----
+# Yapper
 
-## 💬 General Commands
-- **`bye`** - End the conversation with the chatbot
-- **`help`** - Show this help menu
-- **`list`** - Show the current task list
+Yapper is a chatbot created as part of NUS CS2103T Software Engineering Module.
 
 ---
 
-## 📝 Task Management
-- **`todo <task_name>`**
-  - Create a new task with `<task_name>`
-
-- **`deadline <task_name> /by <deadline>`**
-  - Create a Deadline task with `<deadline>`
-  - **Format:** `dd-MM-yyyy HHmm`
-
-- **`event <task_name> /from <start_time> /to <end_time>`**
-  - Create an Event task with `<start_time>` and `<end_time>`
-  - **Format:** `dd-MM-yyyy HHmm`
+# 📖 Usage Guide
 
 ---
 
-## 🕒 Task Rescheduling
-- **`reschedule <task_index> { /from <start_time> /to <end_time> | /by <end_time> }`**
-  - Reschedule an Event or Deadline task
-  - **Format:** `dd-MM-yyyy HHmm`
+## ⚡ General Commands
+
+| Command | Description |
+|---------|-------------|
+| `list {task | note}` | Show the current task or note list. |
+| `find {task | note} <search_term>` | Find tasks or notes containing `<search_term>`. |
+| `mark <task_number>` | Mark task `<task_number>` as done. |
+| `unmark <task_number>` | Unmark task `<task_number>` as incomplete. |
+| `delete {task | note} <index>` | Delete task or note with `<index>` from the list. |
+| `bye` | End the conversation with the chatbot. |
+| `help` | Show this help menu. |
 
 ---
 
-## 🔍 Task Searching & Editing
-- **`find <search_term>`**
-  - Search for tasks containing `<search_term>`
+## 📝 Task Creation
 
-- **`mark <task_number>`**
-  - Mark task with `<task_number>` as done
-
-- **`unmark <task_number>`**
-  - Unmark task with `<task_number>` as incomplete
-
-- **`delete <task_number>`**
-  - Delete task with `<task_number>` from the list
+| Command | Description |
+|---------|-------------|
+| `todo <task_name>` | Create a new task with `<task_name>`. |
+| `deadline <task_name> /by <deadline>` | Create a Deadline task with `<deadline>`. <br>_(Format: `dd-MM-yyyy HHmm`)_ |
+| `event <task_name> /from <start_time> /to <end_time>` | Create an Event task with `<start_time>` and `<end_time>`. <br>_(Format: `dd-MM-yyyy HHmm`)_ |
 
 ---
 
-### 💡 Tip: Use the correct date format (`dd-MM-yyyy HHmm`)
+## 🗒️ Note Creation
+
+| Command | Description |
+|---------|-------------|
+| `note /title <title> /content <content>` | Create a new note with `<title>` and `<content>`. |
+
+---
+
+## 🔄 Task Modification
+
+| Command | Description |
+|---------|-------------|
+| `reschedule <event-index> {/from <start_date_time> /to <end_date_time> | /by <end_date_time>}` | Reschedule an event task to a new time frame. <br>_(Format: `dd-MM-yyyy HHmm`)_ |
+
+---
+
+> 💡 **Tip:** Always use the correct date format → `dd-MM-yyyy HHmm`
