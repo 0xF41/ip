@@ -14,9 +14,9 @@ import yapper.ui.MainWindow;
  */
 public class Main extends Application {
 
-
     private static final String CHATBOT_NAME = "Yapper";
-    private static final String FILE_PATH_CSV_DATA = "usertaskdata.csv";
+    private static final String TASK_FILE_PATH_CSV = "usertaskdata.csv";
+    private static final String NOTE_FILE_PATH_CSV = "usernotedata.csv";
     private static final String FILE_PATH_MAIN_WINDOW_FXML = "/view/MainWindow.fxml";
 
     private static final String ASSERT_YAPPER_NOT_NULL_STRING = "Yapper should not be null";
@@ -30,19 +30,10 @@ public class Main extends Application {
      * @throws IOException If the FXML file is not found.
      */
     private void loadScene(Stage stage, Yapper y1) throws IOException {
-        // Load the FXML file
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FILE_PATH_MAIN_WINDOW_FXML));
-        AnchorPane ap = fxmlLoader.load();  // Load the FXML layout
+        AnchorPane ap = fxmlLoader.load();
 
-        // Get the controller from FXMLLoader
         MainWindow controller = fxmlLoader.getController();
-
-        // Check if the controller is null, and ensure it's being injected correctly
-        if (controller == null) {
-            throw new NullPointerException("Controller is null after FXML load.");
-        }
-
-        // Inject the Yapper instance into the controller
         controller.setYapper(y1);
 
         // Create the scene and show the stage
@@ -55,10 +46,8 @@ public class Main extends Application {
         stage.toFront();
         stage.show();
 
-        // Call displayChatbotGreeting after Yapper is set
         controller.displayChatbotGreeting();
     }
-
 
     /**
      * Starts the JavaFX application. (GUI version)
@@ -67,8 +56,8 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
-        Person p1 = new Person(FILE_PATH_CSV_DATA);
-        Yapper y1 = new Yapper(CHATBOT_NAME, p1.getTaskList(), p1.getFile());
+        Person p1 = new Person(TASK_FILE_PATH_CSV, NOTE_FILE_PATH_CSV);
+        Yapper y1 = new Yapper(CHATBOT_NAME, p1.getTaskList(), p1.getNoteList(), p1.getTaskFile(), p1.getNoteFile());
 
         assert y1 != null : ASSERT_YAPPER_NOT_NULL_STRING;
         assert p1 != null : ASSERT_PERSON_NOT_NULL_STRING;

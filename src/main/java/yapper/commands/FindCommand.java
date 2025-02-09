@@ -3,12 +3,13 @@ package yapper.commands;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import yapper.task.Task;
+import yapper.data.task.Task;
+import yapper.data.ContentDisplayable;
 
 /**
  * Represents a command to find tasks with a search term.
  */
-public class FindTaskCommand implements Command {
+public class FindCommand<T extends ContentDisplayable> implements Command {
 
     private static final String NOT_FOUND_STRING = "Tasks with search term \"%s\" not found!";
     private static final String LIST_OUTPUT_FORMAT_STRING = "%d. %s";
@@ -16,16 +17,20 @@ public class FindTaskCommand implements Command {
     /**
      * List of a Person's current tasks.
      */
-    private ArrayList<Task> taskList;
+    private ArrayList<T> taskList;
+
+    /**
+     * Search term
+     */
     private String searchTerm;
 
     /**
      * Constructs a FindCommand object.
      *
-     * @param taskList List of a Person's current tasks.
+     * @param list List of a Person's current tasks.
      */
-    private FindTaskCommand(ArrayList<Task> taskList, String searchTerm) {
-        this.taskList = taskList;
+    public FindCommand(ArrayList<T> list, String searchTerm) {
+        this.taskList = list;
         this.searchTerm = searchTerm;
     }
 
@@ -54,15 +59,5 @@ public class FindTaskCommand implements Command {
         }
 
         return true;
-    }
-
-    /**
-     * Builds a FindCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @return FindCommand object.
-     */
-    public static Command buildFindCommand(ArrayList<Task> taskList, String searchTerm) {
-        return new FindTaskCommand(taskList, searchTerm);
     }
 }

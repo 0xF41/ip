@@ -1,4 +1,4 @@
-package yapper.task;
+package yapper.data.task;
 
 import java.time.LocalDateTime;
 

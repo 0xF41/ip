@@ -2,8 +2,8 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.EventsScheduleTask;
-import yapper.task.Task;
+import yapper.data.task.EventsScheduleTask;
+import yapper.data.task.Task;
 
 /**
  * Represents a command to add an EventsTask task.

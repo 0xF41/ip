@@ -2,8 +2,8 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.DeadlineScheduleTask;
-import yapper.task.Task;
+import yapper.data.task.DeadlineScheduleTask;
+import yapper.data.task.Task;
 
 /**
  * Represents a command to add a DeadlineTask task.

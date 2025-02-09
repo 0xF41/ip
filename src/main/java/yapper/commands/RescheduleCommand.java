@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import yapper.task.ScheduleTask;
-import yapper.task.Task;
+import yapper.data.task.ScheduleTask;
+import yapper.data.task.Task;
 
 /**
  * Represents a command to reschedule a task.

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 import yapper.data.exception.InvalidCommandSyntaxException;
+import yapper.data.task.Task;
+import yapper.data.task.ToDosTask;
 import yapper.parser.CommandParser;
-import yapper.task.Task;
-import yapper.task.ToDosTask;
 
 /**
  * Tests the MarkCommand class.
@@ -35,7 +35,7 @@ public class MarkCommandTest {
     public void testExecute() {
         Command command;
         try {
-            command = CommandParser.parse(MARK_COMMAND, taskList, null);
+            command = CommandParser.parse(MARK_COMMAND, taskList, null, null, null);
             assertDoesNotThrow(() -> command.execute(new ArrayList<String>()));
         } catch (IndexOutOfBoundsException | InvalidCommandSyntaxException e) {
             e.printStackTrace();
@@ -52,8 +52,8 @@ public class MarkCommandTest {
         Command command;
         Command command2;
         try {
-            command = CommandParser.parse(MARK_COMMAND_INVALID, taskList, null);
-            command2 = CommandParser.parse(MARK_COMMAND_INVALID_2, taskList, null);
+            command = CommandParser.parse(MARK_COMMAND_INVALID, taskList, null, null, null);
+            command2 = CommandParser.parse(MARK_COMMAND_INVALID_2, taskList, null, null, null);
             assertThrowsExactly(IndexOutOfBoundsException.class, () -> command.execute(responseList));
             assertThrowsExactly(IndexOutOfBoundsException.class, () -> command2.execute(responseList));
         } catch (IndexOutOfBoundsException e) {

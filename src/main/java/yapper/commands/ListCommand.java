@@ -3,28 +3,28 @@ package yapper.commands;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import yapper.task.Task;
-
 /**
- * Represents a command to list all tasks.
+ * Represents a command to list all objects of a type T.
+ * @param <T> type of the objects in the list
  */
-public class ListCommand implements Command {
+public class ListCommand<T> implements Command {
 
-    private static final String LIST_EMPTY_STRING = "List is empty!";
+    private static final String LIST_EMPTY_STRING = "Specified List is empty!";
     private static final String LIST_OUTPUT_FORMAT_STRING = "%d. %s";
 
     /**
-     * List of a Person's current tasks.
+     * List of a Person's current tasks/notes.
      */
-    private ArrayList<Task> taskList;
+    private ArrayList<T> list;
 
     /**
      * Constructs a ListCommand object.
+     * @param <T> Type of the list.
      *
-     * @param taskList List of a Person's current tasks.
+     * @param list list to be printed upon the execute() method.
      */
-    private ListCommand(ArrayList<Task> taskList) {
-        this.taskList = taskList;
+    public ListCommand(ArrayList<T> list) {
+        this.list = list;
     }
 
     /**
@@ -35,26 +35,16 @@ public class ListCommand implements Command {
      */
     @Override
     public boolean execute(ArrayList<String> responseList) {
-        if (this.taskList.isEmpty()) {
+        if (this.list.isEmpty()) {
             responseList.add(LIST_EMPTY_STRING);
             return true;
         }
 
         AtomicInteger idx = new AtomicInteger(1); // To track the index for formatting
-        taskList.stream()
+        list.stream()
                 .map(task -> String.format(LIST_OUTPUT_FORMAT_STRING, idx.getAndIncrement(), task))
                 .forEach(responseList::add);
 
         return true;
-    }
-
-    /**
-     * Builds a ListCommand object.
-     *
-     * @param taskList List of a Person's current tasks.
-     * @return ListCommand object.
-     */
-    public static Command buildListCommand(ArrayList<Task> taskList) {
-        return new ListCommand(taskList);
     }
 }

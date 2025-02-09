@@ -8,7 +8,7 @@ import yapper.commands.DeadlineTaskCommand;
 import yapper.commands.EventsTaskCommand;
 import yapper.commands.TaskCommand;
 import yapper.commands.ToDosTaskCommand;
-import yapper.task.Task;
+import yapper.data.task.Task;
 
 public class CommandParserTest {
 
@@ -24,7 +24,7 @@ public class CommandParserTest {
      */
     @Test
     public void parse_todos_test() throws Exception {
-        TaskCommand command = (TaskCommand) CommandParser.parse("todo read book", this.taskList, null);
+        TaskCommand command = (TaskCommand) CommandParser.parse("todo read book", this.taskList, null, null, null);
         assert (command instanceof ToDosTaskCommand);
         assert (command.getTaskDescription().equals("read book"));
     }
@@ -38,7 +38,7 @@ public class CommandParserTest {
     public void parse_deadline_test() throws Exception {
         DeadlineTaskCommand command = (DeadlineTaskCommand) CommandParser.parse(
                 "deadline return book /by 21-08-2025 1800",
-                this.taskList, null);
+                this.taskList, null, null, null);
         assert (command instanceof DeadlineTaskCommand);
         assert (command.getTaskDescription().equals("return book"));
     }
@@ -53,6 +53,8 @@ public class CommandParserTest {
         EventsTaskCommand command = (EventsTaskCommand) CommandParser.parse(
                 "event drink water /from 21-08-2025 1954 /to 22-08-2025 1954",
                 this.taskList,
+                null,
+                null,
                 null);
         assert (command instanceof EventsTaskCommand);
         assert (command.getTaskDescription().equals("drink water"));
