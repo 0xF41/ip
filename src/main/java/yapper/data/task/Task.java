@@ -1,10 +1,12 @@
-package yapper.task;
+package yapper.data.task;
+
+import yapper.data.ContentDisplayable;
 
 /**
  * Task encapsulates an event that is created by the user when communicating
  * with the Yapper chatbot.
  */
-public class Task {
+public class Task implements ContentDisplayable {
 
     private static final String TASK_INFO_FORMAT_STRING = "[%s] %s";
 
@@ -46,6 +48,7 @@ public class Task {
      *
      * @return description of the task
      */
+    @Override
     public String getDescription() {
         return this.description;
     }
@@ -71,5 +74,4 @@ public class Task {
     public String toString() {
         return String.format(TASK_INFO_FORMAT_STRING, this.getStatusIcon(), this.getDescription());
     }
-
 }

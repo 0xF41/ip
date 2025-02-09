@@ -14,9 +14,9 @@ import yapper.ui.MainWindow;
  */
 public class Main extends Application {
 
-
     private static final String CHATBOT_NAME = "Yapper";
-    private static final String FILE_PATH_CSV_DATA = "usertaskdata.csv";
+    private static final String TASK_FILE_PATH_CSV = "usertaskdata.csv";
+    private static final String NOTE_FILE_PATH_CSV = "usernotedata.csv";
     private static final String FILE_PATH_MAIN_WINDOW_FXML = "/view/MainWindow.fxml";
 
     private static final String ASSERT_YAPPER_NOT_NULL_STRING = "Yapper should not be null";
@@ -30,14 +30,23 @@ public class Main extends Application {
      * @throws IOException If the FXML file is not found.
      */
     private void loadScene(Stage stage, Yapper y1) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(FILE_PATH_MAIN_WINDOW_FXML));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FILE_PATH_MAIN_WINDOW_FXML));
         AnchorPane ap = fxmlLoader.load();
+
+        MainWindow controller = fxmlLoader.getController();
+        controller.setYapper(y1);
+
+        // Create the scene and show the stage
         Scene scene = new Scene(ap);
         stage.setScene(scene);
-        fxmlLoader.<MainWindow>getController().setYapper(y1); // inject the Yapper instance
-        stage.setMinHeight(220);
-        stage.setMinWidth(417);
+        stage.setMinHeight(720);
+        stage.setMinWidth(1280);
+        stage.centerOnScreen();
+        stage.setTitle(CHATBOT_NAME);
+        stage.toFront();
         stage.show();
+
+        controller.displayChatbotGreeting();
     }
 
     /**
@@ -47,8 +56,8 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) {
-        Person p1 = new Person(FILE_PATH_CSV_DATA);
-        Yapper y1 = new Yapper(CHATBOT_NAME, p1.getTaskList(), p1.getFile());
+        Person p1 = new Person(TASK_FILE_PATH_CSV, NOTE_FILE_PATH_CSV);
+        Yapper y1 = new Yapper(CHATBOT_NAME, p1.getTaskList(), p1.getNoteList(), p1.getTaskFile(), p1.getNoteFile());
 
         assert y1 != null : ASSERT_YAPPER_NOT_NULL_STRING;
         assert p1 != null : ASSERT_PERSON_NOT_NULL_STRING;

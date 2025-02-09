@@ -3,7 +3,8 @@ package yapper.chatbot;
 import java.io.File;
 import java.util.ArrayList;
 
-import yapper.task.Task;
+import yapper.data.notes.Note;
+import yapper.data.task.Task;
 
 /**
  * Yapper represents a chatbot that interacts with the user.
@@ -21,9 +22,16 @@ public class Yapper {
     private ArrayList<Task> taskList;
 
     /**
+     * The Person's note list
+     */
+    private ArrayList<Note> noteList;
+
+    /**
      * The file to store the task list
      */
-    private File file;
+    private File taskFile;
+
+    private File noteFile;
 
     /**
      * Constructs a Yapper chatbot.
@@ -32,10 +40,12 @@ public class Yapper {
      * @param taskList The list of tasks
      * @param file     The file to store the task list
      */
-    public Yapper(String name, ArrayList<Task> taskList, File file) {
+    public Yapper(String name, ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile) {
         this.name = name;
         this.taskList = taskList;
-        this.file = file;
+        this.noteList = noteList;
+        this.taskFile = taskFile;
+        this.noteFile = noteFile;
     }
 
     /**
@@ -57,11 +67,24 @@ public class Yapper {
     }
 
     /**
+     * Returns the note list.
+     *
+     * @return The note list
+     */
+    public ArrayList<Note> getNoteList() {
+        return this.noteList;
+    }
+
+    /**
      * Returns the file to store the task list.
      *
      * @return The file to store the task list
      */
-    public File getFile() {
-        return this.file;
+    public File getTaskFile() {
+        return this.taskFile;
+    }
+
+    public File getNoteFile() {
+        return this.noteFile;
     }
 }

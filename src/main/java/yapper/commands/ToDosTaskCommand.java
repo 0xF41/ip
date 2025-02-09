@@ -2,8 +2,8 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.Task;
-import yapper.task.ToDosTask;
+import yapper.data.task.Task;
+import yapper.data.task.ToDosTask;
 
 /**
  * Represents a command to add a ToDosTask task.

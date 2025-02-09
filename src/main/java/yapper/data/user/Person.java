@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import yapper.data.notes.Note;
+import yapper.data.task.Task;
 import yapper.storage.FileManager;
-import yapper.task.Task;
 
 /**
  * Represents a Person who uses the chatbot.
@@ -15,29 +16,41 @@ public class Person {
     private static final String ERR_FILE_NOT_FOUND_FORMAT_STRING = "Existing file %s not found.";
 
     /**
-     * Path of Person's file to cache user tasks
+     * Path of Person's file to cache user tasks.
      */
     private String taskFileName;
 
     /**
-     * File object to cache user tasks
+     * File object to cache user tasks.
      */
-    private File file;
+    private File taskFile;
 
     /**
-     * ArrayList to store a list of Person's Tasks
+     * File object to cache user notes.
+     */
+    private File noteFile;
+
+    /**
+     * ArrayList to store a list of Person's Tasks.
      */
     private ArrayList<Task> taskList;
 
     /**
-     * Constructs a Person instance
-     *
-     * @param taskFileName name of the file to cache Person's tasks
+     * noteList to store a list of Person's Note.
      */
-    public Person(String taskFileName) {
-        this.file = FileManager.openFile(taskFileName);
+    private ArrayList<Note> noteList;
+
+    /**
+     * Constructs a Person instance.
+     *
+     * @param taskFileName name of the file to cache Person's tasks.
+     */
+    public Person(String taskFileName, String noteFileName) {
+        this.taskFile = FileManager.openTaskFile(taskFileName);
+        this.noteFile = FileManager.openNoteFile(noteFileName);
         try {
-            this.taskList = FileManager.loadFileContents(this.file);
+            this.taskList = FileManager.loadTaskFileContents(this.taskFile);
+            this.noteList = FileManager.loadNoteFileContent(this.noteFile);
         } catch (FileNotFoundException e) {
             System.out.println(String.format(ERR_FILE_NOT_FOUND_FORMAT_STRING, this.taskFileName));
             this.taskList = new ArrayList<>();
@@ -45,20 +58,38 @@ public class Person {
     }
 
     /**
-     * Returns the list of tasks of the Person
+     * Returns the list of tasks of the Person.
      *
-     * @return list of tasks of the Person
+     * @return list of tasks of the Person.
      */
     public ArrayList<Task> getTaskList() {
         return this.taskList;
     }
 
     /**
-     * Returns the file object of the Person
+     * Returns the list of notes of the Person.
      *
-     * @return file object of the Person
+     * @return list of notes of the Person.
      */
-    public File getFile() {
-        return this.file;
+    public ArrayList<Note> getNoteList() {
+        return this.noteList;
+    }
+
+    /**
+     * Returns the object to store notes.
+     *
+     * @return File object containing Tasks data.
+     */
+    public File getTaskFile() {
+        return this.taskFile;
+    }
+
+    /**
+     * Returns the file to store notes.
+     *
+     * @return File object containing Notes data.
+     */
+    public File getNoteFile() {
+        return this.noteFile;
     }
 }

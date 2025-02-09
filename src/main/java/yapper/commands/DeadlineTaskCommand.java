@@ -2,8 +2,8 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.DeadlineTask;
-import yapper.task.Task;
+import yapper.data.task.DeadlineScheduleTask;
+import yapper.data.task.Task;
 
 /**
  * Represents a command to add a DeadlineTask task.
@@ -18,7 +18,7 @@ public class DeadlineTaskCommand implements TaskCommand {
     /**
      * DeadlineTask task to be added.
      */
-    private DeadlineTask dl;
+    private DeadlineScheduleTask dl;
 
     /**
      * Constructs a DeadlineCommand object.
@@ -26,7 +26,7 @@ public class DeadlineTaskCommand implements TaskCommand {
      * @param taskList List of a Person's current tasks.
      * @param dl       DeadlineTask task to be added.
      */
-    private DeadlineTaskCommand(ArrayList<Task> taskList, DeadlineTask dl) {
+    private DeadlineTaskCommand(ArrayList<Task> taskList, DeadlineScheduleTask dl) {
         this.taskList = taskList;
         this.dl = dl;
     }
@@ -63,7 +63,7 @@ public class DeadlineTaskCommand implements TaskCommand {
      * @param dl       DeadlineTask task to be added.
      * @return DeadlineCommand object.
      */
-    public static Command buildDeadlineCommand(ArrayList<Task> taskList, DeadlineTask dl) {
+    public static Command buildDeadlineCommand(ArrayList<Task> taskList, DeadlineScheduleTask dl) {
         return new DeadlineTaskCommand(taskList, dl);
     }
 

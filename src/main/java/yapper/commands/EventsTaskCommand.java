@@ -2,8 +2,8 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.EventsTask;
-import yapper.task.Task;
+import yapper.data.task.EventsScheduleTask;
+import yapper.data.task.Task;
 
 /**
  * Represents a command to add an EventsTask task.
@@ -23,7 +23,7 @@ public class EventsTaskCommand implements TaskCommand {
     /**
      * EventsTask task to be added.
      */
-    private EventsTask ev;
+    private EventsScheduleTask ev;
 
     /**
      * Constructs an EventsCommand object.
@@ -31,7 +31,7 @@ public class EventsTaskCommand implements TaskCommand {
      * @param taskList List of a Person's current tasks.
      * @param ev       EventsTask task to be added.
      */
-    private EventsTaskCommand(ArrayList<Task> taskList, EventsTask ev) {
+    private EventsTaskCommand(ArrayList<Task> taskList, EventsScheduleTask ev) {
         this.taskList = taskList;
         this.ev = ev;
     }
@@ -68,7 +68,7 @@ public class EventsTaskCommand implements TaskCommand {
      * @param ev       EventsTask task to be added.
      * @return EventsCommand object.
      */
-    public static Command buildEventsCommand(ArrayList<Task> taskList, EventsTask ev) {
+    public static Command buildEventsCommand(ArrayList<Task> taskList, EventsScheduleTask ev) {
         assert ev != null : ASSERT_EVENTS_TASK_NOT_NULL_STRING;
         return new EventsTaskCommand(taskList, ev);
     }

@@ -1,4 +1,4 @@
-package yapper.task;
+package yapper.data.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -6,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 /**
  * Represents an Events task.
  */
-public class EventsTask extends Task {
+public class EventsScheduleTask extends ScheduleTask {
+
+    private static final String ASSERT_NEW_DATE_TIME_STRING = "Only two new date and time should be provided.";
 
     private static final String EVENTS_INFO_FORMAT_STRING = "[E]%s (from: %s to: %s)";
     private static final String DTF_FORMATTER_STRING = "dd-MMM-yyyy HHmm";
@@ -28,7 +30,7 @@ public class EventsTask extends Task {
      * @param fromLocalDateTime Instance of when the Events is started
      * @param toLocalDateTime   Instance of when the Events is due
      */
-    public EventsTask(String description, LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime) {
+    public EventsScheduleTask(String description, LocalDateTime fromLocalDateTime, LocalDateTime toLocalDateTime) {
         super(description);
         this.fromLocalDateTime = fromLocalDateTime;
         this.toLocalDateTime = toLocalDateTime;
@@ -60,5 +62,17 @@ public class EventsTask extends Task {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
         return String.format(EVENTS_INFO_FORMAT_STRING, super.toString(), this.fromLocalDateTime.format(formatter),
                 this.toLocalDateTime.format(formatter));
+    }
+
+    /**
+     * Reschedules the task to a new date and time.
+     *
+     * @param newDateTime New date and time for the task.
+     * @return The rescheduled task.
+     */
+    @Override
+    public ScheduleTask reschedule(LocalDateTime... newDateTime) {
+        assert newDateTime.length == 2 : ASSERT_NEW_DATE_TIME_STRING;
+        return new EventsScheduleTask(this.getDescription(), newDateTime[0], newDateTime[1]);
     }
 }

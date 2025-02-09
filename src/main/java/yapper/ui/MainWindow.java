@@ -68,7 +68,7 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         ArrayList<String> responseList = new ArrayList<>(); // List of responses to be displayed to the user
         try {
-            Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getFile());
+            Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getNoteList(), yapper.getTaskFile(), yapper.getNoteFile());
             command.execute(responseList);
         } catch (InvalidCommandSyntaxException | IndexOutOfBoundsException | IllegalArgumentException e) {
             this.addResponses(responseList, e.getMessage());
@@ -102,4 +102,8 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getYapperDialog(fullResponseString, yapperImage));
     }
 
+    public void displayChatbotGreeting() {
+        String greeting = Ui.printGreet(yapper.getName());
+        dialogContainer.getChildren().add(DialogBox.getYapperDialog(greeting, yapperImage));
+    }
 }

@@ -2,7 +2,7 @@ package yapper.commands;
 
 import java.util.ArrayList;
 
-import yapper.task.Task;
+import yapper.data.task.Task;
 
 /**
  * Represents a command to mark a task as done.
@@ -56,7 +56,12 @@ public class MarkCommand implements Command {
      * @param idx      Index of the task to be marked as done.
      * @return MarkCommand object.
      */
-    public static Command buildMarkCommand(ArrayList<Task> taskList, int idx) {
+    public static Command buildMarkCommand(ArrayList<Task> taskList, int idx) throws IndexOutOfBoundsException {
+        try {
+            taskList.get(idx);
+        } catch (IndexOutOfBoundsException e) {
+            throw e;
+        }
         return new MarkCommand(taskList, idx);
     }
 
