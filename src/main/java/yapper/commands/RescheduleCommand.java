@@ -13,17 +13,24 @@ import yapper.data.task.Task;
 public class RescheduleCommand implements Command {
 
     private static final String ASSERT_TASK_IS_NULL_STRING = "Rescheduled task should not be null.";
-
     private static final String EXECUTE_INFO_STRING = "Task has been rescheduled!";
-
     private static final String DTF_FORMATTER_STRING = "dd-MM-yyyy HHmm";
 
     private static final int RESCHEDULE_COMMAND_MAX_DTL_ARGS = 2;
 
+    /**
+     * List of a Person's current tasks.
+     */
     private ArrayList<Task> taskList;
 
+    /**
+     * Index of the task to be rescheduled.
+     */
     private int idx;
 
+    /**
+     * New date and time for the task.
+     */
     private String[] newDateTimeString;
 
     /**
@@ -32,6 +39,7 @@ public class RescheduleCommand implements Command {
      * @param taskList          List of a Person's current tasks.
      * @param idx               Index of the task to be rescheduled.
      * @param newDateTimeString New date and time for the task.
+     * @return RescheduleCommand object.
      */
     private RescheduleCommand(ArrayList<Task> taskList, int idx, String... newDateTimeString) {
         this.taskList = taskList;
@@ -52,7 +60,7 @@ public class RescheduleCommand implements Command {
     }
 
     /**
-     * Executes the command to reschedule a task. Creates a new task with the new
+     * Executes the command to reschedule a task.
      * date and time and replaces the old task with the new task.
      *
      * @param responseList List of responses to be displayed to the user.

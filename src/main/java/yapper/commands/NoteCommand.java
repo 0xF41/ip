@@ -4,10 +4,22 @@ import java.util.ArrayList;
 
 import yapper.data.notes.Note;
 
+/**
+ * Represents a command to add a note.
+ */
 public class NoteCommand implements Command {
 
+    // Constants
     private static final String NOTE_INFO_FORMAT_STRING = "Note \"%s\" has been added.";
+
+    /**
+     * List of a Person's current notes.
+     */
     private ArrayList<Note> notesList;
+
+    /**
+     * Note to be added.
+     */
     private Note noteToAdd;
 
     /**
@@ -36,10 +48,11 @@ public class NoteCommand implements Command {
     }
 
     /**
+     * Builds a NoteCommand object.
      *
-     * @param notesList
-     * @param noteToAdd
-     * @return
+     * @param notesList List of a Person's current notes.
+     * @param noteToAdd Note to be added.
+     * @return NoteCommand object.
      */
     public static Command buildNoteCommand(ArrayList<Note> notesList, Note noteToAdd) {
         return new NoteCommand(notesList, noteToAdd);

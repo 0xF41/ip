@@ -7,7 +7,7 @@ import yapper.data.notes.Note;
 import yapper.data.task.Task;
 
 /**
- * Yapper represents a chatbot that interacts with the user.
+ * Represents a Yapper chatbot.
  */
 public class Yapper {
 
@@ -31,14 +31,19 @@ public class Yapper {
      */
     private File taskFile;
 
+    /**
+     * The file to store the note list
+     */
     private File noteFile;
 
     /**
-     * Constructs a Yapper chatbot.
+     * Constructor for Yapper.
      *
-     * @param name     The name of the chatbot
-     * @param taskList The list of tasks
-     * @param file     The file to store the task list
+     * @param name The name of the chatbot
+     * @param taskList The task list
+     * @param noteList The note list
+     * @param taskFile The file to store the task list
+     * @param noteFile The file to store the note list
      */
     public Yapper(String name, ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile) {
         this.name = name;
@@ -84,6 +89,11 @@ public class Yapper {
         return this.taskFile;
     }
 
+    /**
+     * Returns the file to store the note list.
+     *
+     * @return The file to store the note list
+     */
     public File getNoteFile() {
         return this.noteFile;
     }

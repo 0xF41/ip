@@ -5,6 +5,7 @@ package yapper.data.task;
  */
 public class ToDosTask extends Task {
 
+    // Constants
     private static final String TODOS_INFO_FORMAT_STRING = "[T]%s";
 
     /**

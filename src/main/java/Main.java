@@ -15,10 +15,13 @@ import yapper.ui.MainWindow;
 public class Main extends Application {
 
     private static final String CHATBOT_NAME = "Yapper";
+
+    // File paths
     private static final String TASK_FILE_PATH_CSV = "usertaskdata.csv";
     private static final String NOTE_FILE_PATH_CSV = "usernotedata.csv";
     private static final String FILE_PATH_MAIN_WINDOW_FXML = "/view/MainWindow.fxml";
 
+    // Assert messages
     private static final String ASSERT_YAPPER_NOT_NULL_STRING = "Yapper should not be null";
     private static final String ASSERT_PERSON_NOT_NULL_STRING = "Person should not be null";
 

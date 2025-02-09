@@ -8,8 +8,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class EventsScheduleTask extends ScheduleTask {
 
+    // Constants
     private static final String ASSERT_NEW_DATE_TIME_STRING = "Only two new date and time should be provided.";
-
     private static final String EVENTS_INFO_FORMAT_STRING = "[E]%s (from: %s to: %s)";
     private static final String DTF_FORMATTER_STRING = "dd-MMM-yyyy HHmm";
 

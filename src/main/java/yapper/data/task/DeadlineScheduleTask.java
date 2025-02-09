@@ -8,10 +8,11 @@ import java.time.format.DateTimeFormatter;
  */
 public class DeadlineScheduleTask extends ScheduleTask {
 
+    // Constants
     private static final String ASSERT_NEW_DATE_TIME_STRING = "Only one new date and time should be provided.";
-
     private static final String DEADLINE_INFO_FORMAT_STRING = "[D]%s (by: %s)";
     private static final String DTF_FORMATTER_STRING = "dd-MMM-yyyy";
+
     /**
      * Represents the Deadline of the task
      */
@@ -22,6 +23,7 @@ public class DeadlineScheduleTask extends ScheduleTask {
      *
      * @param description     Description of the Deadline task.
      * @param byLocalDateTime Deadline of the task.
+     * @return Deadline object.
      */
     public DeadlineScheduleTask(String description, LocalDateTime byLocalDateTime) {
         super(description);

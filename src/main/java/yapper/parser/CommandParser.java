@@ -31,8 +31,10 @@ import yapper.data.task.ToDosTask;
  */
 public class CommandParser {
 
+    // Assertion fail string
     private static final String ASSERT_FAIL_STRING = "Command not handled!";
 
+    // Empty string
     private static final String EMPTY_STRING = "";
 
     // Subcommand lengths for index checking
@@ -65,12 +67,13 @@ public class CommandParser {
     private static final String ERR_MISSING_END_DATE_STRING = "Missing end date! Please specify using /by.";
     private static final String ERR_NOTE_EMPTY_TITLE_STRING = "Title cannot be empty!";
     private static final String ERR_NOTE_EMPTY_CONTENT_STRING = "Content cannot be empty!";
-    private static final String ERR_NOTE_INVALID_SYNTAX_STRING = "Invalid syntax. Use: note /title <title> /content <content>";
-    private static final String ERR_MISSING_START_END_DATE_STRING = "Missing start/end date! Please specify using /from and /to.";
+    private static final String ERR_NOTE_INVALID_SYNTAX_STRING =
+            "Invalid syntax. Use: note /title <title> /content <content>";
+    private static final String ERR_MISSING_START_END_DATE_STRING =
+            "Missing start/end date! Please specify using /from and /to.";
     private static final String ERR_LIST_NOT_FOUND_FORMAT_STRING = "List of type %s not found!";
     private static final String ERR_INVALID_DATE_FORMAT_STRING = "Invalid date format! Please use dd-MM-yyyy HHmm.";
     private static final String ERR_INVALID_LIST_INDEX_FORMAT_STRING = "Invalid index in list %s!";
-
 
     /**
      * Enum to represent the different types of commands.
@@ -292,9 +295,9 @@ public class CommandParser {
      *
      * @param cmd      Full command entered by the user.
      * @param taskList List of tasks.
+     * @param noteList List of notes.
      * @return Delete command.
      * @throws InvalidCommandSyntaxException If the command is invalid.
-     * @throws IndexOutOfBoundsException     If the index is out of bounds.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private static Command buildDeleteCommand(String cmd, ArrayList<Task> taskList, ArrayList<Note> noteList)
@@ -302,10 +305,6 @@ public class CommandParser {
         if (cmd.split(" ").length < 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
-
-        // New command syntax:
-        // delete note X
-        // delete task X
 
         int idx = -1; // index of the selected item to delete
         String listTypeString = EMPTY_STRING;
@@ -330,7 +329,8 @@ public class CommandParser {
                     String.format(ERR_LIST_NOT_FOUND_FORMAT_STRING, listTypeString));
 
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException(String.format(ERR_INVALID_LIST_INDEX_FORMAT_STRING, listTypeString));
+            throw new InvalidCommandSyntaxException(
+                    String.format(ERR_INVALID_LIST_INDEX_FORMAT_STRING, listTypeString));
         }
 
     }
@@ -340,7 +340,9 @@ public class CommandParser {
      *
      * @param fullCmd  Full command entered by the user.
      * @param taskList List of tasks.
-     * @param file     File to save the tasks to.
+     * @param noteList List of notes.
+     * @param taskFile File to save the tasks to.
+     * @param noteFile File to save the notes to.
      * @return Bye command.
      * @throws InvalidCommandSyntaxException If the command is invalid
      */
@@ -357,8 +359,9 @@ public class CommandParser {
     /**
      * Builds a find command.
      *
-     * @param cmd  Full command entered by the user.
+     * @param cmd      Full command entered by the user.
      * @param taskList List of tasks.
+     * @param noteList List of notes.
      * @return Find command.
      * @throws InvalidCommandSyntaxException If the command is invalid
      */
@@ -368,7 +371,6 @@ public class CommandParser {
         if (cmd.split(" ").length != 3) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
-
 
         String searchString = EMPTY_STRING;
         String listTypeString = EMPTY_STRING;
@@ -391,7 +393,8 @@ public class CommandParser {
                     String.format(ERR_LIST_NOT_FOUND_FORMAT_STRING, listTypeString));
 
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            throw new InvalidCommandSyntaxException(String.format(ERR_INVALID_LIST_INDEX_FORMAT_STRING, listTypeString));
+            throw new InvalidCommandSyntaxException(
+                    String.format(ERR_INVALID_LIST_INDEX_FORMAT_STRING, listTypeString));
         }
 
     }
@@ -516,7 +519,9 @@ public class CommandParser {
      *
      * @param fullCmd  Full command entered by the user.
      * @param taskList List of tasks.
-     * @param file     File to save the tasks to.
+     * @param noteList List of notes.
+     * @param taskFile File to save the tasks to.
+     * @param noteFile File to save the notes to.
      * @return Command object.
      * @throws InvalidCommandSyntaxException If the command is invalid.
      * @throws IndexOutOfBoundsException     If the index is out of bounds.
@@ -555,10 +560,4 @@ public class CommandParser {
         assert false : ASSERT_FAIL_STRING;
         return null;
     }
-
-    // TODO update delete command to "delete {note | task} X" DONE
-    // TODO Fix file operations saving and loading bug NEED TESTING
-    // TODO a "note X" command to show the note
-    // TODO update readme
-    // TODO more abstractions and code
 }

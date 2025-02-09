@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represents a command to list all objects of a type T.
- * @param <T> type of the objects in the list
+ * Represents a command to list all tasks.
+ * @param <T> Type of the list.
  */
 public class ListCommand<T> implements Command {
 
+    // Constants
     private static final String LIST_EMPTY_STRING = "Specified List is empty!";
     private static final String LIST_OUTPUT_FORMAT_STRING = "%d. %s";
 

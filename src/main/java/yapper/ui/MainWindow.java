@@ -21,9 +21,11 @@ import yapper.parser.CommandParser;
  */
 public class MainWindow extends AnchorPane {
 
+    // Images for the user and Yapper
     private static final String USER_IMAGE = "/images/jesse.jpg";
     private static final String YAPPER_IMAGE = "/images/heisenberg.jpg";
 
+    // Assert messages
     private static final String ASSERT_RESPONSE_LIST_EMPTY = "Response list should not be empty.";
 
     @FXML
@@ -68,7 +70,8 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         ArrayList<String> responseList = new ArrayList<>(); // List of responses to be displayed to the user
         try {
-            Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getNoteList(), yapper.getTaskFile(), yapper.getNoteFile());
+            Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getNoteList(),
+                    yapper.getTaskFile(), yapper.getNoteFile());
             command.execute(responseList);
         } catch (InvalidCommandSyntaxException | IndexOutOfBoundsException | IllegalArgumentException e) {
             this.addResponses(responseList, e.getMessage());
@@ -102,6 +105,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getYapperDialog(fullResponseString, yapperImage));
     }
 
+    /**
+     * Displays Yapper's greeting in the dialog container.
+     */
     public void displayChatbotGreeting() {
         String greeting = Ui.printGreet(yapper.getName());
         dialogContainer.getChildren().add(DialogBox.getYapperDialog(greeting, yapperImage));

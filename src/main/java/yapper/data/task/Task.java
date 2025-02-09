@@ -8,10 +8,9 @@ import yapper.data.ContentDisplayable;
  */
 public class Task implements ContentDisplayable {
 
+    // Constants
     private static final String TASK_INFO_FORMAT_STRING = "[%s] %s";
-
     private static final String EMPTY_SYMBOL_STRING = " ";
-
     private static final String DONE_SYMBOL_STRING = "X";
 
     /**

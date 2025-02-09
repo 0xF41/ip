@@ -20,23 +20,29 @@ import yapper.data.task.ToDosTask;
  */
 public class FileManager {
 
+    // Error messages
     private static final String ASSERT_UNKNOWN_EVENT_TYPE = "Unknown event type: ";
 
     private static final String ERR_TASK_NOT_ADDED_STRING = "%s is not added to %s.";
     private static final String ERR_FILE_ERROR_OCCURRED = "File error occurred.";
 
+    // Mark as done symbol
     private static final String IS_DONE_SYMBOL = "X";
 
+    // Tasks
     private static final String EVENTS_COMMAND_STRING = "Events";
     private static final String DEADLINE_COMMAND_STRING = "Deadline";
     private static final String TODOS_COMMAND_STRING = "Todos";
 
+    // Write format strings
     private static final String WRITE_STRING_FORMAT_STRING = "%s\n";
     private static final String WRITE_TASK_FORMAT_STRING = "%s,%s,%s,%s,%s";
     private static final String WRITE_NOTE_FORMAT_STRING = "%s,%s";
 
+    // Date time format string
     private static final String DATE_TIME_FORMAT_STRING = "dd-MM-yyyy HHmm";
 
+    // CSV headers
     private static final String TASK_CSV_FILE_HEADERS_STRING = "Type,Description,isDone,From,To";
     private static final String NOTE_CSV_FILE_HEADERS_STRING = "Title,Content";
 
@@ -117,7 +123,7 @@ public class FileManager {
      *
      * @param file file to load contents from
      * @return ArrayList of tasks loaded from file
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException if file is not found
      */
     public static ArrayList<Task> loadTaskFileContents(File file) throws FileNotFoundException {
         ArrayList<Task> taskList = new ArrayList<>();
@@ -144,18 +150,18 @@ public class FileManager {
                 taskTo = tokens[4]; // task by in EventsTask
             }
             switch (taskType) {
-                case TODOS_COMMAND_STRING:
-                    loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
-                    break;
-                case DEADLINE_COMMAND_STRING:
-                    loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
-                    break;
-                case EVENTS_COMMAND_STRING:
-                    loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
-                    break;
-                default:
-                    assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
-                    break;
+            case TODOS_COMMAND_STRING:
+                loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
+                break;
+            case DEADLINE_COMMAND_STRING:
+                loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
+                break;
+            case EVENTS_COMMAND_STRING:
+                loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
+                break;
+            default:
+                assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
+                break;
             }
         }
         s.close();

@@ -10,6 +10,9 @@ import yapper.data.task.Task;
  */
 public class DeadlineTaskCommand implements TaskCommand {
 
+    private static final String DEADLINE_INFO_FORMAT_STRING = "Now you have %d tasks in the list.";
+    private static final String DEADLINE_INFO_STRING = "Got it. I've added this task:";
+
     /**
      * List of a Person's current tasks.
      */
@@ -40,9 +43,9 @@ public class DeadlineTaskCommand implements TaskCommand {
     @Override
     public boolean execute(ArrayList<String> respondList) {
         taskList.add(dl);
-        respondList.add("Got it. I've added this task:");
+        respondList.add(DEADLINE_INFO_STRING);
         respondList.add(dl.toString());
-        respondList.add(String.format("Now you have %d tasks in the list.", taskList.size()));
+        respondList.add(String.format(DEADLINE_INFO_FORMAT_STRING, taskList.size()));
         return true;
     }
 

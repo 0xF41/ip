@@ -3,14 +3,21 @@ package yapper.data.notes;
 import yapper.data.ContentDisplayable;
 
 /**
- * Note
+ * Represents a Note object.
  */
 public class Note implements ContentDisplayable {
 
+    // Constants
     private static final String NOTE_FORMAT_STRING = "%s: %s";
 
+    /*
+     * Title of the Note
+     */
     private String noteName;
 
+    /*
+     * Content of the Note
+     */
     private String noteContent;
 
     /**
@@ -18,6 +25,7 @@ public class Note implements ContentDisplayable {
      *
      * @param noteName    title of the Note
      * @param noteContent content of the Note to be added
+     * @return Note object
      */
     public Note(String noteName, String noteContent) {
         this.noteName = noteName;
@@ -33,6 +41,12 @@ public class Note implements ContentDisplayable {
         return this.noteName;
     }
 
+    /**
+     * Return the content of the note.
+     *
+     * @return content of the note.
+     */
+    @Override
     public String toString() {
         return String.format(NOTE_FORMAT_STRING, this.noteName, this.noteContent);
     }

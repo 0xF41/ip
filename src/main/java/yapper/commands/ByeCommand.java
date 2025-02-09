@@ -13,6 +13,9 @@ import yapper.storage.FileManager;
  */
 public class ByeCommand implements Command {
 
+    /**
+     * Message to display when the chatbot conversation ends.
+     */
     private static final String BYE_MESSAGE = "Bye. Hope to see you again soon!";
 
     /**
@@ -39,7 +42,9 @@ public class ByeCommand implements Command {
      * Constructs a ByeCommand object.
      *
      * @param taskList List of a Person's current tasks.
-     * @param file     File to save the tasks to.
+     * @param noteList List of a Person's current notes.
+     * @param taskFile File to save the tasks to.
+     * @param noteFile File to save the notes to.
      */
     public ByeCommand(ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile) {
         this.taskList = taskList;
@@ -51,7 +56,8 @@ public class ByeCommand implements Command {
     /**
      * Executes the command to end the chatbot conversation.
      *
-     * @return false to indicate the end of the chatbot conversation.
+     * @param responseList List of responses to add to.
+     * @return false to indicate that the chatbot conversation has ended.
      */
     @Override
     public boolean execute(ArrayList<String> responseList) {

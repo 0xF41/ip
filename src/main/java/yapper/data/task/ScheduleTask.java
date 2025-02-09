@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 public abstract class ScheduleTask extends Task {
 
     /**
-     * Constructs a ScheduableTask object.
+     * Constructs a  object.
      *
-     * @param description Description of the ScheduableTask.
+     * @param description Description of the ScheduleTask.
      */
     public ScheduleTask(String description) {
         super(description);

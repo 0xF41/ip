@@ -9,6 +9,7 @@ import yapper.data.task.Task;
  */
 public class MarkCommand implements Command {
 
+    // Constants
     private static final String ASSERT_TASK_NULL_STRING = "Task should not be null.";
     private static final String MARK_INFO_STRING = "Nice! I've marked this task as done:";
 

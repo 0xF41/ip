@@ -10,6 +10,7 @@ import yapper.data.task.Task;
  */
 public class EventsTaskCommand implements TaskCommand {
 
+    // Constants
     private static final String ASSERT_TASK_LIST_NEGATIVE_STRING = "Task list should not be negative.";
     private static final String ASSERT_EVENTS_TASK_NOT_NULL_STRING = "EventsTask should not be null.";
     private static final String DELETE_INFO_STRING = "Got it. I've added this task:";

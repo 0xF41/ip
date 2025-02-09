@@ -9,8 +9,8 @@ import yapper.data.task.Task;
  */
 public class UnmarkCommand implements Command {
 
+    // Constants
     private static final String ASSERT_TASK_NULL_STRING = "Task should not be null.";
-
     private static final String UNMARK_INFO_STRING = "OK, I've marked this task as not done yet:";
 
     /**

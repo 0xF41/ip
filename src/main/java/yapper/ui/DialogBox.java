@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
  */
 public class DialogBox extends HBox {
 
+    // Constants
     private static final String DIALOG_REPLY_LABEL_FIELD_STRING = "reply-label";
     private static final String DIALOG_BOX_FXML_FILEPATH = "/view/DialogBox.fxml";
     private static final String ASSERT_EMPTY_DIALOG_LABEL_STRING = "Dialog label should not be null";

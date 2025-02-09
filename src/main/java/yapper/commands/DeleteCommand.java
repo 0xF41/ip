@@ -7,15 +7,16 @@ import yapper.data.task.Task;
 
 /**
  * Represents a command to delete a task.
- * @param <T> type of the objects in the list
  */
 public class DeleteCommand<T> implements Command {
 
+    // Constants
     private static final String DELETE_REMAINING_TASKS_STRING = "You now have %d tasks.";
     private static final String DELETE_TASK_INFO_STRING = "Noted. I've removed this task: ";
     private static final String DELETE_REMAINING_NOTES_STRING = "You now have %d notes.";
     private static final String DELETE_NOTE_INFO_STRING = "Noted. I've removed this note: ";
 
+    // Error messages
     private static final String ASSERT_LIST_NEGATIVE_STRING = "List should not be negative.";
 
     /**
@@ -31,8 +32,8 @@ public class DeleteCommand<T> implements Command {
     /**
      * Constructs a DeleteCommand object.
      *
-     * @param taskList List of a Person's current tasks.
-     * @param idx      Index of the task to be deleted.
+     * @param list List of a Person's current tasks/notes.
+     * @param idx  Index of the task to be deleted in the list.
      */
     public DeleteCommand(ArrayList<T> list, int idx) {
         this.list = list;

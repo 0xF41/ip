@@ -13,6 +13,7 @@ import yapper.storage.FileManager;
  */
 public class Person {
 
+    // Error messages
     private static final String ERR_FILE_NOT_FOUND_FORMAT_STRING = "Existing file %s not found.";
 
     /**
