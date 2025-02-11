@@ -67,10 +67,8 @@ public class CommandParser {
     private static final String ERR_MISSING_END_DATE_STRING = "Missing end date! Please specify using /by.";
     private static final String ERR_NOTE_EMPTY_TITLE_STRING = "Title cannot be empty!";
     private static final String ERR_NOTE_EMPTY_CONTENT_STRING = "Content cannot be empty!";
-    private static final String ERR_NOTE_INVALID_SYNTAX_STRING =
-            "Invalid syntax. Use: note /title <title> /content <content>";
-    private static final String ERR_MISSING_START_END_DATE_STRING =
-            "Missing start/end date! Please specify using /from and /to.";
+    private static final String ERR_NOTE_INVALID_SYNTAX_STRING = "Invalid syntax. Use: note /title <title> /content <content>";
+    private static final String ERR_MISSING_START_END_DATE_STRING = "Missing start/end date! Please specify using /from and /to.";
     private static final String ERR_LIST_NOT_FOUND_FORMAT_STRING = "List of type %s not found!";
     private static final String ERR_INVALID_DATE_FORMAT_STRING = "Invalid date format! Please use dd-MM-yyyy HHmm.";
     private static final String ERR_INVALID_LIST_INDEX_FORMAT_STRING = "Invalid index in list %s!";
@@ -113,10 +111,6 @@ public class CommandParser {
         if (cmd.split(" ").length != 2) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
-
-        // New command syntax:
-        // list task
-        // list note
 
         String listTypeString = cmd.split(" ")[1];
         try {
@@ -431,7 +425,6 @@ public class CommandParser {
 
         if (taskList.get(idx) instanceof EventsScheduleTask && fullCmd.contains(SUBCOMMAND_FROM_STRING)
                 && fullCmd.contains(SUBCOMMAND_TO_STRING)) {
-            // reschedule <event-index> /from <new-start-date-time> /to <new-end-date-time>
             try {
                 int fromIndex = fullCmd.indexOf(SUBCOMMAND_FROM_STRING) + FROM_MAGIC_LENGTH_INT;
                 int toIndex = fullCmd.indexOf(SUBCOMMAND_TO_STRING);
@@ -444,7 +437,7 @@ public class CommandParser {
             }
 
         } else if (taskList.get(idx) instanceof DeadlineScheduleTask && fullCmd.contains(SUBCOMMAND_BY_STRING)) {
-            // reschedule <event-index> /by <new-date-time>
+
             try {
                 int byIndex = fullCmd.indexOf(SUBCOMMAND_BY_STRING) + BY_MAGIC_LENGTH_INT;
                 String newDateTime = fullCmd.substring(byIndex).trim();
@@ -473,14 +466,12 @@ public class CommandParser {
             throw new InvalidCommandSyntaxException(ERR_NOTE_INVALID_SYNTAX_STRING);
         }
 
-        // Command syntax: note /title <title> /content <content>
-
         String title = EMPTY_STRING;
         String content = EMPTY_STRING;
 
         try {
             int titleIndex = fullCmd.indexOf(SUBCOMMAND_NOTE_TITLE_STRING) + TITLE_MAGIC_LENGTH_INT;
-            int contentIndex = fullCmd.indexOf(SUBCOMMAND_NOTE_CONTENT_STRING) + 9;
+            int contentIndex = fullCmd.indexOf(SUBCOMMAND_NOTE_CONTENT_STRING) + CONTENT_MAGIC_LENGTH_INT;
 
             // Extract title and content
             if (titleIndex < contentIndex) {
