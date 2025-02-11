@@ -62,16 +62,26 @@ public class CommandParser {
     private static final String DATE_TIME_FORMATTER_PATTERN_STRING = "dd-MM-yyyy HHmm";
 
     // Error messages
-    private static final String ERR_CANNOT_RESCHEDULE_TODO_TASK_STRING = "Cannot reschedule a todo task!";
-    private static final String ERR_SEE_USAGE_STRING = "See usage with \"help\"";
-    private static final String ERR_MISSING_END_DATE_STRING = "Missing end date! Please specify using /by.";
-    private static final String ERR_NOTE_EMPTY_TITLE_STRING = "Title cannot be empty!";
-    private static final String ERR_NOTE_EMPTY_CONTENT_STRING = "Content cannot be empty!";
-    private static final String ERR_NOTE_INVALID_SYNTAX_STRING = "Invalid syntax. Use: note /title <title> /content <content>";
-    private static final String ERR_MISSING_START_END_DATE_STRING = "Missing start/end date! Please specify using /from and /to.";
-    private static final String ERR_LIST_NOT_FOUND_FORMAT_STRING = "List of type %s not found!";
-    private static final String ERR_INVALID_DATE_FORMAT_STRING = "Invalid date format! Please use dd-MM-yyyy HHmm.";
-    private static final String ERR_INVALID_LIST_INDEX_FORMAT_STRING = "Invalid index in list %s!";
+    private static final String ERR_CANNOT_RESCHEDULE_TODO_TASK_STRING =
+        "Cannot reschedule a todo task!";
+    private static final String ERR_SEE_USAGE_STRING =
+        "See usage with \"help\"";
+    private static final String ERR_MISSING_END_DATE_STRING =
+        "Missing end date! Please specify using /by.";
+    private static final String ERR_NOTE_EMPTY_TITLE_STRING =
+        "Title cannot be empty!";
+    private static final String ERR_NOTE_EMPTY_CONTENT_STRING =
+        "Content cannot be empty!";
+    private static final String ERR_NOTE_INVALID_SYNTAX_STRING =
+        "Invalid syntax. Use: note /title <title> /content <content>";
+    private static final String ERR_MISSING_START_END_DATE_STRING =
+        "Missing start/end date! Please specify using /from and /to.";
+    private static final String ERR_LIST_NOT_FOUND_FORMAT_STRING =
+        "List of type %s not found!";
+    private static final String ERR_INVALID_DATE_FORMAT_STRING =
+        "Invalid date format! Please use dd-MM-yyyy HHmm.";
+    private static final String ERR_INVALID_LIST_INDEX_FORMAT_STRING =
+        "Invalid index in list %s!";
 
     /**
      * Enum to represent the different types of commands.

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import yapper.data.notes.Note;
 import yapper.data.task.Task;
-import yapper.storage.FileManager;
+import yapper.storage.NoteFileManager;
+import yapper.storage.TaskFileManager;
 
 /**
  * Represents a command to end the chatbot conversation.
@@ -61,8 +62,8 @@ public class ByeCommand implements Command {
      */
     @Override
     public boolean execute(ArrayList<String> responseList) {
-        FileManager.saveTaskToFile(taskFile, taskList);
-        FileManager.saveNoteToFile(noteFile, noteList);
+        TaskFileManager.save(taskFile, taskList);
+        NoteFileManager.save(noteFile, noteList);
         responseList.add(BYE_MESSAGE);
         Platform.exit();
         System.exit(0);

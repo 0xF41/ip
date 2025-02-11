@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 import yapper.data.notes.Note;
 import yapper.data.task.Task;
-import yapper.storage.FileManager;
+import yapper.storage.NoteFileManager;
+import yapper.storage.TaskFileManager;
 
 /**
  * Represents a Person who uses the chatbot.
@@ -47,11 +48,11 @@ public class Person {
      * @param taskFileName name of the file to cache Person's tasks.
      */
     public Person(String taskFileName, String noteFileName) {
-        this.taskFile = FileManager.openTaskFile(taskFileName);
-        this.noteFile = FileManager.openNoteFile(noteFileName);
+        this.taskFile = TaskFileManager.open(taskFileName);
+        this.noteFile = NoteFileManager.open(noteFileName);
         try {
-            this.taskList = FileManager.loadTaskFileContents(this.taskFile);
-            this.noteList = FileManager.loadNoteFileContent(this.noteFile);
+            this.taskList = TaskFileManager.load(this.taskFile);
+            this.noteList = NoteFileManager.load(this.noteFile);
         } catch (FileNotFoundException e) {
             System.out.println(String.format(ERR_FILE_NOT_FOUND_FORMAT_STRING, this.taskFileName));
             this.taskList = new ArrayList<>();
