@@ -16,16 +16,25 @@ import yapper.data.task.ToDosTask;
 /**
  * Manages the loading and saving of tasks to file.
  */
-public class TaskFileManager extends FileManager {
+public class TaskFileManager extends FileManager implements Persistable<Task> {
 
+    private static final String EMPTY_STRING = "";
 
-     /**
+    /**
+     * Constructs a TaskFileManager instance.
+     */
+    public TaskFileManager() {
+
+    }
+
+    /**
      * Open file with specified taskFileName
      *
      * @param taskFileName name of cached note file to open
      * @return File object of the opened file
      */
-    public static File open(String taskFileName) {
+    @Override
+    public File open(String taskFileName) {
         File file = new File(taskFileName);
         try {
             file.createNewFile(); // create a new file if relative pathname DNE
@@ -45,7 +54,8 @@ public class TaskFileManager extends FileManager {
      * @return ArrayList of tasks loaded from file
      * @throws FileNotFoundException if file is not found
      */
-    public static ArrayList<Task> load(File file) throws FileNotFoundException {
+    @Override
+    public ArrayList<Task> load(File file) throws FileNotFoundException {
         ArrayList<Task> taskList = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
 
@@ -53,11 +63,11 @@ public class TaskFileManager extends FileManager {
         s.nextLine(); // skip first row containing csv headers
         while (s.hasNext()) {
             String[] tokens = s.nextLine().split(",");
-            String taskType = "";
-            String taskDescription = "";
-            String taskIsDone = "";
-            String taskFrom = "";
-            String taskTo = "";
+            String taskType = EMPTY_STRING;
+            String taskDescription = EMPTY_STRING;
+            String taskIsDone = EMPTY_STRING;
+            String taskFrom = EMPTY_STRING;
+            String taskTo = EMPTY_STRING;
             taskType = tokens[0];
             taskDescription = tokens[1];
             if (tokens.length > 2) {
@@ -70,18 +80,18 @@ public class TaskFileManager extends FileManager {
                 taskTo = tokens[4]; // task by in EventsTask
             }
             switch (taskType) {
-            case TODOS_COMMAND_STRING:
-                loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
-                break;
-            case DEADLINE_COMMAND_STRING:
-                loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
-                break;
-            case EVENTS_COMMAND_STRING:
-                loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
-                break;
-            default:
-                assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
-                break;
+                case TODOS_COMMAND_STRING:
+                    loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
+                    break;
+                case DEADLINE_COMMAND_STRING:
+                    loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
+                    break;
+                case EVENTS_COMMAND_STRING:
+                    loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
+                    break;
+                default:
+                    assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
+                    break;
             }
         }
         s.close();
@@ -96,7 +106,8 @@ public class TaskFileManager extends FileManager {
      * @param taskList list of tasks to save
      * @return true if save is successful
      */
-    public static boolean save(File file, ArrayList<Task> taskList) {
+    @Override
+    public boolean save(File file, ArrayList<Task> taskList) {
         String filePath = file.getName();
         try {
             appendToFile(filePath, TASK_CSV_FILE_HEADERS_STRING, false);
@@ -152,7 +163,7 @@ public class TaskFileManager extends FileManager {
                         DEADLINE_COMMAND_STRING,
                         dl.getDescription(),
                         dl.getStatusIcon(),
-                        "",
+                        EMPTY_STRING,
                         dl.getByLocalDateTime().format(dtf)),
                 true);
     }
@@ -172,7 +183,7 @@ public class TaskFileManager extends FileManager {
                         TODOS_COMMAND_STRING,
                         td.getDescription(),
                         td.getStatusIcon(),
-                        "", ""),
+                        EMPTY_STRING, EMPTY_STRING),
                 true);
     }
 

@@ -23,6 +23,11 @@ public class Person {
     private String taskFileName;
 
     /**
+     * Path of Person's file to cache user notes.
+     */
+    private String noteFileName;
+
+    /**
      * File object to cache user tasks.
      */
     private File taskFile;
@@ -43,16 +48,44 @@ public class Person {
     private ArrayList<Note> noteList;
 
     /**
+     * TaskFileManager to manage tasks.
+     */
+    private TaskFileManager taskFileManager;
+
+    /**
+     * NoteFileManager to manage notes.
+     */
+    private NoteFileManager noteFileManager;
+
+    /**
      * Constructs a Person instance.
      *
      * @param taskFileName name of the file to cache Person's tasks.
      */
     public Person(String taskFileName, String noteFileName) {
-        this.taskFile = TaskFileManager.open(taskFileName);
-        this.noteFile = NoteFileManager.open(noteFileName);
+        this.taskFileName = taskFileName;
+        this.noteFileName = noteFileName;
+        this.openFiles();
+        this.loadFiles();
+    }
+
+    /**
+     * Opens the files to store tasks and notes.
+     */
+    private void openFiles() {
+        this.taskFileManager = new TaskFileManager();
+        this.noteFileManager = new NoteFileManager();
+        this.taskFile = this.taskFileManager.open(taskFileName);
+        this.noteFile = this.noteFileManager.open(noteFileName);
+    }
+
+    /**
+     * Loads the tasks and notes from the files.
+     */
+    private void loadFiles() {
         try {
-            this.taskList = TaskFileManager.load(this.taskFile);
-            this.noteList = NoteFileManager.load(this.noteFile);
+            this.taskList = this.taskFileManager.load(this.taskFile);
+            this.noteList = this.noteFileManager.load(this.noteFile);
         } catch (FileNotFoundException e) {
             System.out.println(String.format(ERR_FILE_NOT_FOUND_FORMAT_STRING, this.taskFileName));
             this.taskList = new ArrayList<>();
@@ -93,5 +126,23 @@ public class Person {
      */
     public File getNoteFile() {
         return this.noteFile;
+    }
+
+    /**
+     * Returns the TaskFileManager object.
+     *
+     * @return TaskFileManager object.
+     */
+    public TaskFileManager getTaskFileManager() {
+        return this.taskFileManager;
+    }
+
+    /**
+     * Returns the NoteFileManager object.
+     *
+     * @return NoteFileManager object.
+     */
+    public NoteFileManager getNoteFileManager() {
+        return this.noteFileManager;
     }
 }

@@ -9,9 +9,16 @@ import java.util.Scanner;
 import yapper.data.notes.Note;
 
 /**
- * Manages the loading and saving of notes to file.
+ * Represents a file manager to handle note file operations.
  */
-public class NoteFileManager extends FileManager {
+public class NoteFileManager extends FileManager implements Persistable<Note> {
+
+    /**
+     * Constructs a NoteFileManager instance.
+     */
+    public NoteFileManager() {
+
+    }
 
     /**
      * Open file with specified noteFileName
@@ -19,7 +26,8 @@ public class NoteFileManager extends FileManager {
      * @param noteFileName name of cached note file to open
      * @return File object of the opened file
      */
-    public static File open(String noteFileName) {
+    @Override
+    public File open(String noteFileName) {
         File file = new File(noteFileName);
         try {
             file.createNewFile();
@@ -39,7 +47,8 @@ public class NoteFileManager extends FileManager {
      * @return ArrayList of tasks loaded from file
      * @throws FileNotFoundException
      */
-    public static ArrayList<Note> load(File file) throws FileNotFoundException {
+    @Override
+    public ArrayList<Note> load(File file) throws FileNotFoundException {
         ArrayList<Note> noteList = new ArrayList<>();
         Scanner s = new Scanner(file);
         s.nextLine(); // skip first row containing csv headers
@@ -60,7 +69,8 @@ public class NoteFileManager extends FileManager {
      * @param noteList list of notes to save
      * @return true if save is successful
      */
-    public static boolean save(File file, ArrayList<Note> noteList) {
+    @Override
+    public boolean save(File file, ArrayList<Note> noteList) {
         String filePath = file.getName();
         try {
             appendToFile(filePath, NOTE_CSV_FILE_HEADERS_STRING, false);

@@ -71,7 +71,8 @@ public class MainWindow extends AnchorPane {
         ArrayList<String> responseList = new ArrayList<>(); // List of responses to be displayed to the user
         try {
             Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getNoteList(),
-                    yapper.getTaskFile(), yapper.getNoteFile());
+                    yapper.getTaskFile(), yapper.getNoteFile(), yapper.getTaskFileManager(),
+                    yapper.getNoteFileManager());
             command.execute(responseList);
         } catch (InvalidCommandSyntaxException | IndexOutOfBoundsException | IllegalArgumentException e) {
             this.addResponses(responseList, e.getMessage());
