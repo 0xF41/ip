@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import yapper.data.notes.Note;
 import yapper.data.task.Task;
+import yapper.storage.NoteFileManager;
+import yapper.storage.TaskFileManager;
 
 /**
  * Represents a Yapper chatbot.
@@ -37,20 +39,33 @@ public class Yapper {
     private File noteFile;
 
     /**
+     * TaskFileManager to manage Person's tasks.
+     */
+    private TaskFileManager taskFileManager;
+
+    /**
+     * NoteFileManager to manage Person's notes.
+     */
+    private NoteFileManager noteFileManager;
+
+    /**
      * Constructor for Yapper.
      *
-     * @param name The name of the chatbot
+     * @param name     The name of the chatbot
      * @param taskList The task list
      * @param noteList The note list
      * @param taskFile The file to store the task list
      * @param noteFile The file to store the note list
      */
-    public Yapper(String name, ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile) {
+    public Yapper(String name, ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile,
+            TaskFileManager taskFileManager, NoteFileManager noteFileManager) {
         this.name = name;
         this.taskList = taskList;
         this.noteList = noteList;
         this.taskFile = taskFile;
         this.noteFile = noteFile;
+        this.taskFileManager = taskFileManager;
+        this.noteFileManager = noteFileManager;
     }
 
     /**
@@ -96,5 +111,23 @@ public class Yapper {
      */
     public File getNoteFile() {
         return this.noteFile;
+    }
+
+    /**
+     * Returns the TaskFileManager object.
+     *
+     * @return TaskFileManager object
+     */
+    public TaskFileManager getTaskFileManager() {
+        return this.taskFileManager;
+    }
+
+    /**
+     * Returns the NoteFileManager object.
+     *
+     * @return NoteFileManager object
+     */
+    public NoteFileManager getNoteFileManager() {
+        return this.noteFileManager;
     }
 }

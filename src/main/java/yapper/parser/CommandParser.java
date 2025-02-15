@@ -25,6 +25,8 @@ import yapper.data.task.DeadlineScheduleTask;
 import yapper.data.task.EventsScheduleTask;
 import yapper.data.task.Task;
 import yapper.data.task.ToDosTask;
+import yapper.storage.NoteFileManager;
+import yapper.storage.TaskFileManager;
 
 /**
  * CommandParser parses the commands entered by the user into the chatbot.
@@ -351,13 +353,13 @@ public class CommandParser {
      * @throws InvalidCommandSyntaxException If the command is invalid
      */
     private static Command buildByeCommand(String fullCmd, ArrayList<Task> taskList, ArrayList<Note> noteList,
-            File taskFile, File noteFile)
+            File taskFile, File noteFile, TaskFileManager taskFileManager, NoteFileManager noteFileManager)
             throws InvalidCommandSyntaxException {
         if (fullCmd.split(" ").length != 1) {
             throw new InvalidCommandSyntaxException(ERR_SEE_USAGE_STRING);
         }
 
-        return new ByeCommand(taskList, noteList, taskFile, noteFile);
+        return new ByeCommand(taskList, noteList, taskFile, noteFile, taskFileManager, noteFileManager);
     }
 
     /**
@@ -528,7 +530,7 @@ public class CommandParser {
      * @throws IndexOutOfBoundsException     If the index is out of bounds.
      */
     public static Command parse(String fullCmd, ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile,
-            File noteFile)
+            File noteFile, TaskFileManager taskFileManager, NoteFileManager noteFileManager)
             throws InvalidCommandSyntaxException, IndexOutOfBoundsException {
 
         String cmd = fullCmd.split(" ")[0];
@@ -547,7 +549,7 @@ public class CommandParser {
         } else if (CommandOption.fromString(cmd).equals(CommandOption.DELETE)) {
             return buildDeleteCommand(fullCmd, taskList, noteList);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.BYE)) {
-            return buildByeCommand(fullCmd, taskList, noteList, taskFile, noteFile);
+            return buildByeCommand(fullCmd, taskList, noteList, taskFile, noteFile, taskFileManager, noteFileManager);
         } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) {
             return buildHelpCommand();
         } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) {

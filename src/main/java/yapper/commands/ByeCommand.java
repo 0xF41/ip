@@ -40,6 +40,16 @@ public class ByeCommand implements Command {
     private File noteFile;
 
     /**
+     * TaskFileManager to manage tasks.
+     */
+    private TaskFileManager taskFileManager;
+
+    /**
+     * NoteFileManager to manage notes.
+     */
+    private NoteFileManager noteFileManager;
+
+    /**
      * Constructs a ByeCommand object.
      *
      * @param taskList List of a Person's current tasks.
@@ -47,11 +57,14 @@ public class ByeCommand implements Command {
      * @param taskFile File to save the tasks to.
      * @param noteFile File to save the notes to.
      */
-    public ByeCommand(ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile) {
+    public ByeCommand(ArrayList<Task> taskList, ArrayList<Note> noteList, File taskFile, File noteFile,
+            TaskFileManager taskFileManager, NoteFileManager noteFileManager) {
         this.taskList = taskList;
         this.noteList = noteList;
         this.taskFile = taskFile;
         this.noteFile = noteFile;
+        this.taskFileManager = taskFileManager;
+        this.noteFileManager = noteFileManager;
     }
 
     /**
@@ -62,8 +75,8 @@ public class ByeCommand implements Command {
      */
     @Override
     public boolean execute(ArrayList<String> responseList) {
-        TaskFileManager.save(taskFile, taskList);
-        NoteFileManager.save(noteFile, noteList);
+        this.taskFileManager.save(taskFile, taskList);
+        this.noteFileManager.save(noteFile, noteList);
         responseList.add(BYE_MESSAGE);
         Platform.exit();
         System.exit(0);
