@@ -80,18 +80,18 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
                 taskTo = tokens[4]; // task by in EventsTask
             }
             switch (taskType) {
-                case TODOS_COMMAND_STRING:
-                    loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
-                    break;
-                case DEADLINE_COMMAND_STRING:
-                    loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
-                    break;
-                case EVENTS_COMMAND_STRING:
-                    loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
-                    break;
-                default:
-                    assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
-                    break;
+            case TODOS_COMMAND_STRING:
+                loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
+                break;
+            case DEADLINE_COMMAND_STRING:
+                loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
+                break;
+            case EVENTS_COMMAND_STRING:
+                loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
+                break;
+            default:
+                assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
+                break;
             }
         }
         s.close();
