@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 /**
  * Represents a file manager to handle file operations.
  */
@@ -50,7 +49,6 @@ public abstract class FileManager {
         fw.close();
     }
 
-
     /**
      * Write CSV headers to file if file is empty
      *
@@ -60,7 +58,9 @@ public abstract class FileManager {
     protected static void writeCsvHeadersToTaskFile(File file, String csvFileHeaderString) throws IOException {
         try (FileWriter fw = new FileWriter(file, true)) {
             if (file.length() == 0) {
-                fw.write(String.format(WRITE_STRING_FORMAT_STRING, csvFileHeaderString));
+                fw.write(String.format(
+                        WRITE_STRING_FORMAT_STRING,
+                        csvFileHeaderString));
             }
         }
     }

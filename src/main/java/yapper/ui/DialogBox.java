@@ -38,11 +38,13 @@ public class DialogBox extends HBox {
      * @param img  The image to display
      */
     private DialogBox(String text, Image img) {
+
         try {
             this.loadFxml();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         assert dialog != null : ASSERT_EMPTY_DIALOG_LABEL_STRING;
 
         dialog.setText(text);
@@ -59,6 +61,7 @@ public class DialogBox extends HBox {
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(this);
         fxmlLoader.load();
+
     }
 
     /**
@@ -66,7 +69,9 @@ public class DialogBox extends HBox {
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+
         assert tmp != null : ASSERT_EMPTY_OBSERVABLE_LIST_STRING;
+
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);

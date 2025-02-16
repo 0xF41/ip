@@ -68,30 +68,40 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
             String taskIsDone = EMPTY_STRING;
             String taskFrom = EMPTY_STRING;
             String taskTo = EMPTY_STRING;
+
             taskType = tokens[0];
             taskDescription = tokens[1];
+
             if (tokens.length > 2) {
                 taskIsDone = tokens[2];
             }
+
             if (tokens.length > 3) {
                 taskFrom = tokens[3];
             }
+
             if (tokens.length > 4) {
                 taskTo = tokens[4]; // task by in EventsTask
             }
+
             switch (taskType) {
+
             case TODOS_COMMAND_STRING:
                 loadToDosTaskFromFile(taskList, taskDescription, taskIsDone);
                 break;
+
             case DEADLINE_COMMAND_STRING:
                 loadDeadlineTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskTo);
                 break;
+
             case EVENTS_COMMAND_STRING:
                 loadEventsTaskFromFile(taskList, dtf, taskDescription, taskIsDone, taskFrom, taskTo);
                 break;
+
             default:
                 assert false : ASSERT_UNKNOWN_EVENT_TYPE + taskType;
                 break;
+
             }
         }
         s.close();
@@ -111,21 +121,30 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
         String filePath = file.getName();
         try {
             appendToFile(filePath, TASK_CSV_FILE_HEADERS_STRING, false);
+
             for (Task t : taskList) {
                 if (t instanceof ToDosTask) {
                     saveToDosTaskToFile(filePath, t);
+
                 } else if (t instanceof DeadlineScheduleTask) {
                     saveDeadlineTaskToFile(filePath, t);
+
                 } else if (t instanceof EventsScheduleTask) {
                     saveEventsTaskToFile(filePath, t);
+
                 } else {
                     System.out.println(String.format(ERR_TASK_NOT_ADDED_STRING, t, file.getName()));
+
                 }
+
             }
+
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
             return false;
+
         }
+
         return true;
     }
 
@@ -139,11 +158,15 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
     private static void saveEventsTaskToFile(String filePath, Task t) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_STRING);
         EventsScheduleTask ev = (EventsScheduleTask) t;
-        FileManager.appendToFile(filePath, String.format(
-                WRITE_TASK_FORMAT_STRING,
-                EVENTS_COMMAND_STRING, ev.getDescription(),
-                ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
-                ev.getToLocalDateTime().format(dtf)), true);
+
+        FileManager.appendToFile(
+                filePath,
+                String.format(
+                        WRITE_TASK_FORMAT_STRING,
+                        EVENTS_COMMAND_STRING, ev.getDescription(),
+                        ev.getStatusIcon(), ev.getFromLocalDateTime().format(dtf),
+                        ev.getToLocalDateTime().format(dtf)),
+                true);
     }
 
     /**
@@ -177,6 +200,7 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
      */
     private static void saveToDosTaskToFile(String filePath, Task t) throws IOException {
         ToDosTask td = (ToDosTask) t;
+
         FileManager.appendToFile(filePath,
                 String.format(
                         WRITE_TASK_FORMAT_STRING,
@@ -199,12 +223,16 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
      */
     private static void loadEventsTaskFromFile(ArrayList<Task> taskList, DateTimeFormatter dtf, String taskDescription,
             String taskIsDone, String taskFrom, String taskTo) {
+
         LocalDateTime taskFromLocalDateTime = LocalDateTime.parse(taskFrom, dtf);
         LocalDateTime taskToLocalDateTime = LocalDateTime.parse(taskTo, dtf);
+
         EventsScheduleTask ev = new EventsScheduleTask(taskDescription, taskFromLocalDateTime, taskToLocalDateTime);
+
         if (taskIsDone.equals(IS_DONE_SYMBOL)) {
             ev.markAsDone();
         }
+
         taskList.add(ev);
     }
 
@@ -219,11 +247,14 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
      */
     private static void loadDeadlineTaskFromFile(ArrayList<Task> taskList,
             DateTimeFormatter dtf, String taskDescription, String taskIsDone, String taskTo) {
+
         LocalDateTime taskByLocalDateTime = LocalDateTime.parse(taskTo, dtf);
         DeadlineScheduleTask dl = new DeadlineScheduleTask(taskDescription, taskByLocalDateTime);
+
         if (taskIsDone.equals(IS_DONE_SYMBOL)) {
             dl.markAsDone();
         }
+
         taskList.add(dl);
     }
 
@@ -235,10 +266,12 @@ public class TaskFileManager extends FileManager implements Persistable<Task> {
      * @param taskIsDone      status of ToDosTask
      */
     private static void loadToDosTaskFromFile(ArrayList<Task> taskList, String taskDescription, String taskIsDone) {
+
         ToDosTask td = new ToDosTask(taskDescription);
         if (taskIsDone.equals(IS_DONE_SYMBOL)) {
             td.markAsDone();
         }
+
         taskList.add(td);
     }
 }

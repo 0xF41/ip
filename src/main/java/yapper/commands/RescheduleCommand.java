@@ -68,17 +68,23 @@ public class RescheduleCommand implements Command {
      */
     @Override
     public boolean execute(ArrayList<String> responseList) {
+
         ScheduleTask oldTask = (ScheduleTask) this.taskList.get(this.idx);
         LocalDateTime[] newDateTime = new LocalDateTime[RESCHEDULE_COMMAND_MAX_DTL_ARGS];
+
         for (int i = 0; i < newDateTimeString.length; i++) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
             newDateTime[i] = LocalDateTime.parse(this.newDateTimeString[i], formatter);
         }
+
         ScheduleTask rescheduledTask = oldTask.reschedule(newDateTime);
+
         assert rescheduledTask != null : ASSERT_TASK_IS_NULL_STRING;
+
         this.taskList.set(this.idx, rescheduledTask);
         responseList.add(EXECUTE_INFO_STRING);
         responseList.add(rescheduledTask.toString());
+
         return true;
     }
 }

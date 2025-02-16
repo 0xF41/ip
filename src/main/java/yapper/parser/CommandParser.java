@@ -536,31 +536,44 @@ public class CommandParser {
         String cmd = fullCmd.split(" ")[0];
         if (CommandOption.fromString(cmd).equals(CommandOption.LIST)) { // list tasks
             return buildListCommand(fullCmd, taskList, noteList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.MARK)) {
             return buildMarkCommand(fullCmd, taskList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.UNMARK)) {
             return buildUnmarkCommand(fullCmd, taskList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.TODO)) {
             return buildToDosCommand(fullCmd, taskList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.DEADLINE)) {
             return buildDeadlineCommand(fullCmd, taskList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.EVENT)) {
             return buildEventCommand(fullCmd, taskList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.DELETE)) {
             return buildDeleteCommand(fullCmd, taskList, noteList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.BYE)) {
             return buildByeCommand(fullCmd, taskList, noteList, taskFile, noteFile, taskFileManager, noteFileManager);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.HELP)) {
             return buildHelpCommand();
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.FIND)) {
             return buildFindCommand(fullCmd, taskList, noteList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.RESCHEDULE)) {
             return buildRescheduleCommand(fullCmd, taskList);
+
         } else if (CommandOption.fromString(cmd).equals(CommandOption.NOTE)) {
             return buildNoteCommand(fullCmd, noteList);
+
         }
 
         assert false : ASSERT_FAIL_STRING;
+
         return null;
     }
 }

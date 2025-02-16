@@ -57,6 +57,7 @@ public class DeadlineScheduleTask extends ScheduleTask {
     @Override
     public ScheduleTask reschedule(LocalDateTime... newDateTime) {
         assert newDateTime.length == 1 : ASSERT_NEW_DATE_TIME_STRING;
+
         return new DeadlineScheduleTask(this.getDescription(), newDateTime[0]);
     }
 }

@@ -60,7 +60,10 @@ public class EventsScheduleTask extends ScheduleTask {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
-        return String.format(EVENTS_INFO_FORMAT_STRING, super.toString(), this.fromLocalDateTime.format(formatter),
+        return String.format(
+                EVENTS_INFO_FORMAT_STRING,
+                super.toString(),
+                this.fromLocalDateTime.format(formatter),
                 this.toLocalDateTime.format(formatter));
     }
 
@@ -73,6 +76,9 @@ public class EventsScheduleTask extends ScheduleTask {
     @Override
     public ScheduleTask reschedule(LocalDateTime... newDateTime) {
         assert newDateTime.length == 2 : ASSERT_NEW_DATE_TIME_STRING;
-        return new EventsScheduleTask(this.getDescription(), newDateTime[0], newDateTime[1]);
+        return new EventsScheduleTask(
+                this.getDescription(),
+                newDateTime[0],
+                newDateTime[1]);
     }
 }

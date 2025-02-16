@@ -50,6 +50,7 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
+
     /**
      * Sets the Yapper object.
      *
@@ -58,6 +59,7 @@ public class MainWindow extends AnchorPane {
     public void setYapper(Yapper y) {
         yapper = y;
     }
+
 
     /**
      * Creates two dialog boxes, one echoing user input and the other containing
@@ -70,18 +72,29 @@ public class MainWindow extends AnchorPane {
         String input = userInput.getText();
         ArrayList<String> responseList = new ArrayList<>(); // List of responses to be displayed to the user
         try {
-            Command command = CommandParser.parse(input, yapper.getTaskList(), yapper.getNoteList(),
-                    yapper.getTaskFile(), yapper.getNoteFile(), yapper.getTaskFileManager(),
+            Command command = CommandParser.parse(
+                    input,
+                    yapper.getTaskList(),
+                    yapper.getNoteList(),
+                    yapper.getTaskFile(),
+                    yapper.getNoteFile(),
+                    yapper.getTaskFileManager(),
                     yapper.getNoteFileManager());
+
             command.execute(responseList);
+
         } catch (InvalidCommandSyntaxException | IndexOutOfBoundsException | IllegalArgumentException e) {
             this.addResponses(responseList, e.getMessage());
+
         }
+
         assert responseList.size() > 0 : ASSERT_RESPONSE_LIST_EMPTY;
 
         this.displayResponses(input, responseList.toArray(new String[0]));
+
         userInput.clear();
     }
+
 
     /**
      * Adds multiple responses to the response list using varargs.
@@ -92,6 +105,7 @@ public class MainWindow extends AnchorPane {
     private void addResponses(List<String> responseList, String... messages) {
         responseList.addAll(Arrays.asList(messages));
     }
+
 
     /**
      * Displays the user input and Yapper's response in the dialog container.
@@ -104,7 +118,9 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getYapperDialog(fullResponseString, yapperImage));
+
     }
+
 
     /**
      * Displays Yapper's greeting in the dialog container.
@@ -112,5 +128,6 @@ public class MainWindow extends AnchorPane {
     public void displayChatbotGreeting() {
         String greeting = Ui.printGreet(yapper.getName());
         dialogContainer.getChildren().add(DialogBox.getYapperDialog(greeting, yapperImage));
+
     }
 }
