@@ -78,10 +78,10 @@ public class NoteFileManager extends FileManager implements Persistable<Note> {
                 appendToFile(
                         filePath,
                         String.format(
-                        WRITE_NOTE_FORMAT_STRING,
-                        n.getName(),
-                        n.getDescription()),
-                        true);
+                                WRITE_NOTE_FORMAT_STRING,
+                                n.getName(),
+                                n.getDescription()),
+                                true);
             }
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
