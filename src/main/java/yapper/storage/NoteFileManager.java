@@ -75,7 +75,13 @@ public class NoteFileManager extends FileManager implements Persistable<Note> {
         try {
             appendToFile(filePath, NOTE_CSV_FILE_HEADERS_STRING, false);
             for (Note n : noteList) {
-                appendToFile(filePath, String.format(WRITE_NOTE_FORMAT_STRING, n.getName(), n.getDescription()), true);
+                appendToFile(
+                        filePath,
+                        String.format(
+                        WRITE_NOTE_FORMAT_STRING,
+                        n.getName(),
+                        n.getDescription()),
+                        true);
             }
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());

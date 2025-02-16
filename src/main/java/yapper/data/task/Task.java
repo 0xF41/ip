@@ -71,6 +71,9 @@ public class Task implements ContentDisplayable {
      */
     @Override
     public String toString() {
-        return String.format(TASK_INFO_FORMAT_STRING, this.getStatusIcon(), this.getDescription());
+        return String.format(
+                TASK_INFO_FORMAT_STRING,
+                this.getStatusIcon(),
+                this.getDescription());
     }
 }

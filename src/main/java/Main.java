@@ -60,8 +60,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         Person p1 = new Person(TASK_FILE_PATH_CSV, NOTE_FILE_PATH_CSV);
-        Yapper y1 = new Yapper(CHATBOT_NAME, p1.getTaskList(), p1.getNoteList(), p1.getTaskFile(), p1.getNoteFile(),
-                p1.getTaskFileManager(), p1.getNoteFileManager());
+        Yapper y1 = new Yapper(
+                CHATBOT_NAME,
+                p1.getTaskList(),
+                p1.getNoteList(),
+                p1.getTaskFile(),
+                p1.getNoteFile(),
+                p1.getTaskFileManager(),
+                p1.getNoteFileManager());
 
         assert y1 != null : ASSERT_YAPPER_NOT_NULL_STRING;
         assert p1 != null : ASSERT_PERSON_NOT_NULL_STRING;
