@@ -73,8 +73,13 @@ public class RescheduleCommand implements Command {
         LocalDateTime[] newDateTime = new LocalDateTime[RESCHEDULE_COMMAND_MAX_DTL_ARGS];
 
         for (int i = 0; i < newDateTimeString.length; i++) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
-            newDateTime[i] = LocalDateTime.parse(this.newDateTimeString[i], formatter);
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DTF_FORMATTER_STRING);
+                newDateTime[i] = LocalDateTime.parse(this.newDateTimeString[i], formatter);
+            } catch (Exception e) {
+                responseList.add("Invalid date and time format. Please use the format dd-MM-yyyy HHmm");
+                return false;
+            }
         }
 
         ScheduleTask rescheduledTask = oldTask.reschedule(newDateTime);
